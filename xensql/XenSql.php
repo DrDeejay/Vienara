@@ -262,8 +262,6 @@ if(!defined('Xensql'))
 		
 		// Does it includes one of the MySQLi functions that are replaced by Xensql?
 		$reserved_words = array(
-			'!=', 
-			'=', 
 			'select', 
 			'insert into', 
 			'join', 
@@ -274,14 +272,14 @@ if(!defined('Xensql'))
 			'show databases', 
 			'show tables'
 		);
-		
+
 			// Check each of them
 			foreach($reserved_words as $word => $value)
 
 				// Do we have a match?
 				if(!strpos($aquery, $value) == false)
 					die(xensql_error($xensql['str_replacement_available'], $value));
-		
+	
 		// Run the parser
 		$query = xensql_parse($aquery);
 		
@@ -365,12 +363,12 @@ if(!defined('Xensql'))
 		// Define a start var
 		$row_count = 0;
 		
-		// Parse the query
-		$query = xensql_parse($query);
-		
 		// We first need to parse it
 		$result = xensql_query($query);
 		
+		// Parse the query
+		$query = xensql_parse($query);
+
 		// Did it work?
 		if($result == true)
 		

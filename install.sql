@@ -23,7 +23,8 @@ INSERT INTO {db_pref}settings (`id`, `value`) VALUES
 ('order', 'DESC'),
 ('top_button', '1'),
 ('timezone', 'America/New_York'),
-('enable_extra_title', '1'),
+('enable_extra_title', '0'),
 ('extra_title', ''),
 ('language', 'english_usa'),
+('notice', 'Welcome to Vienara!'),
 ('width', '90%');

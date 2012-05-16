@@ -42,6 +42,7 @@ $txt['newer'] = 'Nieuwer';
 $txt['older'] = 'Ouder';
 $txt['posted_on'] = 'Geplaatst op';
 $txt['delete'] = 'Verwijder';
+$txt['approved'] = 'Goedkeuren';
 
 // Altering settings
 $txt['old_pass'] = 'Oud wachtwoord';
@@ -84,3 +85,9 @@ $txt['hash'] = 'Hash';
 $txt['hashthis'] = 'Vul hier de tekst in die je wilt hashen en druk op de hash-knop.';
 $txt['hash_now'] = 'Hash';
 $txt['hash_type'] = 'Type';
+$txt['notice'] = 'Mededeling om te laten zien aan de bovenkant van de site (laat leeg om uit te schakelen)';
+
+// Blog editing
+$txt['edit'] = 'Bewerk';
+$txt['edit_post'] = 'Bewerk bericht';
+$txt['cancel_edit'] = 'Annuleren';

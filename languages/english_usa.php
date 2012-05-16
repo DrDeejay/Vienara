@@ -42,6 +42,8 @@ $txt['newer'] = 'Newer';
 $txt['older'] = 'Older';
 $txt['posted_on'] = 'Posted on';
 $txt['delete'] = 'Delete';
+$txt['approved'] = 'Publish';
+$txt['not_approved'] = 'This post has not been published yet. You need to publish this post in order to display it on the frontpage.';
 
 // Altering settings
 $txt['old_pass'] = 'Old password';
@@ -84,3 +86,9 @@ $txt['hash'] = 'Hash function';
 $txt['hashthis'] = 'Please put the text you want to hash in this box.';
 $txt['hash_now'] = 'Hash!';
 $txt['hash_type'] = 'Type';
+$txt['notice'] = 'Notice to show at the top of the blog (leave empty to disable)';
+
+// Blog editing
+$txt['edit'] = 'Edit';
+$txt['edit_post'] = 'Edit blogpost';
+$txt['cancel_edit'] = 'Cancel';

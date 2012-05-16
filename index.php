@@ -67,6 +67,16 @@ define('Blog_file', 'index.php');
 // The extension directory
 $vienara['extension_dir'] = '/extensions';
 
+// Because sometimes, we need to fix stuff
+function br2nl($text = '')
+{
+	// Just replace.
+	$text = str_replace('<br />', '', $text);
+	$text = str_replace('<br>', '', $text);
+
+	return $text;
+}
+
 // The screen of death
 function fatal_error($error = '', $include_fail = false)
 {
@@ -122,6 +132,9 @@ function loadClass($class_name = '')
 	// We do
 	else
 		include 'classes/Class-' . $class_name . '.php';
+
+	// Y u expectz cookiez? :D
+	return true;
 }
 
 // Get a hook from an extension
@@ -211,21 +224,12 @@ function show_string($string = '')
 	return $txt[$string];
 }
 
-// Count ALL the blogs !
-$result = xensql_query("
-		RETRIEVE id_blog, blog_title, blog_content, published, post_date
-			FROM {db_pref}content
-			WHERE published is equal to 1
+// Get the blogcount
+$vienara['blog_count'] = xensql_count_rows("
+	RETRIEVE id_blog, blog_title, blog_content, published, post_date
+		FROM {db_pref}content
+		WHERE published is equal to 1
 ");
-
-// We need a base number to make sure we don't have freaky errors.
-$vienara['blog_count'] = 0;
-
-foreach($result as $blog)
-	$vienara['blog_count'] ++;
-
-$vienara['blog_count']--;
-			
 
 // Login!
 function vienara_act_login()
@@ -315,6 +319,12 @@ function vienara_act_delete()
 	vienara();
 }
 
+// Setup the Viencode class. But load it first
+loadClass('Viencode');
+
+	// Set it up
+	$viencode = new Viencode;
+
 // Check the password
 function vienara_is_logged()
 {
@@ -382,15 +392,15 @@ function die_nice($message = '')
 // This displays the frontpage
 function vienara()
 {
-	global $show_results, $vienara;
+	global $vienara, $viencode;
 
 	// Get the blogs from the blog table
 	$result = xensql_query("
 		RETRIEVE id_blog, blog_title, blog_content, published, post_date
 			FROM {db_pref}content
 			WHERE published is equal to 1
-			ORDER BY post_date ".$vienara['setting']['order']."
-			LIMIT ".$show_results.",".$vienara['setting']['blogsperpage'].";
+			ORDER BY post_date " . $vienara['setting']['order'] . "
+			LIMIT " . $vienara['blogs_to_show'] . ", " . $vienara['setting']['blogsperpage'] . "
 	");
 
 		// Get the right template
@@ -398,6 +408,9 @@ function vienara()
 
 			// We need new lines
 			$blog['blog_content'] = nl2br($blog['blog_content']);
+
+			// Parse!
+			$blog['blog_content'] = $viencode->parse($blog['blog_content']);
 
 			// Hooks!
 			vienara_hook('single_blog');
@@ -438,6 +451,14 @@ if(!empty($_POST['content'])) {
 			$_POST[$value] = htmlspecialchars($_POST[$value], ENT_NOQUOTES, 'UTF-8', false);
 		}
 
+	// Do we want it approved?
+	if(isset($_POST['adm_post']) && isset($_POST['approved']))
+		$approved = 1;
+	elseif(isset($_POST['adm_post']) && !isset($_POST['approved']))
+		$approved = 0;
+	else
+		$approved = 1;
+
 	// Add it into the database
 	xensql_query("
 		INSERT 
@@ -447,7 +468,7 @@ if(!empty($_POST['content'])) {
 				'" . $_POST['post_title'] . "',
 				'" . $_POST['content'] . "',
 				UNIX_TIMESTAMP(),
-				'1'
+				'" . $approved . "'
 		)
 	", true);
 }
@@ -455,23 +476,18 @@ if(!empty($_POST['content'])) {
 // Update settings, to make sure we have the right value in the database
 function vienara_saveSetting($setting = '', $is_check = '')
 {
-	global $db;
-
-	// No setting is no fun!
-	if(empty($setting))
-		return false;
-
 	// Did we set it?
 	if(empty($_POST[$setting]) && !empty($is_check))
 		$_POST[$setting] = 0;
-	elseif(empty($_POST[$setting]) && empty($is_check))
-		return false;
 
 	// No sql injections
 	$_POST[$setting] = xensql_escape_string($_POST[$setting]);
 
 	// No html!
 	$_POST[$setting] = htmlspecialchars($_POST[$setting], ENT_NOQUOTES, 'UTF-8', false);
+
+	// Hmm
+	$_POST[$setting] = nl2br($_POST[$setting]);
 
 	// Is it a checkbox?
 	if($_POST[$setting] == 'on' && !empty($is_check))
@@ -509,32 +525,6 @@ if(@$direction = opendir('languages'))
 	
 		// Just add it to the array
 		$vienara['languages'][] = $file;
-	}
-}
-
-// Function for creating posts
-function vienara_createpost($title, $content)
-{
-	// Add it into the database
-	xensql_query("
-		INSERT 
-			INTO {db_pref}content			
-			VALUES(
-				'',
-				'" . $title . "',
-				'" . $content . "',
-				UNIX_TIMESTAMP(),
-				'1'
-		)
-	", true);
-}
-
-// Create dummy contents!
-function vienara_dummycontent($howmany)
-{
-	// Generate a few posts
-	for($i = 1;$i < $howmany + 1;$i++){
-		vienara_createpost($i . 'th Test Post', $i);
 	}
 }
 
@@ -661,7 +651,6 @@ function vienara_act_admin()
 		$result = xensql_query('
 			RETRIEVE id_blog, blog_title, blog_content, published, post_date
 				FROM {db_pref}content
-				WHERE published is equal to 1
 				ORDER BY post_date DESC
 		');
 
@@ -704,7 +693,9 @@ function vienara_act_admin()
 				'enable_extra_title' => array('check', 'enable_extra_title'),
 				'extra_title' => array('text', 'extra_title'),
 			'',
-				'timezone' => array('select', 'timezone', $timezones->zones())
+				'timezone' => array('select', 'timezone', $timezones->zones()).
+			'',
+				'notice' => array('largetext', 'notice')
 		);
 
 		// Extra settings! ;)
@@ -721,7 +712,7 @@ function vienara_act_admin()
 					continue;
 
 				// Is this setting set?
-				if(!empty($_POST[$key]))
+				if(isset($_POST[$key]))
 					vienara_saveSetting($key, ($value[0] == 'check' ? true : ''));
 
 				// PHP is like a little kid that doesn't know how to behave
@@ -737,6 +728,88 @@ function vienara_act_admin()
 		define('adm_sect', 'settings');
 	}
 
+	// Publish a blogpost
+	function admin_section_publish()
+	{
+		// Hmm..
+		if(empty($_GET['id'])) {
+
+			// Show the blog list
+			admin_section_blogs();
+	
+			// Return
+			return;
+		}
+
+		// Get the publish class file
+		loadClass('Publish');
+
+		// Set it up
+		$pub = new Publish;
+
+		// Publish!
+		$pub->do_publish($_GET['id']);
+		
+		// We're done!
+		done('?app=admin&section=blogs');
+	}
+
+	// Edit a blog. Quite simple, no?
+	function admin_section_edit()
+	{
+		// Important checks
+		if(!is_numeric($_GET['id']))
+			admin_section_blogs();
+		
+		// Make it safe bro
+		$_GET['id'] = xensql_escape_string($_GET['id']);
+
+		// Edit a blogpost!
+		if(!empty($_POST['edit_content'])) {
+
+			// Title empty?
+			if(empty($_POST['post_title']))
+				die_nice(show_string('fill_in_all_fields'));
+
+			// Make them safe. Both.
+			$_POST['post_title'] = xensql_escape_string($_POST['post_title']);
+			$_POST['edit_content'] = xensql_escape_string($_POST['edit_content']);
+
+			// No html
+			$_POST['post_title'] = htmlspecialchars($_POST['post_title'], ENT_NOQUOTES, 'UTF-8', false);
+			$_POST['edit_content'] = htmlspecialchars($_POST['edit_content'], ENT_NOQUOTES, 'UTF-8', false);
+
+			// Update!
+			xensql_query("
+				UPDATE {db_pref}content
+					SET blog_title IS EQUAL TO '" . $_POST['post_title'] . "',
+						blog_content IS EQUAL TO '" . $_POST['edit_content'] . "'
+					WHERE id_blog IS EQUAL TO '" . $_GET['id'] . "'
+			");
+
+			// We're done
+			done('?app=admin&section=blogs');
+		}
+
+		// Get the blog
+		$result = xensql_query("
+			RETRIEVE id_blog, blog_title, blog_content
+				FROM {db_pref}content
+				WHERE id_blog IS EQUAL TO '" . $_GET['id'] . "'
+				LIMIT 1
+		");
+
+			// Very simple. Show the edit screen
+			foreach($result as $blog)
+				vienara_template_edit($blog);
+
+		// Whut?
+		define('adm_sect', 'edit');
+
+		// Die nice. ;)
+		die_nice();
+	}
+
 	// Define sections!
 	$admin['sections'] = array(
 		'newblog' => 'newblog',
@@ -744,7 +817,9 @@ function vienara_act_admin()
 		'backup' => 'backup',
 		'settings' => 'settings',
 		'password' => 'password',
-		'hash' => 'hash'
+		'hash' => 'hash',
+		'publish' => 'publish',
+		'edit' => 'edit'
 	);
 
 	// New sections :D
@@ -776,15 +851,17 @@ function vienara_act_admin()
 
 // We need to calculate how many results we should show
 if(isset($_GET['show']) && is_numeric($_GET['show']))
-	$show = $_GET['show'] + $vienara['setting']['blogsperpage'];
+	$vienara['show'] = $_GET['show'] + $vienara['setting']['blogsperpage'];
 else
-	$show = $vienara['setting']['blogsperpage'];
+	$vienara['show'] = $vienara['setting']['blogsperpage'];
 
-// Also tell how many
-if(isset($_GET['show']) )
-	$show_results =  (int)($_GET['show']);
+// We should begin with a specific number of blogs. How many?
+if(!empty($_GET['show']) && is_numeric($_GET['show']))
+	$vienara['blogs_to_show'] = $_GET['show'];
+
+// Just begin with the first blog.
 else
-	$show_results = 0;
+	$vienara['blogs_to_show'] = 0;
 
 // Check for maintenance
 if($maintenance['enable'] == 1 && !vienara_is_logged())

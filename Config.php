@@ -15,7 +15,7 @@ if(!defined('Vienara'))
 */
 $db_settings = array(
 	'server' => 'localhost',
-	'username' => 'root',
+	'username' => 'vienaradev',
 	'password' => '',
 	'dbname' => 'vienara',
 	'prefix' => 'vie_'

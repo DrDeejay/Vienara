@@ -5,10 +5,7 @@ global $vienara;
 // The header
 function vienara_header()
 {
-	global $vienara, $show, $is_rtl;
-	
-	$order_ASC = ($vienara['setting']['order'] == "ASC") ? 'selected' : '';
-	$order_DESC = ($vienara['setting']['order'] == "DESC") ? 'selected' : '';
+	global $vienara, $show, $is_rtl, $viencode;
 
 	// The simple stuff
 	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -20,7 +17,7 @@ function vienara_header()
 	<style type="text/css">
 		body {
 			background: #D6D6D6;
-			font-size: 12px;
+			font-size: 13px;
 			font-family: Verdana, Arial, Helvetica;
 			margin: 0;
 			padding: 0;
@@ -30,29 +27,19 @@ function vienara_header()
 			color: #76A744;
 		}
 		#wrapper {
-			width: '.$vienara['setting']['width'].';
+			width: ' . $vienara['setting']['width'] . ';
 			margin: auto;
 			background: white;
 			min-width: 400px;
+		}
+		.reg_content {
 			padding: 10px;
 		}
 		.padding {
 			padding: 5px;
 		}
 		.bg_color {
-			background: #89BE51;
-			background-image: linear-gradient(bottom, #A8CD81 18%, #9AC56C 100%);
-			background-image: -o-linear-gradient(bottom, #A8CD81 18%, #9AC56C 100%);
-			background-image: -moz-linear-gradient(bottom, #A8CD81 18%, #9AC56C 100%);
-			background-image: -webkit-linear-gradient(bottom, #A8CD81 18%, #9AC56C 100%);
-			background-image: -ms-linear-gradient(bottom, #A8CD81 18%, #9AC56C 100%);
-			background-image: -webkit-gradient(
-				linear,
-				left bottom,
-				left top,
-				color-stop(0.18, #A8CD81),
-				color-stop(1, #9AC56C)
-			);
+			background: #89BE51 url(./images/bg_color.png) repeat-x;
 			color: white;
 			font-weight: normal;
 			font-family: Verdana, Arial;
@@ -81,8 +68,8 @@ function vienara_header()
 			padding: 15px;
 			color: white;
 			font-size: 50px;
-			border-top-left-radius: 5px;
-			border-top-right-radius: 5px;
+			border-top-right-radius: 0px;
+			border-top-left-radius: 0px;
 		}
 		.cat_bg {
 			color: white;
@@ -112,8 +99,6 @@ function vienara_header()
 		.menu {
 			background: #78945B;
 			padding: 5px;
-			border-bottom-right-radius: 5px;
-			border-bottom-left-radius: 5px;
 		}
 		.menu a {
 			color: white;
@@ -134,6 +119,7 @@ function vienara_header()
 			font-family: inherit;
 			border: grey 1px solid;
 			border-radius: 5px;
+			font-size: 14px;
 		}
 		.floatright {
 			float: right;
@@ -147,7 +133,7 @@ function vienara_header()
 		.cat_bg a {
 			color: white;
 		}
-		input[type="text"], input[type="password"], select {
+		input[type="text"], input[type="password"], select, input[type="checkbox"] {
 			padding: 5px;
 			border: 1px solid grey;
 			margin: 2px;
@@ -156,21 +142,8 @@ function vienara_header()
 		input[type="text"]:hover, input[type="password"]:hover, select:hover {
 			background: white;
 		}
-		textarea, input { outline: none; resize: none;}
 		input[type="submit"], .more, button {
-			/* http://gradients.glrzad.com/ */
-			background-image: linear-gradient(bottom, #71B055 18%, #88C46E 100%);
-			background-image: -o-linear-gradient(bottom, #71B055 18%, #88C46E 100%);
-			background-image: -moz-linear-gradient(bottom, #71B055 18%, #88C46E 100%);
-			background-image: -webkit-linear-gradient(bottom, #71B055 18%, #88C46E 100%);
-			background-image: -ms-linear-gradient(bottom, #71B055 18%, #88C46E 100%);
-			background-image: -webkit-gradient(
-				linear,
-				left bottom,
-				left top,
-				color-stop(0.18, #71B055),
-				color-stop(1, #88C46E)
-			);
+			background: #A7C78C url(./images/bg_color.png) repeat-x;
 			border-radius: 5px;
 			padding: 5px;
 			width: 100px;
@@ -184,8 +157,8 @@ function vienara_header()
 			background: #6BB74C;
 			color: white;
 			padding: 5px;
-			width: 45px;
-			height: 45px;
+			width: 50px;
+			height: 50px;
 			font-size: 18px;
 			margin: 5px;
 		}
@@ -244,6 +217,22 @@ function vienara_header()
 		}
 		.radius {
 			border-radius: 5px;
+		}
+		.bgwhite {
+			background: white;
+		}
+		.new_post {
+			height: 600px;
+		}
+		.news {
+			padding: 10px;
+			border-top: 2px solid #8FBB61;
+			border-bottom: 2px solid #8FBB61;
+			margin: 10px;
+			background: #DAE7CD;
+		}
+		.whitelink {
+			color: white!important;
 		}';
 
 	// Custom css
@@ -279,59 +268,56 @@ function vienara_header()
 				</form>
 			</div>' : '
 			<a href="' . Blog_file . '?app=admin"><img src="./images/admin.png" alt="" /> ' . show_string('admin') . '</a>
-			<a href="javascript:void(0);" onclick="$(\'#editor\').slideToggle();"><img src="./images/new.png" alt="" /> ' . show_string('new_post') . '</a>
 			<a href="' . Blog_file . '?app=logout"><img src="./images/logout.png" alt="" /> ' . show_string('logout') . '</a>');
 
 	echo '
 		</div>
+		<div class="reg_content">
 		<br />';
-
-		// Are we logged in? If so, show the editor
-		if(vienara_is_logged())
-			echo '
-				<div id="editorhere_before"></div>
-				<div id="editor" style="display: none;">
-					<div class="cat_bg bg_color newblog_title">
-						' . show_string('new_post') . '
-					</div>
-					<div class="padding bg_color5">
-						<form action="' . Blog_file . '" method="post">
-							<table width="100%">
-								<tr class="subject">
-									<td width="20%"><strong id="title_desc">' . show_string('post_title') . ':</strong></td>
-									<td width="80%"><input type="text" id="post_title" name="post_title" /></td>
-								</tr>
-								<tr>
-									<td width="20%" class="blog_msg"><strong>' . show_string('message') . ':</strong></td>
-									<td width="80%"><textarea class="editor" onfocus="vienara_higher()"  name="content" rows="1" cols="1"></textarea></td>
-								</tr>
-							</table>
-							<input type="submit" id="editor_submit" value="' . show_string('submit') . '" />
-							<button class="more" type="button" style="display: none;" onClick="vienara_backtonormal()" id="editor_cancel" href="javascript:void();">' . show_string('cancel') . '</button>
-						</form>
-					</div>
-					<br />
-				</div>';
 
 		// Content!
 		echo '
 			<div id="content">';
 
+	// Notice?
+	if(!empty($vienara['setting']['notice']))
+		echo '
+				<div class="news">
+					' . $viencode->parse($vienara['setting']['notice']) . '
+				</div>';
 }
 
 // And this displays the footer
 function vienara_footer()
 {
-	global $vienara, $show, $show_results;
+	global $vienara;
 
 	// And close the template
 	echo '
-				<div class="aligncenter">
-					'.((($show_results > ((int)$vienara['setting']['blogsperpage'] - 1)) and ($show_results < $vienara['blog_count'])) ?  '<a href="' . Blog_file . '?show='.(((int)$show) - (2 * (int)$vienara['setting']['blogsperpage'])) . '" class="more" style="color: white!important;">< '.(($vienara['setting']['order'] == "DESC") ? show_string('newer') : show_string('older')).'</a>  ' : '').'
-					'.((($vienara['blog_count'] - ((int)$vienara['setting']['blogsperpage'] + $show_results)) > 0) ?  '<a href="' . Blog_file . '?show='.$show . '" class="more" style="color: white!important;">'.(($vienara['setting']['order'] == "ASC") ? show_string('newer') : show_string('older')).' ></a><br /><br />' : '').'
+				<div class="aligncenter">';
+
+	
+	// We don't want to display this when we're in the admin panel or anywhere else
+	if(!isset($_GET['app'])) {
+
+		// Do we even NEED to show more?
+		if(($vienara['show'] > $vienara['blog_count']) && !(($vienara['blogs_to_show'] -1) > $vienara['setting']['blogsperpage'])) {
+
+			// Output the button.
+			if($vienara['setting']['order'] == 'asc')
+				echo '
+						<a href="' . Blog_file . '?show=' . $vienara['show'] . '" class="more whitelink">' . show_string('newer') . '</a>';
+			else
+				echo '
+						<a href="' . Blog_file . '?show=' . $vienara['show'] . '" class="more whitelink">' . show_string('older') . '</a>';
+		}
+	}
+
+		echo '
 					<br /><br />' . ($vienara['setting']['top_button'] == 1 ? '<a href="javascript:void(0);" onclick="$(\'html, body\').animate({scrollTop:0}, \'slow\');">' . show_string('top') . '</a>' : '') . '
 				</div>
 			</div>
+		</div>
 	</div>
 	<div class="copyright">
 		<a href="' . Website_Url . '">' . show_string('powered_by') . 'Vienara ' . show_string('version') . Version . '</a><br />
@@ -506,13 +492,13 @@ function template_admin($admin = array())
 	
 		// Show the editor
 		echo '
-				<div id="editorhere_before"></div>
 				<div id="editor">
 					<div class="cat_bg bg_color newblog_title">
 						' . show_string('new_post') . '
 					</div>
 					<div class="padding bg_color5">
 						<form action="' . Blog_file . '" method="post">
+							<input type="hidden" name="adm_post" />
 							<table width="100%">
 								<tr class="subject">
 									<td width="20%"><strong id="title_desc">' . show_string('post_title') . ':</strong></td>
@@ -520,7 +506,11 @@ function template_admin($admin = array())
 								</tr>
 								<tr>
 									<td width="20%" class="blog_msg"><strong>' . show_string('message') . ':</strong></td>
-									<td width="80%"><textarea class="editor" name="content" rows="1" cols="1"></textarea></td>
+									<td width="80%"><textarea class="editor new_post" name="content" rows="1" cols="1"></textarea></td>
+								</tr>
+								<tr class="subject">
+									<td width="20%"><strong>' . show_string('approved') . ':</strong></td>
+									<td width="80%"><input type="checkbox" id="approved" name="approved" /></td>
 								</tr>
 							</table>
 							<input type="submit" id="editor_submit" value="' . show_string('submit') . '" />
@@ -533,24 +523,40 @@ function template_admin($admin = array())
 	// Blogs!
 	elseif(adm_sect == 'blogs') {
 		
-		global $admin_show;
+		global $admin_show, $viencode;
 
 		// Set the color class
 		$class = 5;
 	
 		echo '
-			<div class="blogborder">';
+			<div class="blogborder bgwhite">';
 
 		// Show the contents
 		foreach($admin_show as $blog) {
 
+			// Parse bbc
+			$blog['blog_content'] = $viencode->parse($blog['blog_content']);
+
 			// Show!
 			echo '
 				<div class="adm_blog bg_color' . $class . '">
-					<a href="javascript:void(0);" onclick="$(\'#adm_blog_' . $blog['id_blog'] . '\').slideToggle(\'slow\');">' . $blog['blog_title'] . '</a>
+						<a href="' . Blog_file . '?app=admin&section=publish&id=' . $blog['id_blog'] . '">
+						' . ($blog['published'] == 1 ? '
+							<img src="./images/accept.png" alt="" />' : '
+							<img src="./images/cancel.png" alt="" />') . ' 
+						</a>
+				' . ($blog['published'] == 0 ? '<em>' : '') . '<a href="javascript:void(0);" onclick="$(\'#adm_blog_' . $blog['id_blog'] . '\').slideToggle(\'slow\');">' . $blog['blog_title'] . '</a>' . ($blog['published'] == 0 ? '</em>' : '') . '
+					<div class="floatright" style="width: 40px;">
+						<a href="' . Blog_file . '?app=delete&id=' . $blog['id_blog'] . '" /><img src="./images/delete.png" alt="' . show_string('delete') . '" /></a>
+						<a href="' . Blog_file . '?app=admin&section=edit&id=' . $blog['id_blog'] . '" /><img src="./images/edit.png" alt="' . show_string('edit') . '" /></a>
+					</div>
+					<br class="clear" />
 				</div>
 				<div style="display: none;" id="adm_blog_' . $blog['id_blog'] . '">
-					' . nl2br($blog['blog_content']) . '
+					<div class="padding">
+						' . ($blog['published'] == 0 ? '<div class="notice">' . show_string('not_approved') . '</div>' : '') . '
+						' . nl2br($blog['blog_content']) . '
+					</div>
 				</div>';
 
 			// Reset the background color
@@ -730,4 +736,33 @@ function done($link = '')
 
 	// Die!
 	die_nice();
+}
+
+// Edit a blog
+function vienara_template_edit($bloginfo = array())
+{
+	echo '
+		<div id="editor">
+			<div class="cat_bg bg_color newblog_title">
+				' . show_string('edit_post') . '
+			</div>
+			<div class="padding bg_color5">
+				<form action="' . Blog_file . '?app=admin&section=edit&id=' . $bloginfo['id_blog'] . '" method="post">
+					<input type="hidden" name="adm_post" />
+					<table width="100%">
+						<tr class="subject">
+							<td width="20%"><strong id="title_desc">' . show_string('post_title') . ':</strong></td>
+							<td width="80%"><input type="text" id="post_title" name="post_title" value="' . $bloginfo['blog_title'] . '" /></td>
+						</tr>
+						<tr>
+							<td width="20%" class="blog_msg"><strong>' . show_string('message') . ':</strong></td>
+							<td width="80%"><textarea class="editor new_post" name="edit_content" rows="1" cols="1">' . br2nl($bloginfo['blog_content']) . '</textarea></td>
+						</tr>
+					</table>
+					<input type="submit" id="editor_submit" value="' . show_string('submit') . '" />
+					<a href="' . Blog_file . '?app=admin&section=blogs" class="more" style="color: white">' . show_string('cancel_edit') . '</a>
+				</form>
+			</div>
+			<br />
+		</div>';
 }
