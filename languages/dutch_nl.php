@@ -4,7 +4,7 @@
  *
  * Translation by: Winterkip7
  * For: Vienara
- * Version: 1.0 Beta 1
+ * Version: 1.0 Alpha 1
  *
  * License: BSD
 */
@@ -25,8 +25,6 @@ $txt['logout'] = 'Uitloggen';
 $txt['incorrect_pass'] = 'Incorrect wachtwoord.';
 $txt['logged_out'] = 'Je bent nu uitgelogd.';
 $txt['password'] = 'Wachtwoord';
-$txt['i_accept'] = 'Nadat je bent ingelogd zal er een sessie op je computer worden geplaatst die je ingelogd houdt. De sessie bevat een hash van het wachtwoord. Indien je dit niet accepteert, ben je niet in staat om in te loggen. Bevestiging is vereist aangezien er een wet van kracht is in de Europese Unie die eist dat gebruikers toestemming moeten geven alvorens er een cookie geplaatst kan worden.';
-$txt['cookie_okay'] = 'Ik geef toestemming om een cookie op mijn computer te plaatsen';
 
 // Blogs
 $txt['blog_not_found'] = 'Blog niet gevonden.';
@@ -43,6 +41,7 @@ $txt['older'] = 'Ouder';
 $txt['posted_on'] = 'Geplaatst op';
 $txt['delete'] = 'Verwijder';
 $txt['approved'] = 'Goedkeuren';
+$txt['not_approved'] = 'Dit bericht is nog niet gepubliceerd. Om deze blogpost op de voorpagina te tonen, dien je het bericht eerst te publiceren.';
 
 // Altering settings
 $txt['old_pass'] = 'Oud wachtwoord';
@@ -86,8 +85,34 @@ $txt['hashthis'] = 'Vul hier de tekst in die je wilt hashen en druk op de hash-k
 $txt['hash_now'] = 'Hash';
 $txt['hash_type'] = 'Type';
 $txt['notice'] = 'Mededeling om te laten zien aan de bovenkant van de site (laat leeg om uit te schakelen)';
+$txt['enable_custom_copyright'] = 'Schakel eigen copyright in';
+$txt['custom_copyright'] = 'Eigen copyright';
+$txt['copyright_link_to'] = 'De link die wordt gebruikt in het copyright. Laat leeg om uit te schakelen';
+$txt['edit_menu'] = 'Menu bewerken';
+$txt['edit_existing_tabs'] = 'Bewerk bestaande tabs';
+$txt['no_tabs_available'] = 'Er zijn geen tabs gevonden.';
+$txt['tab_edit_single'] = 'Bewerk tab';
+$txt['label'] = 'Label';
+$txt['position'] = 'Positie';
+$txt['href'] = 'Link';
+$txt['pos_use_numeric'] = 'De positie dient een nummerieke waarde te hebben';
+$txt['tab_not_found'] = 'Tab niet gevonden.';
+$txt['new_tab'] = 'Nieuwe tab';
+$txt['my_tab'] = 'Mijn tab';
+$txt['remove_tab'] = 'Verwijder tabs';
+$txt['repair_optimize'] = 'Repareer en optimaliseer';
+$txt['rather_optimize'] = 'De geselecteerde tabel optimaliseren in plaats van repareren.';
+$txt['action_fail'] = 'Operatie mislukt. Probeer het alsjeblieft opnieuw.';
+$txt['action_done'] = 'Operatie succesvol afgerond..';
 
 // Blog editing
 $txt['edit'] = 'Bewerk';
 $txt['edit_post'] = 'Bewerk bericht';
 $txt['cancel_edit'] = 'Annuleren';
+
+// Pagination
+$txt['pages'] = 'Pagina\'s';
+
+// Errors
+$txt['bad_request'] = 'Bad request';
+$txt['please_numeric'] = 'Er is een nummerieke waarde vereist bij nummer-velden.';

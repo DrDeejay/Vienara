@@ -1,5 +1,5 @@
 <?php
-// Did we defined Vienara?
+// Have we defined Vienara?
 if(!defined('Vienara'))
 	die();
 

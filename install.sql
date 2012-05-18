@@ -27,4 +27,14 @@ INSERT INTO {db_pref}settings (`id`, `value`) VALUES
 ('extra_title', ''),
 ('language', 'english_usa'),
 ('notice', 'Welcome to Vienara!'),
-('width', '90%');
+('enable_custom_copyright', '0'),
+('custom_copyright', ''),
+('copyright_link_to', ''),
+('width', '90');
+
+CREATE TABLE {db_pref}menu (
+  `id_tab` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `tab_position` int NOT NULL,
+  `tab_link` text NOT NULL,
+  `tab_label` tinytext NOT NULL
+) ENGINE=MyIsam CHARACTER SET utf8 COLLATE 'utf8_bin';

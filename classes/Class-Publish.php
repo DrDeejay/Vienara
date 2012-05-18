@@ -9,7 +9,7 @@
 * not use the name "Vienara" as name for your project
 * either. Thanks for understanding.
 *
-* @version: 1.0 Beta 1
+* @version: 1.0 Alpha 1
 * @copyright 2012: Vienara
 * @developed by: Dr. Deejay and Thomas de Roo
 * @package: Vienara
@@ -39,7 +39,7 @@ class Publish {
 		$result = xensql_count_rows("
 			SELECT id_blog
 				FROM {db_pref}content
-				WHERE id_blog IS EQUAL TO '$blog_id'
+				WHERE id_blog = '$blog_id'
 		");
 
 			// How many rows?
@@ -58,7 +58,7 @@ class Publish {
 		$result = xensql_query("
 			SELECT id_blog, published
 				FROM {db_pref}content
-				WHERE id_blog IS EQUAL TO '$blog_id'
+				WHERE id_blog = '$blog_id'
 		");
 
 		// Walk through the result
@@ -87,8 +87,8 @@ class Publish {
 		// Update the result
 		xensql_query("
 			UPDATE {db_pref}content
-				SET published IS EQUAL TO '$shouldPublish'
-				WHERE id_blog IS EQUAL TO '$id_blog'
+				SET published = '$shouldPublish'
+				WHERE id_blog = '$id_blog'
 		");
 	}
 }

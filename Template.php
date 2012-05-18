@@ -27,10 +27,10 @@ function vienara_header()
 			color: #76A744;
 		}
 		#wrapper {
-			width: ' . $vienara['setting']['width'] . ';
+			width: ' . $vienara['setting']['width'] . '%;
 			margin: auto;
 			background: white;
-			min-width: 400px;
+			min-width: 500px;
 		}
 		.reg_content {
 			padding: 10px;
@@ -192,13 +192,11 @@ function vienara_header()
 			padding: 5px;
 			color: dimgrey;
 		}
-		.blogborder {
-			border: 1px solid grey;
+		.admin_blogs {
 			height: 200px;
-			padding: 3px;
 			overflow-y: scroll;
 		}
-		.blogborder a {
+		.admin_blogs a {
 			color: inherit;
 		}
 		.update {
@@ -233,6 +231,27 @@ function vienara_header()
 		}
 		.whitelink {
 			color: white!important;
+		}
+		.list_tables {
+			max-height: 300px;
+			overflow-y: auto;
+			font-size: 11px;
+		}
+		.result_good {
+			padding: 5px;
+			border-top: 2px solid #6EAD53;
+			border-bottom: 2px solid #6EAD53;
+			color: #6EAD53;
+			background: #DFF1D7;
+			margin: 5px;
+		}
+		.result_bad {
+			padding: 5px;
+			border-top: 2px solid #6EAD53;
+			border-bottom: 2px solid #AD5953;
+			color: #AD5953;
+			background: #F1D7E2;
+			margin: 5px;
 		}';
 
 	// Custom css
@@ -255,16 +274,18 @@ function vienara_header()
 		</div>
 		<div class="menu">
 			<a href="' . Blog_file . '"><img src="./images/home.png" alt="" /> ' . show_string('index') . '</a>';
+
+			// Custom tabs
+			foreach($vienara['tabs'] as $tab)
+				echo '
+					<a href="' . $tab['tab_link'] . '">' . $tab['tab_label'] . '</a>';
 		
 			vienara_hook('menu');
 
 			echo (!vienara_is_logged() ? '<a href="javascript:void(0);" onclick="$(\'.login\').slideToggle(); $(\'.password\').focus();"><img src="./images/login.png" alt="" /> ' . show_string('login') . '</a><br />
 			<div style="display: none;" class="login">
 				<form action="' . Blog_file . '?app=login" method="post">
-					<div class="notice">
-						' . show_string('i_accept') . '
-					</div>
-					' . show_string('password') . ': <input type="password" name="password" class="password" /> <input type="submit" value="' . show_string('login') . '" /> <input type="checkbox" name="i_accept" /> ' . show_string('cookie_okay') . '
+					' . show_string('password') . ': <input type="password" name="password" class="password" /> <input type="submit" value="' . show_string('login') . '" />
 				</form>
 			</div>' : '
 			<a href="' . Blog_file . '?app=admin"><img src="./images/admin.png" alt="" /> ' . show_string('admin') . '</a>
@@ -298,20 +319,8 @@ function vienara_footer()
 
 	
 	// We don't want to display this when we're in the admin panel or anywhere else
-	if(!isset($_GET['app'])) {
-
-		// Do we even NEED to show more?
-		if(($vienara['show'] > $vienara['blog_count']) && !(($vienara['blogs_to_show'] -1) > $vienara['setting']['blogsperpage'])) {
-
-			// Output the button.
-			if($vienara['setting']['order'] == 'asc')
-				echo '
-						<a href="' . Blog_file . '?show=' . $vienara['show'] . '" class="more whitelink">' . show_string('newer') . '</a>';
-			else
-				echo '
-						<a href="' . Blog_file . '?show=' . $vienara['show'] . '" class="more whitelink">' . show_string('older') . '</a>';
-		}
-	}
+	if(!isset($_GET['app']))
+		vienara_page($vienara['blog_count'], Blog_file . '?page=');
 
 		echo '
 					<br /><br />' . ($vienara['setting']['top_button'] == 1 ? '<a href="javascript:void(0);" onclick="$(\'html, body\').animate({scrollTop:0}, \'slow\');">' . show_string('top') . '</a>' : '') . '
@@ -321,7 +330,8 @@ function vienara_footer()
 	</div>
 	<div class="copyright">
 		<a href="' . Website_Url . '">' . show_string('powered_by') . 'Vienara ' . show_string('version') . Version . '</a><br />
-		' . show_string('icons_by') . '<a href="http://www.famfamfam.com/lab/icons/silk/">FamFamFam</a> ' . show_string('and') . ' <a href="http://www.fatcow.com/free-icons">Fatcow</a>
+		' . show_string('icons_by') . '<a href="http://www.famfamfam.com/lab/icons/silk/">FamFamFam</a> ' . show_string('and') . ' <a href="http://www.fatcow.com/free-icons">Fatcow</a>' . ($vienara['setting']['enable_custom_copyright'] == 1 ? '
+			<br />' . (!empty($vienara['setting']['copyright_link_to']) ? '<a href="' . $vienara['setting']['copyright_link_to'] . '">' : '') . $vienara['setting']['custom_copyright'] . (!empty($vienara['setting']['copyright_link_to']) ? '</a>' : '') : '') . '
 	</div>
 </body>
 </html>';
@@ -331,7 +341,7 @@ function vienara_footer()
 function vienara_show_blog($information = '')
 {
 	echo '
-			<div class="floatleft" width="9%">
+			<div class="floatleft">
 				<div class="date">
 					<span class="daymonth">' . date("M j", $information['post_date']) . '</span><br />
 					' . date("Y", $information['post_date']) . '
@@ -344,26 +354,8 @@ function vienara_show_blog($information = '')
 				' . show_string('posted_on') . ': ' . date("F j, Y, g:i a", $information['post_date']) . '
 			</div>
 			<br class="clear" />
-			<div class="blog_content"' . (vienara_is_logged() ? ' onMouseOver="show_delete(\'.deletebutton_' . $information['id_blog'] . '\')" onMouseOut="hide_delete(\'.deletebutton_' . $information['id_blog'] . '\')"' : '') . '>';
-
-			// We need this in order to fix display issues
-			if(vienara_is_logged())
-				echo '
-					<div class="floatleft" style="width: 90%;">';
-
-			echo '
-				' . $information['blog_content'];
-
-			// If we are logged in, show a delete button
-			if(vienara_is_logged())
-				echo '
-					</div>
-					<div class="floatright deletebutton_' . $information['id_blog'] . '" style="display: none;">
-						<a href="' . Blog_file . '?app=delete&id=' . $information['id_blog'] . '">' . show_string('delete') . '</a>
-					</div>
-					<br class="clear" />';
-
-		echo '
+			<div class="blog_content">
+				' . $information['blog_content'] . '
 			</div>
 		<br /><br />';
 }
@@ -439,7 +431,7 @@ function template_admin($admin = array())
 	echo '
 			</div>
 		</div>
-		<div class="floatright bg_color4 radius" style="width: 75%; padding: 10px;">';
+		<div class="floatright" style="width: 75%; padding: 10px;">';
 
 	// Sub admin templates!
 	if(adm_sect == 'main') {
@@ -529,7 +521,10 @@ function template_admin($admin = array())
 		$class = 5;
 	
 		echo '
-			<div class="blogborder bgwhite">';
+			<div class="cat_bg bg_color">
+				' . show_string('blogs') . '
+			</div>
+			<div class="admin_blogs">';
 
 		// Show the contents
 		foreach($admin_show as $blog) {
@@ -562,9 +557,11 @@ function template_admin($admin = array())
 			// Reset the background color
 			$class = $class == '5' ? 4 : 5;
 		}
-
+	
 		echo '
 			</div>';
+
+		vienara_page($vienara['blog_count'], Blog_file . '?app=admin&section=blogs&page=');
 	}
 
 	// Manage our settings
@@ -572,6 +569,10 @@ function template_admin($admin = array())
 		echo '
 		<form accept-charset="UTF-8" action="' . Blog_file . '?app=admin&section=settings" method="post">
 			<input type="hidden" name="settings" />
+			<div class="cat_bg bg_color">
+				' . show_string('settings') . '
+			</div>
+			<div class="padding bg_color4">
 			<table width="100%">';
 
 			// Now parse each setting
@@ -609,7 +610,7 @@ function template_admin($admin = array())
 					echo '
 						<tr>
 							<td width="50%">' . $spage[1] . ':</td>
-							<td width="50%"><input type="hidden" name="' . $key . '_type" value="checkbox" /><input type="checkbox" name="' . $key . '" ' . ($vienara['setting'][$key] == '1' ? ' checked="checked"' : '') . '" /></td>
+							<td width="50%"><input type="hidden" name="' . $key . '_type" value="checkbox" /><input type="checkbox" name="' . $key . '" ' . ($vienara['setting'][$key] == '1' ? ' checked="checked"' : '') . ' /></td>
 						</tr>';				
 
 				// Show a textarea
@@ -664,6 +665,7 @@ function template_admin($admin = array())
 
 			echo '
 			</table>
+			</div>
 			<br /><input type="submit" value="' . show_string('submit') . '" />
 		</form>';
 	}
@@ -671,10 +673,15 @@ function template_admin($admin = array())
 	// It's the password edit form
 	elseif(adm_sect == 'password')
 		echo '
-				<form action="' . Blog_file . '" method="post">
-					' . show_string('old_pass') . ': <input type="password" name="old_password" /><br />
-					' . show_string('new_pass') . ': <input type="password" name="new_password" /> <input type="submit" value="' . show_string('submit') . '" />
-				</form>';
+				<div class="cat_bg bg_color">
+					' . show_string('change_pass') . '
+				</div>
+				<div class="padding bg_color5">
+					<form action="' . Blog_file . '" method="post">
+						' . show_string('old_pass') . ': <input type="password" name="old_password" /><br />
+						' . show_string('new_pass') . ': <input type="password" name="new_password" /> <input type="submit" value="' . show_string('submit') . '" />
+					</form>
+				</div>';
 
 	// Hashes! These are fun :D
 	elseif(adm_sect == 'hash') {
@@ -689,21 +696,26 @@ function template_admin($admin = array())
 			$hash_types = $hash->get();
 
 		echo '
-			<form action="' . Blog_file . '?app=admin&section=hash" method="post">
-				<strong>' . show_string('hash_type') . ':</strong><br />
-					<select name="type">';
+			<div class="cat_bg bg_color">
+				' . show_string('hash') . '
+			</div>
+			<div class="padding bg_color4">
+				<form action="' . Blog_file . '?app=admin&section=hash" method="post">
+					<strong>' . show_string('hash_type') . ':</strong><br />
+						<select name="type">';
 
-					// Show the list of hashes	
-					foreach($hash_types as $key => $value)
-						echo '
-							<option value="' . $value . '">' . $value . '</option>';
+						// Show the list of hashes	
+						foreach($hash_types as $key => $value)
+							echo '
+								<option value="' . $value . '">' . $value . '</option>';
 					
-		echo '
-					</select>
-				<br />
-				<textarea class="editor" cols="1" rows="1" name="hash">' . show_string('hashthis') . '</textarea><br />
-				<input type="submit" value="' . show_string('hash_now') . '" />
-			</form>';
+			echo '
+						</select>
+					<br />
+					<textarea class="editor" cols="1" rows="1" name="hash">' . show_string('hashthis') . '</textarea><br />
+					<input type="submit" value="' . show_string('hash_now') . '" />
+				</form>
+			</div>';
 
 		// Did we hash?! :D :D :D
 		if($hash->parse() != false)
@@ -712,6 +724,149 @@ function template_admin($admin = array())
 				<div class="blogborder" style="width: 80%;">
 					' . $hash->parse() . '
 				</div>';
+	}
+
+	// Add some tabs
+	elseif(adm_sect == 'menu') {
+
+		// Do we want to edit this?
+		if(!empty($_POST['tab_to_edit']) && !empty($vienara['tabs'][$_POST['tab_to_edit']])) {
+
+			// Show the interface
+			echo '
+				<div class="cat_bg bg_color">
+					' . show_string('tab_edit_single') . '
+				</div>
+				<div class="bg_color5 padding">
+					<form action="' . Blog_file . '?app=admin&section=menu" method="post">
+						<input type="hidden" name="tab_id" value="' . $_POST['tab_to_edit'] . '" />
+						<table width="100%">
+							<tr>
+								<td width="50%"><strong>' . show_string('label') . '</strong>:</td>
+								<td width="50%"><input type="text" name="menu_label" value="' . $vienara['tabs'][$_POST['tab_to_edit']]['tab_label'] . '" /></td>
+							</tr>
+							<tr>
+								<td width="50%"><strong>' . show_string('href') . '</strong>:</td>
+								<td width="50%"><input type="text" name="menu_href" value="' . $vienara['tabs'][$_POST['tab_to_edit']]['tab_link'] . '" /></td>
+							</tr>
+							<tr>
+								<td width="50%"><strong>' . show_string('position') . '</strong>:</td>
+								<td width="50%"><input type="text" name="menu_pos" size="2" maxlength="3" value="' . $vienara['tabs'][$_POST['tab_to_edit']]['tab_position'] . '" /></td>
+							</tr>
+						</table><br /><br />
+						<input type="submit" value="' . show_string('submit') . '" />
+					</form>
+				</div>';
+		}
+		else {
+			echo '
+				<div class="cat_bg bg_color">
+					' . show_string('edit_existing_tabs') . '
+				</div>
+				<form action="' . Blog_file . '?app=admin&section=menu" method="post">';
+
+			// A base class
+			$class = 5;
+
+			// Show 'em
+			foreach($vienara['tabs'] as $tab) {
+
+				echo '
+					<div class="bg_color' . $class . ' padding">
+						<input type="radio" name="tab_to_edit" value="' . $tab['id_tab'] . '" /> ' . $tab['tab_label'] . '
+					</div>';
+
+				// Reset the color class
+				$class = ($class == 5 ? 4 : 5);
+
+				// Found it. :)
+				$found = 1;
+			}
+
+			// Did we found anything?
+			if(empty($found))
+				echo show_string('no_tabs_available');
+
+			echo '
+					<br />
+					<input type="submit" value="' . show_string('edit') . '" />
+				</form><br /><br />
+				<div class="cat_bg bg_color">
+					' . show_string('new_tab') . '
+				</div>
+				<div class="bg_color5 padding">
+					<form action="' . Blog_file . '?app=admin&section=menu" method="post">
+						<input type="hidden" name="new" />
+						<table width="100%">
+							<tr>
+								<td width="50%"><strong>' . show_string('label') . '</strong>:</td>
+								<td width="50%"><input type="text" name="menu_label" value="' . show_string('my_tab') . '" /></td>
+							</tr>
+							<tr>
+								<td width="50%"><strong>' . show_string('href') . '</strong>:</td>
+								<td width="50%"><input type="text" name="menu_href" value="http://example.com" /></td>
+							</tr>
+							<tr>
+								<td width="50%"><strong>' . show_string('position') . '</strong>:</td>
+								<td width="50%"><input type="text" name="menu_pos" size="1" maxlength="3" value="" /></td>
+							</tr>
+						</table><br /><br />
+						<input type="submit" value="' . show_string('submit') . '" />
+					</form>
+				</div><br /><br />
+				<div class="cat_bg bg_color">
+					' . show_string('remove_tab') . '
+				</div>
+				<ul>';
+
+			foreach($vienara['tabs'] as $tab)
+				echo '
+					<li><a href="' . Blog_file . '?app=admin&section=menu&delete=' . $tab['id_tab'] . '"><img src="./images/delete_tab.png" alt="*" /></a> ' . $tab['tab_label'] . '</li>';
+
+		echo '
+				</ul>';
+		}
+	}
+
+
+	// Repair and optimize tables
+	elseif(adm_sect == 'repairtable') {
+
+		echo '
+			<div class="cat_bg bg_color">
+				' . show_string('repair_optimize') . '
+			</div>
+			<div class="padding bg_color4">';
+
+		// Done?
+		if(isset($vienara['repair_fail'])) {
+
+			// It failed. :(
+			if($vienara['repair_fail'] == true)
+				echo '
+					<div class="result_bad">' . show_string('action_fail') . '</div>';
+
+			// It worked :)
+			elseif($vienara['repair_fail'] == false)
+				echo '
+					<div class="result_good">' . show_string('action_done') . '</div>';
+		}
+
+		echo '
+			<form action="' . Blog_file . '?app=admin&section=repairtable" method="post">
+			<div class="list_tables">';
+
+		foreach($vienara['admin_tables'] as $table)
+			echo '
+				<input type="radio" name="repair_database" value="' . $table[0] . '" />' . $table[0] . '<br />';
+
+		echo '
+			</div>
+				<br />
+				<input type="checkbox" name="optimize" />' . show_string('rather_optimize') . '<br />
+				<input type="submit" value="' . show_string('submit') . '" />
+			</form>
+			</div>';
 	}
 
 	echo '
@@ -765,4 +920,37 @@ function vienara_template_edit($bloginfo = array())
 			</div>
 			<br />
 		</div>';
+}
+
+// This will create the page list
+function vienara_page($count = 1, $link = '?page=')
+{
+	global $vienara;
+
+	// Nothing?
+	if($count == 0)
+		return;
+
+	// How many results do we have?
+	$pages = ceil($count / $vienara['setting']['blogsperpage']);
+
+	echo '
+			<strong>' . show_string('pages') . ':</strong>';
+
+	// Is it just one?
+	if($pages < 1)
+		echo '
+			<strong><a href="' . $link . '1">1</a></strong>';
+
+	// Show each page
+	for($p = 1; $p <= $pages; $p++) {
+
+		// Show it
+		echo '
+			' . (isset($_GET['page']) && $_GET['page'] == $p ? '<strong>' : '') . '<a href="' . $link . $p . '">' . $p . '</a>' . (isset($_GET['page']) && $_GET['page'] == $p ? '</strong>' : '');
+	}
+
+	// We're almost done
+	echo '
+		<br />';
 }

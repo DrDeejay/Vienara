@@ -204,36 +204,6 @@ if(!defined('Xensql'))
 		
 		return $string;
 	}
-	
-	// Parse queries
-	function xensql_parse($stuff = '')
-	{
-		global $xensql;
-		
-		// Replacements..
-		$replacements = array(
-			'retrieve' => 'select',
-			'post result' => 'insert into',
-			'maintain' => 'optimize',
-			'register' => 'join',
-			'fix' => 'repair table',
-			'new db' => 'create database',
-			'//' => '-- ',
-			'get db' => 'show databases',
-			'get table' => 'show tables',
-			'is not' => '!=',
-			'is equal to' => '='
-		);
-		
-			// We need to change the name of the variable
-			$query = $stuff;
-			
-			// Let's replace!
-			foreach($replacements as $key => $value)
-				$query = str_ireplace($key, $value, $query);
-		
-		return $query;
-	}
 
 	// Run db queries
 	function xensql_query($aquery = '', $prefix = '', $fatal = true, $save = false, $save_as = '')
@@ -255,34 +225,11 @@ if(!defined('Xensql'))
 		$db = $xensql['connect'][$xensql['unique_id']];		
 
 		// Avax -2.0 Beta 2 compatibility for queries
-		$aquery = str_ireplace('setup Xensql()', '', $aquery);
+		$query = str_ireplace('setup Xensql()', '', $aquery);
 		
 		// Make sure we use an array by default
 		$results = array();
-		
-		// Does it includes one of the MySQLi functions that are replaced by Xensql?
-		$reserved_words = array(
-			'select', 
-			'insert into', 
-			'join', 
-			'optimize', 
-			'repair table', 
-			'create database', 
-			'--', 
-			'show databases', 
-			'show tables'
-		);
 
-			// Check each of them
-			foreach($reserved_words as $word => $value)
-
-				// Do we have a match?
-				if(!strpos($aquery, $value) == false)
-					die(xensql_error($xensql['str_replacement_available'], $value));
-	
-		// Run the parser
-		$query = xensql_parse($aquery);
-		
 		// Replace {db_prefix} with the database prefix
 		if(stripos($query, '{db_pref}'))
 			$query = str_ireplace('{db_pref}', $prefix, $query);
@@ -365,9 +312,6 @@ if(!defined('Xensql'))
 		
 		// We first need to parse it
 		$result = xensql_query($query);
-		
-		// Parse the query
-		$query = xensql_parse($query);
 
 		// Did it work?
 		if($result == true)

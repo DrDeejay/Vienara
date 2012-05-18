@@ -1,6 +1,6 @@
 <?php
 /**
- * English USA translation
+ * English UK translation
  *
  * Translation by: Winterkip7
  * For: Vienara
@@ -67,7 +67,7 @@ $txt['top_button'] = 'Show the top button at the bottom of the blog';
 // The administration panel and its strings
 $txt['admin'] = 'Administration';
 $txt['admin_not_allowed'] = 'You are not allowed to access the administration panel!';
-$txt['admin_welcome_notice'] = 'Hello! Welcome to your administration panel. The administration panel is created to make Vienara as customizable as possible. Please choose a destination in the sidebar.';
+$txt['admin_welcome_notice'] = 'Hello! Welcome to your administration panel. The administration panel is created to make Vienara as customisable as possible. Please choose a destination in the sidebar.';
 $txt['list_blogs'] = 'Blogs';
 $txt['team'] = 'The team';
 $txt['friends'] = 'Friends and family';
@@ -100,10 +100,10 @@ $txt['tab_not_found'] = 'Tab not found.';
 $txt['new_tab'] = 'Add new tab';
 $txt['my_tab'] = 'My tab';
 $txt['remove_tab'] = 'Remove tabs';
-$txt['repair_optimize'] = 'Repair and Optimize';
-$txt['rather_optimize'] = 'Optimize this table rather than repairing it.';
-$txt['action_fail'] = 'Failed to optimize/repair table. Please try again.';
-$txt['action_done'] = 'Succesfully optimized/repaired table.';
+$txt['repair_optimize'] = 'Repair and Optimise';
+$txt['rather_optimize'] = 'Optimise this table rather than repairing it.';
+$txt['action_fail'] = 'Failed to optimise/repair table. Please try again.';
+$txt['action_done'] = 'Succesfully optimised/repaired table.';
 
 // Blog editing
 $txt['edit'] = 'Edit';

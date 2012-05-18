@@ -9,7 +9,7 @@
 * not use the name "Vienara" as name for your project
 * either. Thanks for understanding.
 *
-* @version: 1.0 Beta 1
+* @version: 1.0 Alpha 1
 * @copyright 2012: Vienara
 * @developed by: Dr. Deejay and Thomas de Roo
 * @package: Vienara
@@ -60,7 +60,7 @@ ob_start('vienara_pretty');
 $vienara = array();
 
 // What version are we using? And what is the link to the website?
-define('Version', '1.0 Beta 1');
+define('Version', '1.0 Alpha 1');
 define('Website_Url', 'http://vienara.co.cc'); // Don't change this!
 define('Blog_file', 'index.php');
 
@@ -187,13 +187,27 @@ $vienara['setting'] = array();
 
 // Retrieve the settings from the database
 $result = xensql_query("
-	RETRIEVE id, value
+	SELECT id, value
 		FROM {db_pref}settings
 ");
 	
 	// Merge them into a settings array
 	foreach($result as $setting)
 		$vienara['setting'][$setting['id']] = $setting['value'];
+
+// Create a new array, which we will need for the custom tabs
+$vienara['tabs'] = array();
+
+	// Get those tabs!
+	$result = xensql_query("
+		SELECT id_tab, tab_link, tab_label, tab_position
+			FROM {db_pref}menu
+			ORDER BY tab_position ASC
+	");
+
+	// Add those to the array
+	foreach($result as $tab)
+		$vienara['tabs'][$tab['id_tab']] = $tab;
 
 // Set the default timezone
 date_default_timezone_set($vienara['setting']['timezone']);
@@ -226,9 +240,9 @@ function show_string($string = '')
 
 // Get the blogcount
 $vienara['blog_count'] = xensql_count_rows("
-	RETRIEVE id_blog, blog_title, blog_content, published, post_date
+	SELECT id_blog, blog_title, blog_content, published, post_date
 		FROM {db_pref}content
-		WHERE published is equal to 1
+		" . (!isset($_GET['app']) ? 'WHERE published = 1' : '') . "
 ");
 
 // Login!
@@ -237,7 +251,7 @@ function vienara_act_login()
 	global $vienara;
 
 	// Is it the right one?
-	if(isset($_POST['password']) && isset($_POST['i_accept'])) {
+	if(isset($_POST['password'])) {
 
 		// Does it match?
 		if(sha1($_POST['password']) != $vienara['setting']['password'])
@@ -253,10 +267,6 @@ function vienara_act_login()
 			header('Location: ' . Blog_file);
 		}
 	}
-
-	// We have set the password but we didn't accept.
-	elseif(isset($_POST['password']) && !isset($_POST['accept']))
-		vienara();
 	
 	// Nothing set.
 	else
@@ -295,9 +305,9 @@ function vienara_act_delete()
 
 	// We can check if it exists. So let's do that
 	$result = xensql_query("
-		RETRIEVE id_blog
+		SELECT id_blog
 			FROM {db_pref}content
-			WHERE id_blog is equal to '{id}'
+			WHERE id_blog = '{id}'
 	");
 
 		// Do we have any results?
@@ -312,7 +322,7 @@ function vienara_act_delete()
 	xensql_query("
 		DELETE
 			FROM {db_pref}content
-			WHERE id_blog is equal to '{id}'
+			WHERE id_blog = '{id}'
 	", true);
 
 	// Now show the blogs
@@ -394,13 +404,42 @@ function vienara()
 {
 	global $vienara, $viencode;
 
+	// Just in case
+	$end = 10;
+	
+	// Int?
+	if(isset($_GET['page']) && !is_numeric($_GET['page']))
+		die_nice(show_string('bad_request'));
+
+	// We didn't set a page
+	if(!isset($_GET['page']))
+		$_GET['page'] = 1;
+
+	// How many messages should we load?
+	if(isset($_GET['page'])) {
+
+		// Begin with..
+		$begin = ($_GET['page']-1) * $vienara['setting']['blogsperpage'];
+
+		// Or is it one?
+		if($_GET['page'] == 1)
+			$begin = 0;
+
+		// How many should we load?
+		$end = $vienara['setting']['blogsperpage'];
+	}
+
+	// Just load 10
+	else
+		$begin = 0;
+
 	// Get the blogs from the blog table
 	$result = xensql_query("
-		RETRIEVE id_blog, blog_title, blog_content, published, post_date
+		SELECT id_blog, blog_title, blog_content, published, post_date
 			FROM {db_pref}content
-			WHERE published is equal to 1
+			WHERE published = 1
 			ORDER BY post_date " . $vienara['setting']['order'] . "
-			LIMIT " . $vienara['blogs_to_show'] . ", " . $vienara['setting']['blogsperpage'] . "
+			LIMIT $begin, $end
 	");
 
 		// Get the right template
@@ -470,7 +509,7 @@ if(!empty($_POST['content'])) {
 				UNIX_TIMESTAMP(),
 				'" . $approved . "'
 		)
-	", true);
+	");
 }
 
 // Update settings, to make sure we have the right value in the database
@@ -498,8 +537,8 @@ function vienara_saveSetting($setting = '', $is_check = '')
 	// Update it
 	xensql_query("
 		UPDATE {db_pref}settings
-			SET value IS EQUAL TO '" . $_POST[$setting] . "'
-			WHERE id IS EQUAL TO '" . $setting . "'
+			SET value = '" . $_POST[$setting] . "'
+			WHERE id = '" . $setting . "'
 	", true);
 }
 
@@ -581,6 +620,24 @@ function vienara_act_admin()
 			'show' => true,
 			'icon' => 'hash.png'
 		),
+		'edit_menu' => array(
+			'title' => show_string('edit_menu'),
+			'href' => Blog_file . '?app=admin&section=menu',
+			'show' => true,
+			'icon' => 'menu_edit.png'
+		),
+		'table_repair' => array(
+			'title' => show_string('repair_optimize'),
+			'href' => Blog_file . '?app=admin&section=repairtable',
+			'show' => true,
+			'icon' => 'wrench.png'
+		),
+		'logout' => array(
+			'title' => show_string('logout'),
+			'href' => Blog_file . '?app=logout',
+			'show' => true,
+			'icon' => 'logout.png'
+		),
 	);
 
 	// Hooks!
@@ -645,14 +702,44 @@ function vienara_act_admin()
 	// Call all of the blogs, so the admin can take a look at them
 	function admin_section_blogs()
 	{
-		global $admin_show;
+		global $admin_show, $vienara;
+
+		// Just in case
+		$end = 10;
+	
+		// Int?
+		if(isset($_GET['page']) && !is_numeric($_GET['page']))
+			die_nice(show_string('bad_request'));
+
+		// We didn't set a page
+		if(!isset($_GET['page']))
+			$_GET['page'] = 1;
+
+		// How many messages should we load?
+		if(isset($_GET['page'])) {
+
+			// Begin with..
+			$begin = ($_GET['page']-1) * $vienara['setting']['blogsperpage'];
+
+			// Or is it one?
+			if($_GET['page'] == 1)
+				$begin = 0;
+
+			// How many should we load?
+			$end = $vienara['setting']['blogsperpage'];
+		}
+
+		// Just load 10
+		else
+			$begin = 0;
 
 		// Use a query to retrieve blogs
-		$result = xensql_query('
-			RETRIEVE id_blog, blog_title, blog_content, published, post_date
+		$result = xensql_query("
+			SELECT id_blog, blog_title, blog_content, published, post_date
 				FROM {db_pref}content
 				ORDER BY post_date DESC
-		');
+				LIMIT $begin, $end
+		");
 
 			// Show them all. :)
 			$admin_show = $result;
@@ -693,9 +780,13 @@ function vienara_act_admin()
 				'enable_extra_title' => array('check', 'enable_extra_title'),
 				'extra_title' => array('text', 'extra_title'),
 			'',
-				'timezone' => array('select', 'timezone', $timezones->zones()).
+				'timezone' => array('select', 'timezone', $timezones->zones()),
 			'',
-				'notice' => array('largetext', 'notice')
+				'notice' => array('largetext', 'notice'),
+			'',
+				'enable_custom_copyright' => array('check', 'enable_custom_copyright'),
+				'custom_copyright' => array('text', 'custom_copyright'),
+				'copyright_link_to' => array('text', 'copyright_link_to')
 		);
 
 		// Extra settings! ;)
@@ -710,6 +801,10 @@ function vienara_act_admin()
 				// Is it a divider?
 				if(is_numeric($key))
 					continue;
+
+				// Should it be numeric?
+				if(isset($_POST[$key]) && !is_numeric($_POST[$key]) && $value[0] == 'number')
+					die_nice(show_string('please_numeric'));
 
 				// Is this setting set?
 				if(isset($_POST[$key]))
@@ -782,9 +877,9 @@ function vienara_act_admin()
 			// Update!
 			xensql_query("
 				UPDATE {db_pref}content
-					SET blog_title IS EQUAL TO '" . $_POST['post_title'] . "',
-						blog_content IS EQUAL TO '" . $_POST['edit_content'] . "'
-					WHERE id_blog IS EQUAL TO '" . $_GET['id'] . "'
+					SET blog_title = '" . $_POST['post_title'] . "',
+						blog_content = '" . $_POST['edit_content'] . "'
+					WHERE id_blog = '" . $_GET['id'] . "'
 			");
 
 			// We're done
@@ -793,9 +888,9 @@ function vienara_act_admin()
 
 		// Get the blog
 		$result = xensql_query("
-			RETRIEVE id_blog, blog_title, blog_content
+			SELECT id_blog, blog_title, blog_content
 				FROM {db_pref}content
-				WHERE id_blog IS EQUAL TO '" . $_GET['id'] . "'
+				WHERE id_blog = '" . $_GET['id'] . "'
 				LIMIT 1
 		");
 
@@ -810,6 +905,136 @@ function vienara_act_admin()
 		die_nice();
 	}
 
+	// The menu editor
+	function admin_section_menu()
+	{
+		global $vienara;
+
+		// Are we attempting to save a menu tab?
+		if(isset($_POST['menu_label'])) {
+
+			// Important fields
+			$imp_fields = array(
+				'menu_label',
+				'menu_href',
+				'menu_pos'
+			);
+
+				// Check them all
+				foreach($imp_fields as $key => $value) {
+
+					// Make 'em safe
+					$_POST[$value] = xensql_escape_string($_POST[$value]);
+					$_POST[$value] = htmlspecialchars($_POST[$value], ENT_NOQUOTES, 'UTF-8', false);
+
+					// Are they empty?
+					if(empty($_POST[$value]))
+						die_nice(show_string('fill_in_all_fields'));
+				}
+
+			// The position should have a numeric value
+			if(!is_numeric($_POST['menu_pos']))
+				die_nice(show_string('pos_use_numeric'));
+
+			// Set a tab id just in case we're creating a new one
+			if(isset($_POST['new']))
+				$_POST['tab_id'] = '';
+
+			// Does it exist?
+			if(empty($vienara['tabs'][$_POST['tab_id']]) && !isset($_POST['new']))
+				die_nice(show_string('tab_not_found'));
+
+			// Let's update it
+			if(!isset($_POST['new']))
+				xensql_query("
+					UPDATE {db_pref}menu
+						SET tab_label = '" . $_POST['menu_label'] . "',
+							tab_link = '" . $_POST['menu_href'] . "',
+							tab_position = '" . $_POST['menu_pos'] . "'
+						WHERE
+							id_tab = '" . $_POST['tab_id'] . "'
+				");
+
+			// Create a new tab
+			else
+				xensql_query("
+					INSERT
+						INTO {db_pref}menu
+					VALUES (
+						'',
+						'" . $_POST['menu_pos'] . "',
+						'" . $_POST['menu_href'] . "',
+						'" . $_POST['menu_label'] . "'
+					)
+				");
+
+			// Say that we're done
+			done('?app=admin&section=menu');
+		}
+
+		// Delete one?
+		elseif(isset($_GET['delete'])) {
+
+			// The id should have a numeric value
+			if(!is_numeric($_GET['delete']))
+				die_nice(show_string('tab_not_found'));
+
+			// Does it exist?
+			if(empty($vienara['tabs'][$_GET['delete']]))
+				die_nice(show_string('tab_not_found'));
+
+			// Meh
+			$_GET['delete'] = xensql_escape_string($_GET['delete']);
+
+			// Delete it
+			xensql_query("
+				DELETE
+					FROM {db_pref}menu
+					WHERE id_tab='" . $_GET['delete'] . "'
+			");
+
+			// We're done
+			done('?app=admin&section=menu');
+		}
+
+		// Define which template we should use
+		define('adm_sect', 'menu');
+	}
+
+	// Repair and optimize tables.
+	function admin_section_repairtable()
+	{
+		global $db_settings, $vienara;
+
+		// Do we have some things to do?
+		if(isset($_POST['repair_database'])) {
+
+			// Make it sql friendly
+			$_POST['repair_database'] = xensql_escape_string($_POST['repair_database']);
+
+			// Repair or optimize?
+			if(!isset($_POST['optimize']))
+				$result = xensql_query('REPAIR TABLE ' . $_POST['repair_database']);
+			else
+				$result = xensql_query('OPTIMIZE TABLE ' . $_POST['repair_database']);
+
+			// Did it work?
+			if(!$result)
+				$vienara['repair_fail'] = true;
+			else
+				$vienara['repair_fail'] = false;
+		}
+
+		// Get the tables
+		$vienara['admin_tables'] = xensql_query("
+			SHOW TABLES
+				FROM " . $db_settings['dbname'] . "
+		");
+
+		// Where are we?
+		define('adm_sect', 'repairtable');
+	}
+
 	// Define sections!
 	$admin['sections'] = array(
 		'newblog' => 'newblog',
@@ -819,7 +1044,9 @@ function vienara_act_admin()
 		'password' => 'password',
 		'hash' => 'hash',
 		'publish' => 'publish',
-		'edit' => 'edit'
+		'edit' => 'edit',
+		'menu' => 'menu',
+		'repairtable' => 'repairtable'
 	);
 
 	// New sections :D
@@ -848,20 +1075,6 @@ function vienara_act_admin()
 	// Load the admin template
 	template_admin($admin);
 }
-
-// We need to calculate how many results we should show
-if(isset($_GET['show']) && is_numeric($_GET['show']))
-	$vienara['show'] = $_GET['show'] + $vienara['setting']['blogsperpage'];
-else
-	$vienara['show'] = $vienara['setting']['blogsperpage'];
-
-// We should begin with a specific number of blogs. How many?
-if(!empty($_GET['show']) && is_numeric($_GET['show']))
-	$vienara['blogs_to_show'] = $_GET['show'];
-
-// Just begin with the first blog.
-else
-	$vienara['blogs_to_show'] = 0;
 
 // Check for maintenance
 if($maintenance['enable'] == 1 && !vienara_is_logged())
@@ -917,8 +1130,8 @@ if(isset($_POST['old_password'])) {
 	// Update it
 	xensql_query("
 		UPDATE {db_pref}settings
-			SET value IS EQUAL TO '" . $_POST['new_password'] . "'
-			WHERE id IS EQUAL TO 'password'
+			SET value = '" . $_POST['new_password'] . "'
+			WHERE id = 'password'
 	", true);
 
 	// Logout.

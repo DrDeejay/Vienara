@@ -9,7 +9,7 @@
 * not use the name "Vienara" as name for your project
 * either. Thanks for understanding.
 *
-* @version: 1.0 Beta 1
+* @version: 1.0 Alpha 1
 * @copyright 2012: Vienara
 * @developed by: Dr. Deejay and Thomas de Roo
 * @package: Vienara
@@ -48,6 +48,15 @@ class Viencode {
 			// Just replace it.
 			foreach($easy_replace as $key => $value)
 				$content = str_ireplace($key, $value, $content);
+
+		// Regex things
+		$reg_replace = array(
+			'^http://([\w+?\.\w+])+([a-zA-Z0-9\~\!\@\#\$\%\^\&amp;\*\(\)_\-\=\+\\\/\?\.\:\;\'\,]*)?^' => '<a href="$0">$0</a>'
+		);
+
+			// Do a preg replace on this
+			foreach($reg_replace as $key => $value)
+				$content = preg_replace($key, $value, $content);
 	
 		// What do we have?
 		return $content;
