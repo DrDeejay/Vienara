@@ -28,9 +28,6 @@ function vienara_pretty($buffer)
 	// Replace all slashes
 	$buffer = stripslashes($buffer);
 
-	// Fix invalid html bugs
-	$buffer = str_replace('&', '&amp;', $buffer);
-
 	// Fix bad characters
 	$char_table = get_html_translation_table(HTML_ENTITIES);
 	
@@ -773,6 +770,18 @@ function vienara_act_admin()
 			'show' => true,
 			'icon' => 'wrench.png'
 		),
+		'style_edit' => array(
+			'title' => show_string('style_edit'),
+			'href' => Blog_file . '?app=admin&section=css',
+			'show' => true,
+			'icon' => 'style_edit.png'
+		),
+		'template_edit' => array(
+			'title' => show_string('template_edit'),
+			'href' => Blog_file . '?app=admin&section=template',
+			'show' => true,
+			'icon' => 'template_edit.png'
+		),
 		'help' => array(
 			'title' => show_string('help_docs'),
 			'href' => Blog_file . '?app=admin&section=help',
@@ -1390,6 +1399,97 @@ function vienara_act_admin()
 		// We're about to edit a page
 		elseif(!empty($_GET['edit'])) {
 
+			// Is it set?
+			if(empty($vienara['pages'][$_GET['edit']]))
+				die_nice(show_string('page_not_found'));
+
+			// We need to alter the page body a bit
+			$vienara['pages'][$_GET['edit']]['page_body'] = htmlspecialchars($vienara['pages'][$_GET['edit']]['page_body']);
+		}
+
+		// Edit!
+		if(isset($_POST['page_content']) && isset($_POST['page_id'])) {
+
+			// Things that shouldn't be empty.
+			$imp_fields = array(
+				'page_content',
+				'page_title'
+			);
+
+			// Fetch through them
+			foreach($imp_fields as $field) {
+
+				// Escape.
+				$_POST[$field] = xensql_escape_string($_POST[$field]);
+
+				// Unscape the html
+				$_POST[$field] = htmlspecialchars_decode($_POST[$field]);
+
+				// Is it empty?
+				if(empty($_POST[$field]))
+					die_nice(show_string('fill_in_all_fields'));
+			}
+
+			// Should we show the header?
+			if(isset($_POST['page_header']))
+				$showheader = 1;
+			else
+				$showheader = 0;
+
+			// Update-vous!
+			xensql_query("
+				UPDATE {db_pref}pages
+					SET page_title = '" . $_POST['page_title'] . "',
+						page_body = '" . $_POST['page_content'] . "',
+						show_header = '$showheader'
+					WHERE
+						id_page = '" . $_POST['page_id'] . "'
+			");
+
+			// We're done
+			done('?app=admin&section=pages');
+		}
+
+		// Create a new page
+		elseif(isset($_POST['page_content']) && !isset($_POST['page_id'])) {
+
+			// Things that shouldn't be empty.
+			$imp_fields = array(
+				'page_content',
+				'page_title'
+			);
+
+			// Fetch through them
+			foreach($imp_fields as $field) {
+
+				// Escape.
+				$_POST[$field] = xensql_escape_string($_POST[$field]);
+
+				// Is it empty?
+				if(empty($_POST[$field]))
+					die_nice(show_string('fill_in_all_fields'));
+			}
+
+			// Should we show the header?
+			if(isset($_POST['page_header']))
+				$showheader = 1;
+			else
+				$showheader = 0;
+
+			// Update-vous!
+			xensql_query("
+				INSERT 
+					INTO {db_pref}pages
+				VALUES (
+					'',
+					'" . $_POST['page_title'] . "',
+					'" . $_POST['page_content'] . "',
+					'$showheader'
+				)
+			");
+
+			// We're done
+			done('?app=admin&section=pages');
 		}
 
 		// Hmm

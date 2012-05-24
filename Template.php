@@ -257,7 +257,7 @@ function template_admin($admin = array())
 			// Echo the team title
 			echo '
 				<br />
-				<div class="cat_bg bg_color2">
+				<div class="cat_bg bg_color">
 					' . $team['label'] . '
 				</div>';
 
@@ -269,7 +269,7 @@ function template_admin($admin = array())
 
 					// Echo the team name
 					echo '
-						<div class="cat_bg bg_color3">
+						<div class="cat_bg bg_color2">
 							' . $value['label'] . '
 						</div>
 						<div class="padding bg_color4">';
@@ -760,33 +760,88 @@ function template_admin($admin = array())
 	// Manage pages
 	elseif(adm_sect == 'managepages') {
 
-		// Begin with the template
-		echo '
-			<div class="cat_bg bg_color">
-				' . show_string('manage_pages') . '
-			</div>
-			<table width="100%" cellspacing="0">
-				<tr>
-					<td class="padding bg_color2" width="5%">' . show_string('page_id') . '</td>
-					<td class="padding bg_color2" width="50%">' . show_string('page_title') . '</td>
-					<td class="padding bg_color2" width="20%">' . show_string('page_header') . '</td>
-					<td class="padding bg_color2" width="25%">' . show_string('page_tools') . '</td>
-				</tr>';
-
-		foreach($vienara['pages'] as $page)
+		// Do we want to see the regular page screen?
+		if(!isset($_GET['edit'])) {
+			// Begin with the template
 			echo '
-				<tr>
-					<td class="padding bg_color5">' . $page['id_page'] . '</td>
-					<td class="padding bg_color4"><a class="grey" href="' . Blog_file . '?app=site&id=' . $page['id_page'] . '">' . $page['page_title'] . '</a></td>
-					<td class="padding bg_color5">' . ($page['show_header'] == 1 ? show_string('enabled') : show_string('disabled')) . '</td>
-					<td class="padding bg_color4">
-						<a href="' . Blog_file . '?app=admin&section=pages&delete=' . $page['id_page'] . '">' . show_string('page_delete') . '</a>
-						<a href="' . Blog_file . '?app=admin&section=pages&edit=' . $page['id_page'] . '">' . show_string('page_edit') . '</a>
-					</td>
-				</tr>';
+				<div class="cat_bg bg_color">
+					' . show_string('manage_pages') . '
+				</div>
+				<table width="100%" cellspacing="0">
+					<tr>
+						<td class="padding bg_color2" width="5%">' . show_string('page_id') . '</td>
+						<td class="padding bg_color2" width="50%">' . show_string('page_title') . '</td>
+						<td class="padding bg_color2" width="20%">' . show_string('page_header') . '</td>
+						<td class="padding bg_color2" width="25%">' . show_string('page_tools') . '</td>
+					</tr>';
 
-		echo '
-			</table>';
+			foreach($vienara['pages'] as $page)
+				echo '
+					<tr>
+						<td class="padding bg_color5">' . $page['id_page'] . '</td>
+						<td class="padding bg_color4"><a class="grey" href="' . Blog_file . '?app=site&id=' . $page['id_page'] . '">' . $page['page_title'] . '</a></td>
+						<td class="padding bg_color5">' . ($page['show_header'] == 1 ? show_string('enabled') : show_string('disabled')) . '</td>
+						<td class="padding bg_color4">
+							<a href="' . Blog_file . '?app=admin&section=pages&delete=' . $page['id_page'] . '">' . show_string('page_delete') . '</a>
+							<a href="' . Blog_file . '?app=admin&section=pages&edit=' . $page['id_page'] . '">' . show_string('page_edit') . '</a>
+						</td>
+					</tr>';
+
+			echo '
+				</table><br /><br />
+				<div class="cat_bg bg_color">
+					' . show_string('new_page') . '
+				</div>
+				<div class="bg_color5 padding">
+					<form accept-charset="UTF-8" action="' . Blog_file . '?app=admin&section=pages" method="post">
+						<table width="100%">
+							<tr>
+								<td width="20%"><strong>' . show_string('page_title') . ':</strong></td>
+								<td width="80%"><input type="text" name="page_title" /></td>
+							</tr>
+							<tr>
+								<td width="20%"><strong>' . show_string('show_header') . ':</strong></td>
+								<td width="80%"><input type="checkbox" name="page_header" checked/></td>
+							</tr>
+							<tr>
+								<td width="20%"><strong>' . show_string('page_content') . ':</strong></td>
+								<td width="80%"><textarea class="editor new_post" rows="1" cols="1" name="page_content"></textarea></td>
+							</tr>
+						</table><br /><br />
+						<input type="submit" value="' . show_string('submit') . '" />
+					</form>
+				</div>';
+		}
+
+		// Show the edit screen
+		else {
+
+			// Just echo stuff
+			echo '
+				<div class="cat_bg bg_color">
+					' . show_string('edit_page') . '
+				</div>
+				<div class="bg_color5 padding">
+					<form accept-charset="UTF-8" action="' . Blog_file . '?app=admin&section=pages" method="post">
+						<input type="hidden" name="page_id" value="' . $vienara['pages'][$_GET['edit']]['id_page'] . '" />
+						<table width="100%">
+							<tr>
+								<td width="20%"><strong>' . show_string('page_title') . ':</strong></td>
+								<td width="80%"><input type="text" name="page_title" value="' . $vienara['pages'][$_GET['edit']]['page_title'] . '" /></td>
+							</tr>
+							<tr>
+								<td width="20%"><strong>' . show_string('show_header') . ':</strong></td>
+								<td width="80%"><input type="checkbox" name="page_header"' . ($vienara['pages'][$_GET['edit']]['show_header'] == 1 ? ' checked' : '') . ' /></td>
+							</tr>
+							<tr>
+								<td width="20%"><strong>' . show_string('page_content') . ':</strong></td>
+								<td width="80%"><textarea class="editor new_post" rows="1" cols="1" name="page_content">' . $vienara['pages'][$_GET['edit']]['page_body'] . '</textarea></td>
+							</tr>
+						</table><br /><br />
+						<input type="submit" value="' . show_string('submit') . '" />
+					</form>
+				</div>';
+		}
 	}
 
 	echo '

@@ -131,6 +131,12 @@ $txt['page_tools'] = 'Tools';
 $txt['page_header'] = 'Show header';
 $txt['page_edit'] = '[Edit]';
 $txt['page_id'] = 'Id';
+$txt['edit_page'] = 'Edit page';
+$txt['show_header'] = 'Show header';
+$txt['page_content'] = 'Page content';
+$txt['new_page'] = 'New page';
+$txt['style_edit'] = 'Edit default style';
+$txt['template_edit'] = 'Edit template';
 
 // Pages
 $txt['page_not_found'] = 'Page not found';
