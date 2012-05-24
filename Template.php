@@ -8,7 +8,7 @@ function vienara_header()
 	global $vienara, $show, $is_rtl, $viencode;
 
 	// The simple stuff
-	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+	echo '<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"' . $is_rtl . ' lang="' . $vienara['lang']['code'] . '">
 <head>
 	<script type="text/javascript" src="javascript/Jquery.js"></script>
@@ -63,6 +63,18 @@ function vienara_header()
 				<div class="news">
 					' . $viencode->parse($vienara['setting']['notice']) . '
 				</div>';
+
+	// Facebook likes
+	if($vienara['setting']['enable_comments'] == 1)
+		echo '
+		<div id="fb-root"></div>
+		<script>(function(d, s, id) {
+		  var js, fjs = d.getElementsByTagName(s)[0];
+		  if (d.getElementById(id)) return;
+		  js = d.createElement(s); js.id = id;
+		  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+		  fjs.parentNode.insertBefore(js, fjs);
+		}(document, \'script\', \'facebook-jssdk\'));</script>';
 }
 
 // And this displays the footer
@@ -97,6 +109,8 @@ function vienara_footer()
 // Show a blog
 function vienara_show_blog($information = '')
 {
+	global $vienara;
+
 	echo '
 			<div class="floatleft">
 				<div class="date">
@@ -106,13 +120,15 @@ function vienara_show_blog($information = '')
 			</div>
 			<div style="width: 90%">
 				<div class="title">
-					<a href="#' . $information['id_blog'] . '" name="' . $information['id_blog'] . '">' . $information['blog_title'] . '</a>
+					<a href="#' . $information['id_blog'] . '" id="' . $information['id_blog'] . '">' . $information['blog_title'] . '</a>
 				</div>
 				' . show_string('posted_on') . ': ' . date("F j, Y, g:i a", $information['post_date']) . '
 			</div>
 			<br class="clear" />
 			<div class="blog_content">
 				' . $information['blog_content'] . '
+				' . ($vienara['setting']['enable_likes'] == 1 ? '<br /><br /><iframe src="https://www.facebook.com/plugins/like.php?href=' . $vienara['setting']['blog_url'] . '?blog=' . $information['id_blog'] . '" style="border:none!important; width:450px; height:80px"></iframe>' : '') . '
+			' . ($vienara['setting']['enable_likes'] == 1 ? '<br /><div class="fb-comments" data-href="' . $vienara['setting']['blog_url'] . '?blog=' . $information['id_blog'] . '" data-num-posts="5" data-width="470"></div>' : '') . '
 			</div>
 		<br /><br />';
 }

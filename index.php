@@ -64,6 +64,16 @@ define('Version', '1.0 Alpha 1');
 define('Website_Url', 'http://vienara.co.cc'); // Don't change this!
 define('Blog_file', 'index.php');
 
+// Have we set a blog?
+if(isset($_GET['blog'])) {
+
+	// Redirect to the blog
+	header('Location: ' . Blog_file . '#' . $_GET['blog']);
+
+	// Exit, just to be sure
+	exit;
+}
+
 // The extension directory
 $vienara['extension_dir'] = 'extensions';
 
@@ -852,6 +862,7 @@ function vienara_act_admin()
 		$admin['settings'] = array(
 				'title' => array('text', 'blog_title'),
 				'language' => array('select', 'language'),
+				'blog_url' => array('text', 'blog_url'),
 			'',
 				'blogsperpage' => array('number', 'items_per_page'),
 				'width' => array('number', 'width'),
@@ -870,7 +881,9 @@ function vienara_act_admin()
 				'custom_copyright' => array('text', 'custom_copyright'),
 				'copyright_link_to' => array('text', 'copyright_link_to'),
 			'',
-				'enable_keyboard' => array('check', 'enable_keyboard')
+				'enable_keyboard' => array('check', 'enable_keyboard'),
+				'enable_likes' => array('check', 'enable_likes'),
+				'enable_comments' => array('check', 'enable_comments')
 		);
 
 		// Extra settings! ;)

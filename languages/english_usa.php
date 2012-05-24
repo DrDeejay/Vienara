@@ -122,6 +122,9 @@ $txt['upload_ext'] = 'Upload extension';
 $txt['invalid_file'] = 'Invalid file. Make sure the archive is a zip package.';
 $txt['upload_fail'] = 'Failed to upload file.';
 $txt['ext_already'] = 'Extension already exists';
+$txt['enable_likes'] = 'Enable Facebook likes';
+$txt['blog_url'] = 'Link that should be used for likes';
+$txt['enable_comments'] = 'Enable Facebook comments';
 
 // Blog editing
 $txt['edit'] = 'Edit';
@@ -168,3 +171,20 @@ $txt['doc']['copyright_link_to'] = 'Setting - Custom copyright link';
 $txt['doc']['doc_copyright_link_to'] = 'The url the custom copyright should link to. Example: http://example.com';
 $txt['doc']['enable_keyboard'] = 'Setting - Virtual Keyboard';
 $txt['doc']['doc_enable_keyboard'] = 'Enable the virtual keyboard. This is disabled by default and should only be used when your keyboard does not work correctly. It causes performance issues, but as it may be the last hope for people, it is included into the default package. When you do not need this feature anymore (because your keyboard works fine again, etc), make sure to disable it. Your blog will still load when the virtual keyboard is enabled, but the loading time will definitely increase.';
+$txt['doc']['enable_likes'] = 'Setting - Facebook likes';
+$txt['doc']['doc_enable_likes'] = 'With this setting, you can enable/disable Facebook likes. Facebook likes are great to improve the socialization of your blog.';
+$txt['doc']['blog_url'] = 'Setting - Blog url';
+$txt['doc']['doc_blog_url'] = 'This is only used for optional features, like Facebook likes. This will <strong>not</strong> have effect on regular links you click on. This will just tell Facebook what url it should use for the likes. Examples of correct urls:<br /><br />
+		<ul>
+			<li>http://localhost/vienara</li>
+			<li>http://www.mysite.com</li>
+		</ul><br />
+		For example, the following urls will not work properly.<br />
+		<ul>
+			<li>localhost/vienara</li>
+			<li>http://localhost/vienara/</li>
+			<li>http://localhost/vienara/index.php</li>
+			<li>http://localhost/vienara/index.php?</li>
+		</ul>';
+$txt['doc']['enable_comments'] = 'Setting - Facebook comments';
+$txt['doc']['doc_enable_comments'] = 'Vienara has the ability to enable Facebook comments. Facebook users will be able to add comments below blogs. When this is enabled, you should make sure that the amount of blogs per page is not higher than 5, otherwise the page loading time will greatly increase. Also, there is no way of using iframes rather than HTML5, so there is a chance that the HTML markup will be invalid.';

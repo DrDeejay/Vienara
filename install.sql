@@ -31,6 +31,9 @@ INSERT INTO {db_pref}settings (`id`, `value`) VALUES
 ('custom_copyright', ''),
 ('copyright_link_to', ''),
 ('enable_keyboard', '0'),
+('blog_url', 'http://example.com'),
+('enable_comments', '0'),
+('enable_likes', '0'),
 ('width', '90');
 
 CREATE TABLE {db_pref}menu (
