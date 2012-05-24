@@ -42,3 +42,10 @@ CREATE TABLE {db_pref}menu (
   `tab_link` text NOT NULL,
   `tab_label` tinytext NOT NULL
 ) ENGINE=MyIsam CHARACTER SET utf8 COLLATE 'utf8_bin';
+
+CREATE TABLE {db_pref}pages (
+  `id_page` int NOT NULL AUTO_INCREMENT,
+  `page_title` text NOT NULL,
+  `page_body` longtext NOT NULL,
+  `show_header` tinyint NOT NULL
+) ENGINE=MyIsam CHARACTER SET utf8 COLLATE 'utf8_bin';

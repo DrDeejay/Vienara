@@ -842,3 +842,20 @@ function vienara_page($count = 1, $link = '?page=')
 	echo '
 		<br />';
 }
+
+// Show a page
+function template_page($info = array())
+{
+	// Show it
+	if($info['show_header'] == 1)
+		echo '
+			<div class="cat_bg bg_color">
+				' . $info['page_title'] . '
+			</div>';
+
+	// Regular content
+	echo '
+			<div class="bg_color5 padding">
+				' . $info['page_body'] . '
+			</div>';
+}

@@ -124,6 +124,10 @@ $txt['ext_already'] = 'Extension already exists';
 $txt['enable_likes'] = 'Enable Facebook likes';
 $txt['blog_url'] = 'Link that should be used for socialization';
 $txt['enable_comments'] = 'Enable Facebook comments';
+$txt['manage_pages'] = 'Manage Pages';
+
+// Pages
+$txt['page_not_found'] = 'Page not found';
 
 // Blog editing
 $txt['edit'] = 'Edit';

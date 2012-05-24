@@ -380,7 +380,8 @@ function vienara_get_app($application = '')
 			'login' => 'login',
 			'logout' => 'logout',
 			'delete' => 'delete',
-			'admin' => 'admin'
+			'admin' => 'admin',
+			'site' => 'site'
 		);
 
 		// Extra actions
@@ -577,6 +578,54 @@ if(@$directory = opendir('languages'))
 	}
 }
 
+// Get a page
+function vienara_act_site($all = false)
+{
+	global $vienara;
+
+	// Make it safe
+	if(empty($_GET['id']) && !$all)
+		die_nice(show_string('page_not_found'));
+	elseif(!$all)
+		$page = xensql_escape_string($_GET['id']);
+	elseif(!is_numeric($_GET['id']) && !$all)
+		die_nice(show_string('page_not_found'));
+
+	// Empty array.
+	$return_page = array();
+
+	// Get the page(s) from the database
+	$result = xensql_query("
+		SELECT id_page, page_body, page_title, show_header
+			FROM {db_pref}pages
+			" . ($all == false ? "WHERE id_page='$page'" : "") . "
+			ORDER BY page_title ASC
+	");
+
+	// Fetch through those pages
+	foreach($result as $p) {
+
+		// Found it
+		$found = 1;
+
+		// Show everything?
+		if($all == true)
+			$return_pages[] = $p;
+
+		// Nope, just one.
+		else
+			template_page($p);
+	}
+
+	// Check if we need all
+	if($all == true)
+		return $return_page;
+
+	// Found?
+	if(!isset($found))
+		die_nice(show_string('page_not_found'));
+}
+
 // Remove a directory and all its files
 function remove_dir($dir = '')
 {
@@ -693,6 +742,12 @@ function vienara_act_admin()
 			'href' => Blog_file . '?app=admin&section=settings',
 			'show' => true,
 			'icon' => 'settings.png'
+		),
+		'pages' => array(
+			'title' => show_string('manage_pages'),
+			'href' => Blog_file . '?app=admin&section=pages',
+			'show' => true,
+			'icon' => 'page_edit.png'
 		),
 		'password' => array(
 			'title' => show_string('change_pass'),
@@ -1306,6 +1361,12 @@ function vienara_act_admin()
 		define('adm_sect', 'extensions');
 	}
 
+	// Manage pages
+	function admin_section_pages()
+	{
+		global $vienara;
+	}
+
 	// Define sections!
 	$admin['sections'] = array(
 		'newblog' => 'newblog',
@@ -1319,7 +1380,8 @@ function vienara_act_admin()
 		'menu' => 'menu',
 		'repairtable' => 'repairtable',
 		'help' => 'help',
-		'extensions' => 'extensions'
+		'extensions' => 'extensions',
+		'pages' => 'pages'
 	);
 
 	// New sections :D
@@ -1414,7 +1476,7 @@ if(isset($_POST['old_password'])) {
 // What do we want to do?
 if(!isset($_GET['app']))
 	vienara();
-elseif(isset($_GET['app']))
+elseif(!empty($_GET['app']))
 	vienara_get_app($_GET['app']);
 else
 	vienara();
