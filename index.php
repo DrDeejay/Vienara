@@ -939,7 +939,6 @@ function vienara_act_admin()
 				'custom_copyright' => array('text', 'custom_copyright'),
 				'copyright_link_to' => array('text', 'copyright_link_to'),
 			'',
-				'enable_keyboard' => array('check', 'enable_keyboard'),
 				'enable_likes' => array('check', 'enable_likes'),
 				'enable_comments' => array('check', 'enable_comments')
 		);

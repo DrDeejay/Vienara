@@ -15,7 +15,6 @@ function vienara_header()
 	<script type="text/javascript" src="javascript/Vienara.js"></script>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="stylesheet" type="text/css" href="style.css" />
-	' . ($vienara['setting']['enable_keyboard'] == 1 ? '<script type="text/javascript" src="javascript/Keyboard.js" charset="UTF-8"></script>' : '') . '
 	<title>' . $vienara['setting']['title'] . ($vienara['setting']['enable_extra_title'] == 1 ? ' | ' . $vienara['setting']['extra_title'] : '') . '</title>';
 	
 	// Custom header scripts
@@ -303,11 +302,11 @@ function template_admin($admin = array())
 							<table width="100%">
 								<tr class="subject">
 									<td width="20%"><strong id="title_desc">' . show_string('post_title') . ':</strong></td>
-									<td width="80%"><input type="text" id="post_title" name="post_title" class="keyboardInput" /></td>
+									<td width="80%"><input type="text" id="post_title" name="post_title" /></td>
 								</tr>
 								<tr>
 									<td width="20%" class="blog_msg"><strong>' . show_string('message') . ':</strong></td>
-									<td width="80%"><textarea class="editor new_post keyboardInput" name="content" rows="1" cols="1"></textarea></td>
+									<td width="80%"><textarea class="editor new_post" name="content" rows="1" cols="1"></textarea></td>
 								</tr>
 								<tr class="subject">
 									<td width="20%"><strong>' . show_string('approved') . ':</strong></td>

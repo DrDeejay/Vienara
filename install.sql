@@ -30,7 +30,6 @@ INSERT INTO {db_pref}settings (`id`, `value`) VALUES
 ('enable_custom_copyright', '0'),
 ('custom_copyright', ''),
 ('copyright_link_to', ''),
-('enable_keyboard', '0'),
 ('blog_url', 'http://example.com'),
 ('enable_comments', '0'),
 ('enable_likes', '0'),
