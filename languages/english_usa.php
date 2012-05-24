@@ -103,7 +103,6 @@ $txt['remove_tab'] = 'Remove tabs';
 $txt['repair_optimize'] = 'Repair and Optimize';
 $txt['rather_optimize'] = 'Optimize this table rather than repairing it.';
 $txt['action_fail'] = 'Failed to optimize/repair table. Please try again.';
-$txt['action_done'] = 'Succesfully optimized/repaired table.';
 $txt['enable_keyboard'] = 'Enable virtual keyboard (can cause performance issues)';
 $txt['extensions'] = 'Extensions';
 $txt['extension_list'] = 'Installed extensions';
@@ -123,7 +122,7 @@ $txt['invalid_file'] = 'Invalid file. Make sure the archive is a zip package.';
 $txt['upload_fail'] = 'Failed to upload file.';
 $txt['ext_already'] = 'Extension already exists';
 $txt['enable_likes'] = 'Enable Facebook likes';
-$txt['blog_url'] = 'Link that should be used for likes';
+$txt['blog_url'] = 'Link that should be used for socialization';
 $txt['enable_comments'] = 'Enable Facebook comments';
 
 // Blog editing
