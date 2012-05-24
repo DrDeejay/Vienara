@@ -757,6 +757,38 @@ function template_admin($admin = array())
 			</div>';
 	}
 
+	// Manage pages
+	elseif(adm_sect == 'managepages') {
+
+		// Begin with the template
+		echo '
+			<div class="cat_bg bg_color">
+				' . show_string('manage_pages') . '
+			</div>
+			<table width="100%" cellspacing="0">
+				<tr>
+					<td class="padding bg_color2" width="5%">' . show_string('page_id') . '</td>
+					<td class="padding bg_color2" width="50%">' . show_string('page_title') . '</td>
+					<td class="padding bg_color2" width="20%">' . show_string('page_header') . '</td>
+					<td class="padding bg_color2" width="25%">' . show_string('page_tools') . '</td>
+				</tr>';
+
+		foreach($vienara['pages'] as $page)
+			echo '
+				<tr>
+					<td class="padding bg_color5">' . $page['id_page'] . '</td>
+					<td class="padding bg_color4"><a class="grey" href="' . Blog_file . '?app=site&id=' . $page['id_page'] . '">' . $page['page_title'] . '</a></td>
+					<td class="padding bg_color5">' . ($page['show_header'] == 1 ? show_string('enabled') : show_string('disabled')) . '</td>
+					<td class="padding bg_color4">
+						<a href="' . Blog_file . '?app=admin&section=pages&delete=' . $page['id_page'] . '">' . show_string('page_delete') . '</a>
+						<a href="' . Blog_file . '?app=admin&section=pages&edit=' . $page['id_page'] . '">' . show_string('page_edit') . '</a>
+					</td>
+				</tr>';
+
+		echo '
+			</table>';
+	}
+
 	echo '
 		</div>
 		<br class="clear" />';

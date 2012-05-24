@@ -588,7 +588,7 @@ function vienara_act_site($all = false)
 		die_nice(show_string('page_not_found'));
 	elseif(!$all)
 		$page = xensql_escape_string($_GET['id']);
-	elseif(!is_numeric($_GET['id']) && !$all)
+	elseif(!$all && !is_numeric($_GET['id']))
 		die_nice(show_string('page_not_found'));
 
 	// Empty array.
@@ -610,7 +610,7 @@ function vienara_act_site($all = false)
 
 		// Show everything?
 		if($all == true)
-			$return_pages[] = $p;
+			$return_page[$p['id_page']] = $p;
 
 		// Nope, just one.
 		else
@@ -1365,6 +1365,35 @@ function vienara_act_admin()
 	function admin_section_pages()
 	{
 		global $vienara;
+
+		// Get the pages
+		$vienara['pages'] = vienara_act_site(true);
+
+		// Delete?
+		if(!empty($_GET['delete'])) {
+
+			// Is it set?
+			if(empty($vienara['pages'][$_GET['delete']]))
+				die_nice('page_not_found');
+
+			// Delete it
+			xensql_query("
+				DELETE
+					FROM {db_pref}pages
+					WHERE id_page = '" . $_GET['delete'] . "'
+			");
+
+			// We're done
+			done('?app=admin&section=pages');			
+		}
+
+		// We're about to edit a page
+		elseif(!empty($_GET['edit'])) {
+
+		}
+
+		// Hmm
+		define('adm_sect', 'managepages');
 	}
 
 	// Define sections!

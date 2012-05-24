@@ -125,6 +125,12 @@ $txt['enable_likes'] = 'Enable Facebook likes';
 $txt['blog_url'] = 'Link that should be used for socialization';
 $txt['enable_comments'] = 'Enable Facebook comments';
 $txt['manage_pages'] = 'Manage Pages';
+$txt['page_delete'] = '[Delete]';
+$txt['page_title'] = 'Title';
+$txt['page_tools'] = 'Tools';
+$txt['page_header'] = 'Show header';
+$txt['page_edit'] = '[Edit]';
+$txt['page_id'] = 'Id';
 
 // Pages
 $txt['page_not_found'] = 'Page not found';

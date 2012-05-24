@@ -9,6 +9,9 @@ a, a:visited, a:hover {
 	text-decoration: none;
 	color: #76A744;
 }
+a.grey {
+	color: grey!important;
+}
 #wrapper {
 	margin: auto;
 	background: white;
