@@ -844,6 +844,22 @@ function template_admin($admin = array())
 		}
 	}
 
+	// The css edit page
+	elseif(adm_sect == 'css') {
+
+		// Just echo the form. Nothing fancy
+		echo '
+				<div class="cat_bg bg_color">
+					' . show_string('style_edit') . '
+				</div>
+				<form action="' . Blog_file . '?app=admin&section=css" method="post">
+					<div class="bg_color5 padding">
+						<textarea name="new_style" class="editor new_post" rows="1" cols="1">' . $vienara['style'] . '</textarea><br /><br />
+						<input type="submit" value="' . show_string('submit') . '" />
+					</div>
+				</form>';
+	}
+
 	echo '
 		</div>
 		<br class="clear" />';

@@ -776,12 +776,6 @@ function vienara_act_admin()
 			'show' => true,
 			'icon' => 'style_edit.png'
 		),
-		'template_edit' => array(
-			'title' => show_string('template_edit'),
-			'href' => Blog_file . '?app=admin&section=template',
-			'show' => true,
-			'icon' => 'template_edit.png'
-		),
 		'help' => array(
 			'title' => show_string('help_docs'),
 			'href' => Blog_file . '?app=admin&section=help',
@@ -1496,6 +1490,31 @@ function vienara_act_admin()
 		define('adm_sect', 'managepages');
 	}
 
+	// Edit the site css
+	function admin_section_css()
+	{
+		global $vienara;
+
+		// Attempting to save it?
+		if(!empty($_POST['new_style'])) {
+
+			// Put the contents into the file
+			file_put_contents('style.css', $_POST['new_style']);
+
+			// We are done
+			done('?app=admin&section=css');
+		}
+
+		// Get the content of the file
+		$vienara['style'] = file_get_contents('style.css');
+
+		// Escape
+		$vienara['style'] = htmlspecialchars($vienara['style']);
+
+		// Define the current template
+		define('adm_sect', 'css');
+	}
+
 	// Define sections!
 	$admin['sections'] = array(
 		'newblog' => 'newblog',
@@ -1510,7 +1529,8 @@ function vienara_act_admin()
 		'repairtable' => 'repairtable',
 		'help' => 'help',
 		'extensions' => 'extensions',
-		'pages' => 'pages'
+		'pages' => 'pages',
+		'css' => 'css'
 	);
 
 	// New sections :D
