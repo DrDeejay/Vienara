@@ -28,8 +28,10 @@ class Hash {
 	// Generate a list of hashes
 	function get()
 	{
+		global $vienara;
+
 		// What kind of hashes do we support?
-		$hash_types = array(
+		$vienara['hashes'] = array(
 			'sha1',
 			'md5',
 			'base64_encode',
@@ -40,12 +42,12 @@ class Hash {
 		vienara_hook('hashes');
 
 		// Does every function exist?
-		foreach($hash_types as $type => $value)
+		foreach($vienara['hashes'] as $type => $value)
 			if(!function_exists($value))
-				unset($hash_types[$type]);
+				unset($vienara['hashes'][$type]);
 
 		// Return what we have
-		return $hash_types;
+		return $vienara['hashes'];
 	}
 
 	// So we want to hash?

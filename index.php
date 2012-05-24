@@ -65,7 +65,7 @@ define('Website_Url', 'http://vienara.co.cc'); // Don't change this!
 define('Blog_file', 'index.php');
 
 // The extension directory
-$vienara['extension_dir'] = '/extensions';
+$vienara['extension_dir'] = 'extensions';
 
 // Because sometimes, we need to fix stuff
 function br2nl($text = '')
@@ -546,10 +546,10 @@ function vienara_saveSetting($setting = '', $is_check = '')
 $vienara['languages'] = array();
 
 // Get the languages
-if(@$direction = opendir('languages'))
+if(@$directory = opendir('languages'))
 {
 	// Use a while to create arrays
-	while(false !== ($file = readdir($direction)))
+	while(false !== ($file = readdir($directory)))
 	{
 		// Don't use stuff we're not going to use anyway
 		if($file == '.')
@@ -564,6 +564,76 @@ if(@$direction = opendir('languages'))
 	
 		// Just add it to the array
 		$vienara['languages'][] = $file;
+	}
+}
+
+// Remove a directory and all its files
+function remove_dir($dir = '')
+{
+	// Get the files in this directory
+	$files = scandir($dir);
+
+	// Get through each file
+	foreach($files as $file) {
+
+		// No dots
+		if($file == '.')
+			continue;
+		elseif($file == '..')
+			continue;
+
+		// Is this a dir?
+		if(is_dir($file))
+			remove_dir($file);
+		else
+			unlink($dir . '/' . $file);
+	}
+
+	// Remove.
+	rmdir($dir);
+}
+
+// Extract a zip archive
+function zip_extract($filename, $directory)
+{
+	global $vienara;
+
+	// Create the directory
+	mkdir($vienara['extension_dir'] . '/' . $directory);
+
+	// Give it the right permissions
+	chmod($vienara['extension_dir'] . '/' . $directory, 0775);
+
+	// Open the file
+	$zip = zip_open($filename);
+
+	// Get through the files we have just created
+	while($file = zip_read($zip)) {
+
+		// Get the entryname
+		$entry = zip_entry_name($file);
+
+		// Is this a directory?
+		if(!strpos($entry, '.')) {
+
+			// Create the directory
+			mkdir($vienara['extension_dir'] . '/' . $directory . '/' . $entry);
+
+			// Continue
+			continue;
+		}
+
+			// Get the file
+			$new_file = zip_entry_read($file);
+
+			// Create it
+			$result = fopen(str_replace('.zip', '', $filename) . '/' . $entry, 'w+');
+
+			// Write it
+			fwrite($result, $new_file);
+
+			// Close.
+			fclose($result);
 	}
 }
 
@@ -589,6 +659,12 @@ function vienara_act_admin()
 			'href' => Blog_file . '?app=admin',
 			'show' => true,
 			'icon' => 'home.png'
+		),
+		'extensions' => array(
+			'title' => show_string('extensions'),
+			'href' => Blog_file . '?app=admin&section=extensions',
+			'show' => true,
+			'icon' => 'plugin.png'
 		),
 		'post_blog' => array(
 			'title' => show_string('new_post'),
@@ -631,6 +707,12 @@ function vienara_act_admin()
 			'href' => Blog_file . '?app=admin&section=repairtable',
 			'show' => true,
 			'icon' => 'wrench.png'
+		),
+		'help' => array(
+			'title' => show_string('help_docs'),
+			'href' => Blog_file . '?app=admin&section=help',
+			'show' => true,
+			'icon' => 'help.png'
 		),
 		'logout' => array(
 			'title' => show_string('logout'),
@@ -786,7 +868,9 @@ function vienara_act_admin()
 			'',
 				'enable_custom_copyright' => array('check', 'enable_custom_copyright'),
 				'custom_copyright' => array('text', 'custom_copyright'),
-				'copyright_link_to' => array('text', 'copyright_link_to')
+				'copyright_link_to' => array('text', 'copyright_link_to'),
+			'',
+				'enable_keyboard' => array('check', 'enable_keyboard')
 		);
 
 		// Extra settings! ;)
@@ -1035,6 +1119,180 @@ function vienara_act_admin()
 		define('adm_sect', 'repairtable');
 	}
 
+	// Show the help documents
+	function admin_section_help()
+	{
+		global $txt, $vienara;
+
+		// Setup a new array
+		$vienara['help_docs'] = array();
+
+		// Setup the help document array
+		foreach($txt['doc'] as $key => $value) {
+
+			// So what is this?
+			if(!isset($txt['doc']['doc_' . $key]))
+				continue;
+
+			// Add it to the array
+			$vienara['help_docs'][] = array(
+				'title' => $key
+			);
+		}
+		
+		// Where are we?
+		define('adm_sect', 'help');
+	}
+
+	// Extensions!
+	function admin_section_extensions()
+	{
+		global $vienara;
+
+		// Let's remove this extension.
+		if(isset($_GET['delete'])) {
+
+			// Increase memory
+			@ini_set('memory_limit', '-1');
+
+			// Decode the url
+			$_GET['delete'] = urldecode($_GET['delete']);
+
+			// Setup a new dir variable
+			$dir = $vienara['extension_dir'] . '/' . $_GET['delete'];
+		
+			// Does it exist?
+			$ext = $vienara['extension_dir'] . '/' . $_GET['delete'] . '/ExtensionInfo.php';
+
+				// Test it
+				if(!file_exists($ext))
+					
+					// Do nothing
+					return;
+
+			// Delete every file
+			remove_dir($dir);
+		}
+
+		// Enable or disable an extension
+		elseif(isset($_GET['changestatus'])) {
+
+			// Setup the dir
+			$dir = $vienara['extension_dir'] . '/' . $_GET['changestatus'] . '/disabled.ext';
+
+			// Does it exist?
+			if(!file_exists($dir)) {
+
+				// Create the file
+				$result = fopen($dir, 'w');
+
+					// Did it work?
+					if(!$result)
+						die_nice(show_string('create_disabled_fail'));
+					else
+						fclose($result);
+			}
+			else
+				unlink($dir);
+		}
+
+		// Upload and extract an extension
+		elseif(isset($_FILES['extension_archive'])) {
+
+			// Check the extension
+			if(!$_FILES['extension_archive']['type'] == 'archive/zip')
+				die_nice(show_string('invalid_file'));
+
+			// It's fine
+			else {
+
+				// Are there any errors?
+				if($_FILES['extension_archive']['error'] != 0)
+					die_nice(show_string('invalid_file'));
+
+				// Nope
+				else {
+
+					// Define the new filename
+					$fname = $_FILES['extension_archive']['tmp_name'];
+
+					// We need this later
+					$name = $_FILES['extension_archive']['name'];
+
+					// Get a new dirname
+					$new_dirname = str_replace('.zip', '', $name);
+
+					// Does it already exist?
+					if(file_exists($vienara['extension_dir'] . '/' . $name))
+						die_nice(show_string('ext_already'));
+
+					// Move it
+					$result = move_uploaded_file($fname, $vienara['extension_dir'] . '/' . $name);
+
+						// Did it work?
+						if(!$result)
+							die_nice(show_string('upload_fail'));
+
+					// Chmod it
+					chmod($vienara['extension_dir'] . '/' . $name, 0775);
+
+					// Get the file
+					zip_extract($vienara['extension_dir'] . '/' . $name, $new_dirname);
+				}
+			}
+		}
+
+		// Get the files
+		$dir = $vienara['extension_dir'];
+
+		// Define a new array
+		$vienara['extensions'] = array();
+
+		// Does the extension dir exist?
+		if(!file_exists($dir))
+			$extensions = array();
+
+		// Get the list of files
+		else {
+			$extensions = scandir($dir);
+
+			// Fetch through them and tell if they're dots or not
+			foreach($extensions as $key => $value) {
+
+				// Dot?
+				if($value == '.')
+					continue;
+				elseif($value == '..')
+					continue;
+				elseif($value == 'index.html')
+					continue;
+				elseif(strpos($value, '.zip'))
+					continue;
+
+				// Get the configuration file
+				include($dir . '/' . $value . '/ExtensionInfo.php');
+
+				// Check if we have this mod enabled
+				if(file_exists($dir . '/' . $value . '/disabled.ext'))
+					$isEnabled = false;
+				else
+					$isEnabled = true;
+
+				// Add the information to the array
+				$vienara['extensions'][] = array(
+					'author' => $mod['author'],
+					'version' => $mod['version'],
+					'title' => $mod['title'],
+					'enabled' => $isEnabled,
+					'dir' => $value
+				);
+			}
+		}
+
+		// Define the current template
+		define('adm_sect', 'extensions');
+	}
+
 	// Define sections!
 	$admin['sections'] = array(
 		'newblog' => 'newblog',
@@ -1046,7 +1304,9 @@ function vienara_act_admin()
 		'publish' => 'publish',
 		'edit' => 'edit',
 		'menu' => 'menu',
-		'repairtable' => 'repairtable'
+		'repairtable' => 'repairtable',
+		'help' => 'help',
+		'extensions' => 'extensions'
 	);
 
 	// New sections :D

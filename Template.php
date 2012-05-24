@@ -14,251 +14,8 @@ function vienara_header()
 	<script type="text/javascript" src="javascript/Jquery.js"></script>
 	<script type="text/javascript" src="javascript/Vienara.js"></script>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<style type="text/css">
-		body {
-			background: #D6D6D6;
-			font-size: 13px;
-			font-family: Verdana, Arial, Helvetica;
-			margin: 0;
-			padding: 0;
-		}
-		a, a:visited, a:hover {
-			text-decoration: none;
-			color: #76A744;
-		}
-		#wrapper {
-			width: ' . $vienara['setting']['width'] . '%;
-			margin: auto;
-			background: white;
-			min-width: 500px;
-		}
-		.reg_content {
-			padding: 10px;
-		}
-		.padding {
-			padding: 5px;
-		}
-		.bg_color {
-			background: #89BE51 url(./images/bg_color.png) repeat-x;
-			color: white;
-			font-weight: normal;
-			font-family: Verdana, Arial;
-			border-top-right-radius: 5px;
-			border-top-left-radius: 5px;
-			font-size: 13px;
-		}
-		.bg_color2 {
-			background: #C0DBA3;
-		}
-		.bg_color3 {
-			background: #CAE7AC;
-		}
-		.bg_color4 {
-			background: #F8FFF6;
-		}
-		.bg_color5 {
-			background: #E8ECE6;
-		}
-		.db_border {
-			border: 1px solid #EDFEDB;
-			border-top-right-radius: 5px;
-			border-top-left-radius: 5px;
-		}
-		#header {
-			padding: 15px;
-			color: white;
-			font-size: 50px;
-			border-top-right-radius: 0px;
-			border-top-left-radius: 0px;
-		}
-		.cat_bg {
-			color: white;
-			font-weight: bold;
-			padding: 5px;
-		}
-		.copyright {
-			text-align: center;
-			font-size: 11px;
-			margin-bottom: 20px;
-		}
-		hr {
-			border: 0;
-			border-top: 1px solid grey;
-		}
-		.title {
-			font-size: 20px;
-			font-weight: normal;
-			color: red;
-		}
-		.blog_content .floatleft:first-letter, .blog_content:first-letter {
-			color: #638B3E;
-			font-weight: bold;
-			font-family: Times New Roman;
-			font-size: 40px;
-		}
-		.menu {
-			background: #78945B;
-			padding: 5px;
-		}
-		.menu a {
-			color: white;
-			margin-right: 5px;
-		}
-		.aligncenter {
-			text-align: center;
-		}
-		.editor {
-			padding: 5px;
-			font: inherit;
-			width: 95%;
-			height: 150px;
-			opacity: 1!important;
-			position: relative;
-			top: 10;
-			left: 10;
-			font-family: inherit;
-			border: grey 1px solid;
-			border-radius: 5px;
-			font-size: 14px;
-		}
-		.floatright {
-			float: right;
-		}
-		.floatleft {
-			float: left;
-		}
-		.clear {
-			clear: both;
-		}
-		.cat_bg a {
-			color: white;
-		}
-		input[type="text"], input[type="password"], select, input[type="checkbox"] {
-			padding: 5px;
-			border: 1px solid grey;
-			margin: 2px;
-			background: #F7F7F7;
-		}
-		input[type="text"]:hover, input[type="password"]:hover, select:hover {
-			background: white;
-		}
-		input[type="submit"], .more, button {
-			background: #A7C78C url(./images/bg_color.png) repeat-x;
-			border-radius: 5px;
-			padding: 5px;
-			width: 100px;
-			color: white;
-			border: 1px solid #639E48;
-			font-weight: normal;
-			font-family: Verdana, Arial;
-			font-size: 12px;
-		}
-		.date {
-			background: #6BB74C;
-			color: white;
-			padding: 5px;
-			width: 50px;
-			height: 50px;
-			font-size: 18px;
-			margin: 5px;
-		}
-		.date .daymonth {
-			font-size: 13px;
-		}
-		.notice {
-			border: 1px solid dimgrey;
-			background: white;
-			margin: 5px;
-			padding: 5px;
-		}
-		.sidebar {
-			width: 100%;
-		}
-		.sidebar_link {
-			display: block;
-			padding: 10px;
-			margin-bottom: 1px!important;
-			color: dimgrey!important;
-			line-height: 25px;
-			border-left: 10px solid #C3D5AF;
-			background: #F7F7F7;
-		}
-		.sidebar_link:hover {
-			background: #F5F5F5;
-		}
-		.adm_blog {
-			margin: 1px;
-			font-size: 15px;
-			padding: 5px;
-			color: dimgrey;
-		}
-		.admin_blogs {
-			height: 200px;
-			overflow-y: scroll;
-		}
-		.admin_blogs a {
-			color: inherit;
-		}
-		.update {
-			padding: 10px;
-			border: 1px solid #DEDEDE;
-			background: #F5F5F5;
-			margin: 10px;
-			width: 250px;
-			display: table-cell;
-			font-size: 20px;
-			color: #8AC168;
-		}
-		.done {
-			margin: auto;
-			width: 40%;
-		}
-		.radius {
-			border-radius: 5px;
-		}
-		.bgwhite {
-			background: white;
-		}
-		.new_post {
-			height: 600px;
-		}
-		.news {
-			padding: 10px;
-			border-top: 2px solid #8FBB61;
-			border-bottom: 2px solid #8FBB61;
-			margin: 10px;
-			background: #DAE7CD;
-		}
-		.whitelink {
-			color: white!important;
-		}
-		.list_tables {
-			max-height: 300px;
-			overflow-y: auto;
-			font-size: 11px;
-		}
-		.result_good {
-			padding: 5px;
-			border-top: 2px solid #6EAD53;
-			border-bottom: 2px solid #6EAD53;
-			color: #6EAD53;
-			background: #DFF1D7;
-			margin: 5px;
-		}
-		.result_bad {
-			padding: 5px;
-			border-top: 2px solid #6EAD53;
-			border-bottom: 2px solid #AD5953;
-			color: #AD5953;
-			background: #F1D7E2;
-			margin: 5px;
-		}';
-
-	// Custom css
-	vienara_hook('cust_css');
-
-	echo '
-	</style>
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	' . ($vienara['setting']['enable_keyboard'] == 1 ? '<script type="text/javascript" src="javascript/Keyboard.js" charset="UTF-8"></script>' : '') . '
 	<title>' . $vienara['setting']['title'] . ($vienara['setting']['enable_extra_title'] == 1 ? ' | ' . $vienara['setting']['extra_title'] : '') . '</title>';
 	
 	// Custom header scripts
@@ -268,7 +25,7 @@ function vienara_header()
 </head>
 <body class="vienara">
 	<div id="editorhere_after"></div>
-	<div id="wrapper">
+	<div id="wrapper" style="width: ' . $vienara['setting']['width'] . '%;">
 		<div id="header" class="bg_color">
 			' . $vienara['setting']['title'] . '
 		</div>
@@ -360,6 +117,43 @@ function vienara_show_blog($information = '')
 		<br /><br />';
 }
 
+// The help template
+function template_help($doc_message = '', $title = '')
+{
+	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<style type="text/css">
+			body {
+				background: #B9D897;
+				color: dimgrey;
+				font-family: Verdana;
+				font-size: 13px;
+			}
+			.message {
+				width: 40%;
+				margin: auto;
+				padding: 15px;
+				background: white;
+				border: 1px solid dimgrey;
+			}
+			a {
+				color: #9BC86C;
+				text-decoration: none;
+			}
+		</style>
+		<title>' . $title . '</title>
+	</head>
+	<body>
+		<div class="message">
+			' . $doc_message . '
+			<br /><br />
+			<strong><a href="javascript:void(0);" onclick="window.close();">' . show_helpstring('close') . '</a></strong>
+		</div>
+	</body>
+</html>';
+}
+
 // Meh
 function screenofdeath_header()
 {
@@ -420,13 +214,12 @@ function template_admin($admin = array())
 			' . $admin['title'] . '
 		</div>
 		<div class="floatleft" style="width: 20%;">
-			<br />
 			<div class="sidebar">';
 
 		// Show the administration navigation
 		foreach($admin['sidebar'] as $item)
 			echo '
-				<a href="' . $item['href'] . '" class="sidebar_link"><img src="./images/' . $item['icon'] . '" alt="" /> ' . $item['title'] . '</a><br />';
+				<a href="' . $item['href'] . '" class="sidebar_link"><img src="./images/' . $item['icon'] . '" alt="" /> ' . $item['title'] . '</a>';
 
 	echo '
 			</div>
@@ -434,7 +227,7 @@ function template_admin($admin = array())
 		<div class="floatright" style="width: 75%; padding: 10px;">';
 
 	// Sub admin templates!
-	if(adm_sect == 'main') {
+	if(!defined('adm_sect') || adm_sect == 'main') {
 
 		// Welcome!
 		echo '
@@ -494,11 +287,11 @@ function template_admin($admin = array())
 							<table width="100%">
 								<tr class="subject">
 									<td width="20%"><strong id="title_desc">' . show_string('post_title') . ':</strong></td>
-									<td width="80%"><input type="text" id="post_title" name="post_title" /></td>
+									<td width="80%"><input type="text" id="post_title" name="post_title" class="keyboardInput" /></td>
 								</tr>
 								<tr>
 									<td width="20%" class="blog_msg"><strong>' . show_string('message') . ':</strong></td>
-									<td width="80%"><textarea class="editor new_post" name="content" rows="1" cols="1"></textarea></td>
+									<td width="80%"><textarea class="editor new_post keyboardInput" name="content" rows="1" cols="1"></textarea></td>
 								</tr>
 								<tr class="subject">
 									<td width="20%"><strong>' . show_string('approved') . ':</strong></td>
@@ -593,7 +386,7 @@ function template_admin($admin = array())
 				elseif($spage[0] == 'text')
 					echo '
 						<tr>
-							<td width="50%">' . $spage[1] . ':</td>
+							<td width="50%"><a href="help.php?id=' . $key . '" target="_blank">' . show_string('help') . '</a> ' . $spage[1] . ':</td>
 							<td width="50%"><input type="text" name="' . $key . '" value="' . $vienara['setting'][$key] . '" /></td>
 						</tr>';
 			
@@ -601,7 +394,7 @@ function template_admin($admin = array())
 				elseif($spage[0] == 'number')
 					echo '
 						<tr>
-							<td width="50%">' . $spage[1] . ':</td>
+							<td width="50%"><a href="help.php?id=' . $key . '" target="_blank">' . show_string('help') . '</a> ' . $spage[1] . ':</td>
 							<td width="50%"><input type="text" name="' . $key . '" value="' . $vienara['setting'][$key] . '" maxlength="3" size="3" /></td>
 						</tr>';
 
@@ -609,7 +402,7 @@ function template_admin($admin = array())
 				elseif($spage[0] == 'check')
 					echo '
 						<tr>
-							<td width="50%">' . $spage[1] . ':</td>
+							<td width="50%"><a href="help.php?id=' . $key . '" target="_blank">' . show_string('help') . '</a> ' . $spage[1] . ':</td>
 							<td width="50%"><input type="hidden" name="' . $key . '_type" value="checkbox" /><input type="checkbox" name="' . $key . '" ' . ($vienara['setting'][$key] == '1' ? ' checked="checked"' : '') . ' /></td>
 						</tr>';				
 
@@ -617,7 +410,7 @@ function template_admin($admin = array())
 				elseif($spage[0] == 'largetext')
 					echo '
 						<tr>
-							<td width="50%">' . $spage[1] . ':</td>
+							<td width="50%"><a href="help.php?id=' . $key . '" target="_blank">' . show_string('help') . '</a> ' . $spage[1] . ':</td>
 							<td width="50%"><textarea class="editor" cols="1" rows="1" name="' . $key . '">' . br2nl($vienara['setting'][$key]) . '</textarea></td>
 						</tr>';		
 
@@ -630,7 +423,7 @@ function template_admin($admin = array())
 						// Echo it
 						echo '					
 							<tr>
-								<td width="50%">' . $spage[1] . ':</td>
+								<td width="50%"><a href="help.php?id=' . $key . '" target="_blank">' . show_string('help') . '</a> ' . $spage[1] . ':</td>
 								<td width="50%"><select name="language">';
 
 							// Show the languages
@@ -648,7 +441,7 @@ function template_admin($admin = array())
 						// Echo it
 						echo '					
 							<tr>
-								<td width="50%">' . $spage[1] . ':</td>
+								<td width="50%"><a href="help.php?id=' . $key . '" target="_blank">' . show_string('help') . '</a> ' . $spage[1] . ':</td>
 								<td width="50%"><select name="' . $key . '">';
 
 							// Show the languages
@@ -866,6 +659,85 @@ function template_admin($admin = array())
 				<input type="checkbox" name="optimize" />' . show_string('rather_optimize') . '<br />
 				<input type="submit" value="' . show_string('submit') . '" />
 			</form>
+			</div>';
+	}
+
+	// Show the help page
+	elseif(adm_sect == 'help') {
+
+		global $txt;
+
+		// Show them all
+		foreach($vienara['help_docs'] as $documentation) {
+
+			// Show it
+			echo '
+				<br />
+				<div class="cat_bg bg_color">
+					<a href="help.php?id=' . $documentation['title'] . '">' . $txt['doc'][$documentation['title']] . '</a>
+				</div>
+				<div class="bg_color4 padding">
+					' . $txt['doc']['doc_' . $documentation['title']] . '
+				</div>';
+		}
+	}
+
+	// Manage extensions
+	elseif(adm_sect == 'extensions') {
+
+		echo '
+			<div class="cat_bg bg_color">
+				' . show_string('extension_list') . '
+			</div>';
+
+		if(empty($vienara['extensions']))
+			echo '
+				<div class="padding">' . show_string('no_extensions') . '</div>';
+		else {
+
+			echo '
+				<table style="width: 100%" cellspacing="0">
+					<tr>
+						<td class="bg_color3 padding" width="40%">' . show_string('ext_title') . '</td>
+						<td class="bg_color3 padding" width="10%">' . show_string('ext_version') . '</td>
+						<td class="bg_color3 padding" width="20%">' . show_string('ext_author') . '</td>
+						<td class="bg_color3 padding" width="10%">' . show_string('ext_enabled') . '</td>
+						<td class="bg_color3 padding" width="20%">' . show_string('ext_actions') . '</td>
+					</tr>';
+
+			$variation = 5;
+
+			foreach($vienara['extensions'] as $extension) {
+
+				echo '
+					<tr>
+						<td class="bg_color' . $variation . ' padding">' . $extension['title'] . '</td>
+						<td class="bg_color' . $variation . ' padding">' . $extension['version'] . '</td>
+						<td class="bg_color' . $variation . ' padding">' . $extension['author'] . '</td>
+						<td class="bg_color' . $variation . ' padding">' . ($extension['enabled'] == true ? show_string('enabled') : show_string('disabled')) . '</td>
+						<td class="bg_color' . $variation . ' padding">
+							[<a href="' . Blog_file . '?app=admin&section=extensions&delete=' . urlencode($extension['dir']) . '">' . show_string('delete') . '</a>]
+							[<a href="' . Blog_file . '?app=admin&section=extensions&changestatus=' . urlencode($extension['dir']) . '">' . ($extension['enabled'] == true ? show_string('disable') : show_string('enable')) . '</a>]
+						</td>
+					</tr>';
+
+				$variation = ($variation == 5 ? 4 : 5);
+			}
+
+			echo '
+				</table>';
+		}
+
+		echo '
+			<br /><br />
+			<div class="cat_bg bg_color">
+				' . show_string('upload_ext') . '
+			</div>
+			<div class="padding bg_color5">
+				<form enctype="multipart/form-data" action="' . Blog_file . '?app=admin&section=extensions" method="post">
+					<input type="file" name="extension_archive" />
+					<input type="submit" value="' . show_string('submit') . '" /> 
+				</form>
 			</div>';
 	}
 

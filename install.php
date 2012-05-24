@@ -331,15 +331,18 @@ function install_step_2()
 		// Execute the queries
 		mysqli_multi_query($db, $query);
 
-	// Update forum.php
+	// Update index.php
 	$file = file_get_contents('./Config.php');
 
+	// Get the existing configuration settings
+	include 'Config.php';
+
 		// Replace important stuff
-		$file = str_replace("'server' => 'localhost',", "'server' => '" . $_POST['db_server'] . "',", $file);
-		$file = str_replace("'username' => 'root',", "'username' => '" . $_POST['db_user'] . "',", $file);
-		$file = str_replace("'password' => '',", "'password' => '" . $_POST['db_password'] . "',", $file);
-		$file = str_replace("'dbname' => 'vienara',", "'dbname' => '" . $_POST['db_name'] . "',", $file);
-		$file = str_replace("'prefix' => 'vie_'", "'prefix' => '" . $_POST['db_prefix'] . "'", $file);
+		$file = str_replace("'server' => '" . $db_settings['server'] . "',", "'server' => '" . $_POST['db_server'] . "',", $file);
+		$file = str_replace("'username' => '" . $db_settings['username'] . "',", "'username' => '" . $_POST['db_user'] . "',", $file);
+		$file = str_replace("'password' => '" . $db_settings['password'] . "',", "'password' => '" . $_POST['db_password'] . "',", $file);
+		$file = str_replace("'dbname' => '" . $db_settings['dbname'] . "',", "'dbname' => '" . $_POST['db_name'] . "',", $file);
+		$file = str_replace("'prefix' => '" . $db_settings['prefix'] . "'", "'prefix' => '" . $_POST['db_prefix'] . "'", $file);
 
 		// Update the file
 		file_put_contents('./Config.php', $file);

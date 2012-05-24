@@ -30,6 +30,7 @@ INSERT INTO {db_pref}settings (`id`, `value`) VALUES
 ('enable_custom_copyright', '0'),
 ('custom_copyright', ''),
 ('copyright_link_to', ''),
+('enable_keyboard', '0'),
 ('width', '90');
 
 CREATE TABLE {db_pref}menu (
