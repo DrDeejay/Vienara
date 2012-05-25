@@ -99,7 +99,8 @@ function vienara_footer()
 	<div class="copyright">
 		<a href="' . Website_Url . '">' . show_string('powered_by') . 'Vienara ' . show_string('version') . Version . '</a><br />
 		' . show_string('icons_by') . '<a href="http://www.famfamfam.com/lab/icons/silk/">FamFamFam</a> ' . show_string('and') . ' <a href="http://www.fatcow.com/free-icons">Fatcow</a>' . ($vienara['setting']['enable_custom_copyright'] == 1 ? '
-			<br />' . (!empty($vienara['setting']['copyright_link_to']) ? '<a href="' . $vienara['setting']['copyright_link_to'] . '">' : '') . $vienara['setting']['custom_copyright'] . (!empty($vienara['setting']['copyright_link_to']) ? '</a>' : '') : '') . '
+			<br />' . (!empty($vienara['setting']['copyright_link_to']) ? '<a href="' . $vienara['setting']['copyright_link_to'] . '">' : '') . $vienara['setting']['custom_copyright'] . (!empty($vienara['setting']['copyright_link_to']) ? '</a>' : '') : '') . '<br />
+		<a href="' . Blog_file . '?rss">' . show_string('rss') . '</a>
 	</div>
 </body>
 </html>';
@@ -113,8 +114,8 @@ function vienara_show_blog($information = '')
 	echo '
 			<div class="floatleft">
 				<div class="date">
-					<span class="daymonth">' . date("M j", $information['post_date']) . '</span><br />
-					' . date("Y", $information['post_date']) . '
+					<span class="daymonth">' . parse_date(date("M j", $information['post_date'])) . '</span><br />
+					' . parse_date(date("Y", $information['post_date'])) . '
 				</div>	
 			</div>
 			<div style="width: 90%">
@@ -380,7 +381,7 @@ function template_admin($admin = array())
 			<div class="cat_bg bg_color">
 				' . show_string('settings') . '
 			</div>
-			<div class="padding bg_color4">
+			<div class="padding bg_color6">
 			<table width="100%">';
 
 			// Now parse each setting

@@ -63,6 +63,8 @@ $txt['powered_by'] = 'Powered by ';
 $txt['version'] = 'v';
 $txt['icons_by'] = 'Icons by ';
 $txt['top_button'] = 'Show the top button at the bottom of the blog';
+$txt['rss'] = 'RSS';
+$txt['rss_purpose'] = 'Feed of the latest 15 blogs.';
 
 // The administration panel and its strings
 $txt['admin'] = 'Administration';
@@ -199,3 +201,17 @@ $txt['doc']['doc_blog_url'] = 'This is only used for optional features, like Fac
 		</ul>';
 $txt['doc']['enable_comments'] = 'Setting - Facebook comments';
 $txt['doc']['doc_enable_comments'] = 'Vienara has the ability to enable Facebook comments. Facebook users will be able to add comments below blogs. When this is enabled, you should make sure that the amount of blogs per page is not higher than 5, otherwise the page loading time will greatly increase. Also, there is no way of using iframes rather than HTML5, so there is a chance that the HTML markup will be invalid.';
+
+// Dates
+$txt['jan'] = 'Jan';
+$txt['def'] = 'Feb';
+$txt['mar'] = 'Mar';
+$txt['apr'] = 'Apr';
+$txt['may'] = 'May';
+$txt['jun'] = 'Jun';
+$txt['jul'] = 'Jul';
+$txt['aug'] = 'Aug';
+$txt['sep'] = 'Sep';
+$txt['oct'] = 'Oct';
+$txt['nov'] = 'Nov';
+$txt['dec'] = 'Dec';

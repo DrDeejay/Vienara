@@ -245,6 +245,33 @@ function show_string($string = '')
 	return $txt[$string];
 }
 
+// Parse dates
+function parse_date($date = '')
+{
+	// An array with things that should be translated
+	$dates = array(
+		'Jan' => show_string('jan'),
+		'Feb' => show_string('feb'),
+		'Mar' => show_string('mar'),
+		'Apr' => show_string('apr'),
+		'May' => show_string('may'),
+		'Jun' => show_string('jun'),
+		'Jul' => show_string('jul'),
+		'Aug' => show_string('aug'),
+		'Sep' => show_string('sep'),
+		'Oct' => show_string('oct'),
+		'Nov' => show_string('nov'),
+		'Dec' => show_string('dec')
+	);
+
+	// Translate them
+	foreach($dates as $key => $value)
+		$date = str_replace($key, $value, $date);
+
+	// Return
+	return $date;
+}
+
 // Get the blogcount
 $vienara['blog_count'] = xensql_count_rows("
 	SELECT id_blog, blog_title, blog_content, published, post_date
@@ -573,6 +600,22 @@ if(@$directory = opendir('languages'))
 		// Just add it to the array
 		$vienara['languages'][] = $file;
 	}
+}
+
+// Show rss feeds
+if(isset($_GET['rss'])) {
+
+	// Get the class file
+	loadClass('RSS');
+
+		// Set it up
+		$feed = new RSS;
+
+		// Get the setup feed function
+		$feed->setup();
+
+	// Nothing left to show
+	die;
 }
 
 // Get a page
