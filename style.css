@@ -155,9 +155,10 @@ input[type="submit"], .more, button {
 }
 .notice {
 	border: 1px solid dimgrey;
-	background: white;
+	background: #F1F1F1;
 	margin: 5px;
 	padding: 5px;
+	border-radius: 5px;
 }
 .sidebar {
 	width: 100%;
