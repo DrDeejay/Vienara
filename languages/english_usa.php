@@ -42,6 +42,7 @@ $txt['posted_on'] = 'Posted on';
 $txt['delete'] = 'Delete';
 $txt['approved'] = 'Publish';
 $txt['not_approved'] = 'This post has not been published yet. You need to publish this post in order to display it on the frontpage.';
+$txt['is_status'] = 'Is status update';
 
 // Altering settings
 $txt['old_pass'] = 'Old password';
@@ -68,12 +69,17 @@ $txt['rss_purpose'] = 'Feed of the latest 15 blogs.';
 
 // The administration panel and its strings
 $txt['admin'] = 'Administration';
+$txt['version_history'] = 'Version history';
+$txt['changelog_fail'] = 'Failed to load version history';
 $txt['admin_not_allowed'] = 'You are not allowed to access the administration panel!';
 $txt['admin_welcome_notice'] = 'Hello! Welcome to your administration panel. The administration panel is created to make Vienara as customizable as possible. Please choose a destination in the sidebar.';
 $txt['list_blogs'] = 'Blogs';
 $txt['team'] = 'The team';
 $txt['friends'] = 'Friends and family';
+$txt['special_thanks'] = 'Special thanks';
+$txt['credits'] = 'Credits';
 $txt['developers'] = 'Development team';
+$txt['extensions'] = 'Extensions';
 $txt['and'] = 'and';
 $txt['blog_title'] = 'The title of your blog';
 $txt['action_done'] = 'Action completed';
@@ -137,6 +143,8 @@ $txt['show_header'] = 'Show header';
 $txt['page_content'] = 'Page content';
 $txt['new_page'] = 'New page';
 $txt['style_edit'] = 'Edit default style';
+$txt['css_cache_version'] = 'CSS cache version';
+$txt['avatar'] = 'Avatar image';
 
 // Pages
 $txt['page_not_found'] = 'Page not found';
@@ -201,6 +209,10 @@ $txt['doc']['doc_blog_url'] = 'This is only used for optional features, like Fac
 		</ul>';
 $txt['doc']['enable_comments'] = 'Setting - Facebook comments';
 $txt['doc']['doc_enable_comments'] = 'Vienara has the ability to enable Facebook comments. Facebook users will be able to add comments below blogs. When this is enabled, you should make sure that the amount of blogs per page is not higher than 5, otherwise the page loading time will greatly increase. Also, there is no way of using iframes rather than HTML5, so there is a chance that the HTML markup will be invalid.';
+$txt['doc']['css_cache_version'] = 'Setting - CSS cache version';
+$txt['doc']['doc_css_cache_version'] = 'When you made a small edit in the css file, you need to update this number in order to let the new css have effect for everyone. Usually, the css file is cached by the browser and if you edit this setting, it will be updated automatically, which makes sure your changes have effect. This also applies to Javascript files.';
+$txt['doc']['avatar'] = 'Setting - Avatar image';
+$txt['doc']['doc_avatar'] = 'The avatar image will be used on specific places, like status updates.';
 
 // Dates
 $txt['jan'] = 'Jan';
@@ -215,3 +227,8 @@ $txt['sep'] = 'Sep';
 $txt['oct'] = 'Oct';
 $txt['nov'] = 'Nov';
 $txt['dec'] = 'Dec';
+
+// Terminal
+$txt['terminal'] = 'Terminal';
+$txt['no_command'] = '<em>No command executed</em>';
+$txt['command_not_found'] = '<em>Command not found.</em>';

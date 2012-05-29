@@ -242,3 +242,16 @@ input[type="submit"], .more, button {
 	background: #F1D7E2;
 	margin: 5px;
 }
+.blogpost {
+	border-left: 10px solid #C3D5AF;
+	margin-bottom: 20px;
+	padding: 10px;
+}
+.blogpost:hover {
+	background: #F7F7F7;
+}
+.changelog {
+	height: 200px;
+	overflow-y: scroll;
+	font-size: 12px;
+}

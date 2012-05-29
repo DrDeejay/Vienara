@@ -28,6 +28,8 @@ class Viencode {
 	// Parse the content!
 	function parse($content = '') {
 
+		global $bbc;
+
 		// Stuff we can replace without any hard obstacles
 		$easy_replace = array(
 			'[br]' => '<br />',
@@ -49,14 +51,14 @@ class Viencode {
 			foreach($easy_replace as $key => $value)
 				$content = str_ireplace($key, $value, $content);
 
-		// Regex things
-		$reg_replace = array(
-			'^http://([\w+?\.\w+])+([a-zA-Z0-9\~\!\@\#\$\%\^\&amp;\*\(\)_\-\=\+\\\/\?\.\:\;\'\,]*)?^' => '<a href="$0">$0</a>'
-		);
+		// Setup bbcode
+		$bbc = new Decoda($content);
 
-			// Do a preg replace on this
-			foreach($reg_replace as $key => $value)
-				$content = preg_replace($key, $value, $content);
+			// Add filters
+			$bbc->defaults();
+
+			// Parse bbcode
+			$content = $bbc->parse();
 	
 		// What do we have?
 		return $content;

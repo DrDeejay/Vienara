@@ -11,10 +11,10 @@ function vienara_header()
 	echo '<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"' . $is_rtl . ' lang="' . $vienara['lang']['code'] . '">
 <head>
-	<script type="text/javascript" src="javascript/Jquery.js"></script>
-	<script type="text/javascript" src="javascript/Vienara.js"></script>
+	<script type="text/javascript" src="javascript/Jquery.js?' . $vienara['setting']['css_cache_version'] . '"></script>
+	<script type="text/javascript" src="javascript/Vienara.js?' . $vienara['setting']['css_cache_version'] . '"></script>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<link rel="stylesheet" type="text/css" href="style.css" />
+	<link rel="stylesheet" type="text/css" href="style.css?' . $vienara['setting']['css_cache_version'] . '" />
 	<title>' . $vienara['setting']['title'] . ($vienara['setting']['enable_extra_title'] == 1 ? ' | ' . $vienara['setting']['extra_title'] : '') . '</title>';
 	
 	// Custom header scripts
@@ -107,30 +107,48 @@ function vienara_footer()
 }
 
 // Show a blog
-function vienara_show_blog($information = '')
+function vienara_show_blog($information = '', $is_status = false)
 {
 	global $vienara;
 
-	echo '
-			<div class="floatleft">
-				<div class="date">
-					<span class="daymonth">' . parse_date(date("M j", $information['post_date'])) . '</span><br />
-					' . parse_date(date("Y", $information['post_date'])) . '
-				</div>	
-			</div>
-			<div style="width: 90%">
-				<div class="title">
-					<a href="#' . $information['id_blog'] . '" id="' . $information['id_blog'] . '">' . $information['blog_title'] . '</a>
+	// Is this a status?
+	if($is_status == true)
+		echo '
+			<div class="blogpost padding">
+				<table style="width: 100%;">
+					<tr>
+						<td width="5%">
+							<img src="' . $vienara['setting']['avatar'] . '" alt="" />
+						</td>	
+						<td width="95%" style="vertical-align: top">
+							' . $information['blog_content'] . '<br />
+							<em>' . show_string('posted_on') . ': ' . date("F j, Y, g:i a", $information['post_date']) . '</em>
+						</td>
+					</tr>
+				</table>
+			</div>';
+	else
+		echo '
+			<div class="blogpost">
+				<div class="floatleft">
+					<div class="date">
+						<span class="daymonth">' . parse_date(date("M j", $information['post_date'])) . '</span><br />
+						' . parse_date(date("Y", $information['post_date'])) . '
+					</div>	
 				</div>
-				' . show_string('posted_on') . ': ' . date("F j, Y, g:i a", $information['post_date']) . '
-			</div>
-			<br class="clear" />
-			<div class="blog_content">
-				' . $information['blog_content'] . '
-				' . ($vienara['setting']['enable_likes'] == 1 ? '<br /><br /><iframe src="https://www.facebook.com/plugins/like.php?href=' . $vienara['setting']['blog_url'] . '?blog=' . $information['id_blog'] . '" style="border:none!important; width:450px; height:80px"></iframe>' : '') . '
-			' . ($vienara['setting']['enable_likes'] == 1 ? '<br /><div class="fb-comments" data-href="' . $vienara['setting']['blog_url'] . '?blog=' . $information['id_blog'] . '" data-num-posts="5" data-width="470"></div>' : '') . '
-			</div>
-		<br /><br />';
+				<div style="width: 90%">
+					<div class="title">
+						<a href="#' . $information['id_blog'] . '" id="' . $information['id_blog'] . '">' . $information['blog_title'] . '</a>
+					</div>
+					' . show_string('posted_on') . ': ' . date("F j, Y, g:i a", $information['post_date']) . '
+				</div>
+				<br class="clear" />
+				<div class="blog_content">
+					' . $information['blog_content'] . '
+					' . ($vienara['setting']['enable_likes'] == 1 ? '<br /><br /><iframe src="https://www.facebook.com/plugins/like.php?href=' . $vienara['setting']['blog_url'] . '?blog=' . $information['id_blog'] . '" style="border:none!important; width:450px; height:80px"></iframe>' : '') . '
+				' . ($vienara['setting']['enable_likes'] == 1 ? '<br /><div class="fb-comments" data-href="' . $vienara['setting']['blog_url'] . '?blog=' . $information['id_blog'] . '" data-num-posts="5" data-width="470"></div>' : '') . '
+				</div>
+			</div>';
 }
 
 // The help template
@@ -249,6 +267,12 @@ function template_admin($admin = array())
 		echo '
 			<div class="' . $admin['notice']['class'] . '">
 				' . $admin['notice']['string'] . '
+			</div><br />
+			<div class="cat_bg bg_color">
+				' . show_string('version_history') . '
+			</div>
+			<div class="bg_color4 padding changelog">
+				' . $vienara['changelog'] . '
 			</div>';
 
 		// Echo everything
@@ -312,6 +336,10 @@ function template_admin($admin = array())
 								<tr class="subject">
 									<td width="20%"><strong>' . show_string('approved') . ':</strong></td>
 									<td width="80%"><input type="checkbox" id="approved" name="approved" /></td>
+								</tr>
+								<tr class="subject">
+									<td width="20%"><strong>' . show_string('is_status') . ':</strong></td>
+									<td width="80%"><input type="checkbox" id="is_status" name="is_status" /></td>
 								</tr>
 							</table>
 							<input type="submit" id="editor_submit" value="' . show_string('submit') . '" />
@@ -858,6 +886,23 @@ function template_admin($admin = array())
 						<input type="submit" value="' . show_string('submit') . '" />
 					</div>
 				</form>';
+	}
+
+	// The terminal
+	elseif(adm_sect == 'terminal') {
+
+		echo '
+			<div class="cat_bg bg_color">
+				' . show_string('terminal') . '
+			</div>
+			<div class="padding bg_color5">
+					' . $vienara['current_command'] . '
+				<hr />
+				<form action="' . Blog_file . '?app=admin&section=terminal" method="post">
+					<input type="text" name="command" autofocus="autofocus" style="width: 80%;" />
+					<input type="submit" value="' . show_string('submit') . '" />
+				</form>
+			</div>';
 	}
 
 	echo '

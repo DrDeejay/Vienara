@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS {db_pref}content (
   `blog_content` longtext NOT NULL,
   `post_date` int(11) NOT NULL,
   `published` int(1) NOT NULL,
+  `is_status` int(1) NOT NULL,
   PRIMARY KEY (`id_blog`),
   UNIQUE KEY `id_blog` (`id_blog`)
 ) ENGINE=MyISAM CHARACTER SET utf8 COLLATE utf8_bin;
@@ -32,7 +33,9 @@ INSERT INTO {db_pref}settings (`id`, `value`) VALUES
 ('copyright_link_to', ''),
 ('blog_url', 'http://example.com'),
 ('enable_comments', '0'),
+('avatar', 'images/no_ava.png'),
 ('enable_likes', '0'),
+('css_cache_version', 'vienara10'),
 ('width', '90');
 
 CREATE TABLE {db_pref}menu (
@@ -43,7 +46,7 @@ CREATE TABLE {db_pref}menu (
 ) ENGINE=MyIsam CHARACTER SET utf8 COLLATE 'utf8_bin';
 
 CREATE TABLE {db_pref}pages (
-  `id_page` int NOT NULL AUTO_INCREMENT,
+  `id_page` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `page_title` text NOT NULL,
   `page_body` longtext NOT NULL,
   `show_header` tinyint NOT NULL

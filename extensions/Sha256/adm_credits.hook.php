@@ -15,12 +15,11 @@
 *
 * @license MIT
 */
-global $mod;
+global $admin;
 
-// Setup package information
-$mod = array(
-	'author' => 'Dr. Deejay',
-	'version' => '1.0',
-	'title' => 'Sha256 hash extension',
-	'dir' => 'Sha256'
+$admin['credits']['extensions']['teams']['sha256'] = array(
+	'label' => 'Sha256 hash function',
+	'members' => array(
+		'Dr. Deejay'
+	),
 );

@@ -2,7 +2,7 @@
 /**
  * XenSql
  *
- * Version: 1.0
+ * Version: 1.0 (Modified)
  * Copyright 2012: XenSql
  * Developed by: Dr. Deejay
  * Based on: Xensql (The Xensql development team)
@@ -234,10 +234,6 @@ if(!defined('Xensql'))
 		// Replace some extra variables too
 		if(isset($_GET['id']))
 			$query = str_replace('{id}', $_GET['id'], $query);
-		
-		// Due coding standards, we don't allow "*"
-		if(!strpos($query, '*') == false)
-			die(xensql_error($xensql['str_invalid_char1']));
 		
 		// Execute the query, using the correct sql function
 		if($xensql['db_type'] == 'mysqli')

@@ -144,6 +144,9 @@ function loadClass($class_name = '')
 	return true;
 }
 
+// Get the Decoda class
+include 'decoda/Decoda.php';
+
 // Get a hook from an extension
 function vienara_hook($hook_name = '')
 {
@@ -390,7 +393,7 @@ function vienara_is_logged()
 // What action should we call?
 function vienara_get_app($application = '')
 {
-	global $vienara;
+	global $vienara, $vienara_acts;
 
 	// Did we set anything?
 	if(empty($application))
@@ -470,7 +473,7 @@ function vienara()
 
 	// Get the blogs from the blog table
 	$result = xensql_query("
-		SELECT id_blog, blog_title, blog_content, published, post_date
+		SELECT id_blog, blog_title, blog_content, published, post_date, is_status
 			FROM {db_pref}content
 			WHERE published = 1
 			ORDER BY post_date " . $vienara['setting']['order'] . "
@@ -490,7 +493,7 @@ function vienara()
 			vienara_hook('single_blog');
 
 			// Finally show everything
-			vienara_show_blog($blog);
+			vienara_show_blog($blog, ($blog['is_status'] == 1 ? true : false));
 		}
 }
 
@@ -533,6 +536,14 @@ if(!empty($_POST['content'])) {
 	else
 		$approved = 1;
 
+	// And is this a status update?
+	if(isset($_POST['adm_post']) && isset($_POST['is_status']))
+		$is_status = 1;
+	elseif(isset($_POST['adm_post']) && !isset($_POST['is_status']))
+		$is_status = 0;
+	else
+		$is_status = 1;
+
 	// Add it into the database
 	xensql_query("
 		INSERT 
@@ -542,7 +553,8 @@ if(!empty($_POST['content'])) {
 				'" . $_POST['post_title'] . "',
 				'" . $_POST['content'] . "',
 				UNIX_TIMESTAMP(),
-				'" . $approved . "'
+				'" . $approved . "',
+				'" . $is_status . "'
 		)
 	");
 }
@@ -765,6 +777,12 @@ function vienara_act_admin()
 			'show' => true,
 			'icon' => 'plugin.png'
 		),
+		'terminal' => array(
+			'title' => show_string('terminal'),
+			'href' => Blog_file . '?app=admin&section=terminal',
+			'show' => true,
+			'icon' => 'terminal.png'
+		),
 		'post_blog' => array(
 			'title' => show_string('new_post'),
 			'href' => Blog_file . '?app=admin&section=newblog',
@@ -845,6 +863,21 @@ function vienara_act_admin()
 	// The main admin function. This is the function that show's the welcome thing. Currently, it only displays credits
 	function admin_main()
 	{
+		global $vienara;
+
+		// Get the changelog
+		$vienara['changelog'] = @file_get_contents('changelog.txt');
+
+			// Wipe out html
+			$vienara['changelog'] = htmlspecialchars($vienara['changelog']);
+
+			// Make it pretty
+			$vienara['changelog'] = nl2br($vienara['changelog']);
+
+		// We do have one right?
+		if(empty($vienara['changelog']))
+			$vienara['changelog'] = show_string('changelog_fail');
+
 		// We're using the main admin stuff
 		define('adm_sect', 'main');
 	}
@@ -869,16 +902,30 @@ function vienara_act_admin()
 				)
 			)
 		),
-		'friends' => array(
-			'label' => show_string('friends'),
-			'no_team' => true,
+		'special_thanks' => array(
+			'label' => show_string('special_thanks'),
 			'teams' => array(
-				'members' => array(
-					'Yoshi2889',
-					'Lagom',
-					'Fivang'
+				'family' => array(
+					'label' => show_string('friends'),
+					'members' => array(
+						'Yoshi2889',
+						'Lagom',
+						'Fivang'
+					),
+				),
+				'credits' => array(
+					'label' => show_string('credits'),
+					'members' => array(
+						'<a href="http://www.famfamfam.com/lab/icons/silk/">FamFamFam</a>',
+						'<a href="http://www.fatcow.com/free-icons">Fatcow</a>',
+						'<a href="http://milesj.me/code/php/decoda">Decoda</a>'
+					),
 				)
 			)
+		),
+		'extensions' => array(
+			'label' => show_string('extensions'),
+			'teams' => array()
 		)
 	);
 
@@ -964,6 +1011,7 @@ function vienara_act_admin()
 				'title' => array('text', 'blog_title'),
 				'language' => array('select', 'language'),
 				'blog_url' => array('text', 'blog_url'),
+				'css_cache_version' => array('text', 'css_cache_version'),
 			'',
 				'blogsperpage' => array('number', 'items_per_page'),
 				'width' => array('number', 'width'),
@@ -983,7 +1031,9 @@ function vienara_act_admin()
 				'copyright_link_to' => array('text', 'copyright_link_to'),
 			'',
 				'enable_likes' => array('check', 'enable_likes'),
-				'enable_comments' => array('check', 'enable_comments')
+				'enable_comments' => array('check', 'enable_comments'),
+			'',
+				'avatar' => array('text', 'avatar')
 		);
 
 		// Extra settings! ;)
@@ -1557,6 +1607,84 @@ function vienara_act_admin()
 		define('adm_sect', 'css');
 	}
 
+	// The terminal!
+	function admin_section_terminal()
+	{
+		global $vienara;
+
+		// Check if we have already a command set
+		if(empty($_POST['command']))
+			$vienara['current_command'] = show_string('no_command');
+
+		// Yeah we have one set
+		else {
+
+			// The array with commands
+			$commands = array(
+				'hello_world' => 'hello_world',
+				'help' => 'help',
+				'getsettings' => 'getsettings',
+				'refresh' => 'refresh',
+				'support_url' => 'support_url'
+			);
+
+			// Is it set?
+			if(isset($commands[$_POST['command']])) {
+
+				// What should we do?
+				switch($_POST['command']) {
+
+					// The hello world command
+					case 'hello_world':
+						$vienara['current_command'] = 'Hello world!';
+						break;
+
+					// Do nothing
+					case 'refresh':
+						$vienara['current_command'] = show_string('no_command');
+						break;
+
+					// Get the settings and their values
+					case 'getsettings':
+
+						$vienara['current_command'] = '<ul>';
+
+						// Walk through the settings		
+						foreach($vienara['setting'] as $key => $value) {
+
+							// For security reasons, don't show the password
+							if($key == 'password')
+								continue;
+
+							// Show it
+							$vienara['current_command'] .= '<li><strong>' . $key . ':</strong> ' . $value . '</li>';
+						}
+
+						$vienara['current_command'] .= '</ul>';				
+
+						break;
+
+					// The link you can use for getting support
+					case 'support_url':
+						$vienara['current_command'] = '<a href="' . Website_Url . '">' . Website_Url . '</a>';
+						break;
+
+					// Provide a list of commands
+					case 'help':
+						$vienara['current_command'] = implode(', ', $commands);
+						break;
+				}
+			}
+
+			// Nope
+			else
+				$vienara['current_command'] = show_string('command_not_found');
+		}
+
+		// We need this to get the template
+		define('adm_sect', 'terminal');
+	}
+
 	// Define sections!
 	$admin['sections'] = array(
 		'newblog' => 'newblog',
@@ -1572,7 +1700,8 @@ function vienara_act_admin()
 		'help' => 'help',
 		'extensions' => 'extensions',
 		'pages' => 'pages',
-		'css' => 'css'
+		'css' => 'css',
+		'terminal' => 'terminal'
 	);
 
 	// New sections :D
