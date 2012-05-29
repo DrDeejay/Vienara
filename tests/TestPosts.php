@@ -20,7 +20,10 @@ $db = xensql_connect($db_settings['server'], $db_settings['username'], $db_setti
 		fatal_error('Database connection failed.');
 
 // How many posts should we generate?
-$posts = 12000;
+$posts = 1000;
+
+// Status updates?
+$status = 1; # Set to 0 to create blogs, set to 1 to create status updates
 
 // Generate the posts
 for($p = 1; $p <= $posts; $p++)
@@ -33,6 +36,7 @@ for($p = 1; $p <= $posts; $p++)
 				'Another blog - Part $p',
 				'Hi all! This is another blogpost.',
 				UNIX_TIMESTAMP(),
-				'1'
+				'1',
+				'$status'
 		)
 	");

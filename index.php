@@ -442,6 +442,9 @@ function vienara()
 {
 	global $vienara, $viencode;
 
+	// We're viewing the frontpage
+	define('VienaraFront', 1);
+
 	// Just in case
 	$end = 10;
 	

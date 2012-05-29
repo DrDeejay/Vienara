@@ -255,3 +255,10 @@ input[type="submit"], .more, button {
 	overflow-y: scroll;
 	font-size: 12px;
 }
+.new_status {
+	height: 50px;
+	width: 80%;
+	border: 1px solid dimgrey;
+	font-size: inherit;
+	font-family: inherit;
+}

@@ -74,6 +74,25 @@ function vienara_header()
 		  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
 		  fjs.parentNode.insertBefore(js, fjs);
 		}(document, \'script\', \'facebook-jssdk\'));</script>';
+
+	// Are we viewing the frontpage of vienara?
+	if(!isset($_GET['app']))
+		echo '
+			<br />
+			<div class="cat_bg bg_color">
+				' . show_string('new_status') . '
+			</div>
+			<div class="padding bg_color5">
+				<form action="' . Blog_file . '" method="post">
+					<input type="hidden" name="adm_post" />
+					<input type="hidden" name="is_status" />
+					<input type="hidden" name="approved" />
+					<input type="hidden" name="post_title" value="' . show_string('status_title') . '" />
+					<textarea class="new_status" rows="1" cols="1" name="content"></textarea><br />
+					<input type="submit" value="' . show_string('submit') . '" />
+				</form>
+			</div>
+			<br />';
 }
 
 // And this displays the footer

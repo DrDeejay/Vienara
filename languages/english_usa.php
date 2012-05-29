@@ -43,6 +43,8 @@ $txt['delete'] = 'Delete';
 $txt['approved'] = 'Publish';
 $txt['not_approved'] = 'This post has not been published yet. You need to publish this post in order to display it on the frontpage.';
 $txt['is_status'] = 'Is status update';
+$txt['new_status'] = 'New status update';
+$txt['status_title'] = 'Status update';
 
 // Altering settings
 $txt['old_pass'] = 'Old password';

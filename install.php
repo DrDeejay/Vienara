@@ -137,19 +137,7 @@ function vienara_header()
 			border: 1px solid grey;
 		}
 		input[type="submit"] {
-			/* http://gradients.glrzad.com/ */
-			background-image: linear-gradient(bottom, #71B055 18%, #88C46E 100%);
-			background-image: -o-linear-gradient(bottom, #71B055 18%, #88C46E 100%);
-			background-image: -moz-linear-gradient(bottom, #71B055 18%, #88C46E 100%);
-			background-image: -webkit-linear-gradient(bottom, #71B055 18%, #88C46E 100%);
-			background-image: -ms-linear-gradient(bottom, #71B055 18%, #88C46E 100%);
-			background-image: -webkit-gradient(
-				linear,
-				left bottom,
-				left top,
-				color-stop(0.18, #71B055),
-				color-stop(1, #88C46E)
-			);
+			background: #A7C78C url(./images/bg_color.png) repeat-x;
 			border-radius: 5px;
 			padding: 5px;
 			width: 100px;
