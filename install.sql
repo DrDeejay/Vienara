@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS {db_pref}settings (
 
 INSERT INTO {db_pref}settings (`id`, `value`) VALUES
 ('password', '{user_password}'),
-('title', 'Vienara'), 
+('title', 'My Blog'), 
 ('blogsperpage', '10'),
 ('order', 'DESC'),
 ('top_button', '1'),

@@ -978,7 +978,7 @@ function vienara_template_edit($bloginfo = array())
 }
 
 // This will create the page list
-function vienara_page($count = 1, $link = '?page=', $force = false)
+function vienara_page($count = 1, $link = '?page=')
 {
 	global $vienara;
 
@@ -993,7 +993,7 @@ function vienara_page($count = 1, $link = '?page=', $force = false)
 			<strong>' . show_string('pages') . ':</strong>';
 
 	// Is it just one?
-	if($pages < 1 && $force == true)
+	if($pages < 1)
 		echo '
 			<strong><a href="' . $link . '1">1</a></strong>';
 
