@@ -147,6 +147,10 @@ $txt['new_page'] = 'New page';
 $txt['style_edit'] = 'Edit default style';
 $txt['css_cache_version'] = 'CSS cache version';
 $txt['avatar'] = 'Avatar image';
+$txt['quick_status'] = 'Enable quick status updates';
+$txt['menu_icons'] = 'Enable menu icons';
+$txt['ignore_disabled_ext'] = 'Always load extensions';
+$txt['ext_enable'] = 'Enable extensions';
 
 // Pages
 $txt['page_not_found'] = 'Page not found';
@@ -215,6 +219,14 @@ $txt['doc']['css_cache_version'] = 'Setting - CSS cache version';
 $txt['doc']['doc_css_cache_version'] = 'When you made a small edit in the css file, you need to update this number in order to let the new css have effect for everyone. Usually, the css file is cached by the browser and if you edit this setting, it will be updated automatically, which makes sure your changes have effect. This also applies to Javascript files.';
 $txt['doc']['avatar'] = 'Setting - Avatar image';
 $txt['doc']['doc_avatar'] = 'The avatar image will be used on specific places, like status updates.';
+$txt['doc']['quick_status'] = 'Setting - Quick status update';
+$txt['doc']['doc_quick_status'] = 'When enabling this setting, you will see a quick status update form above the blogs on the homepage. This is meant for fast status updates, so you do not have to go to your admin panel when you want to post a new status update.';
+$txt['doc']['menu_icons'] = 'Setting - Menu icons';
+$txt['doc']['doc_menu_icons'] = 'Menu icons are meant to make the menu prettier, but if you don\'t like them, you can disable them here.';
+$txt['doc']['ignore_disabled_ext'] = 'Setting - Always load extensions';
+$txt['doc']['doc_ignore_disabled_ext'] = 'This setting makes the extension loader ignore disabled.ext files. This makes sure that extensions are always loaded, even if they are disabled. This will only have effect on loading them. The extension management screen will not be effected by this setting. It is not recommended to enable this setting.';
+$txt['doc']['ext_enable'] = 'Setting - Enable extensions';
+$txt['doc']['doc_ext_enable'] = 'When disabled, extensions will not be loaded.';
 
 // Dates
 $txt['jan'] = 'Jan';

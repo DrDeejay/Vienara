@@ -29,7 +29,7 @@ function vienara_header()
 			' . $vienara['setting']['title'] . '
 		</div>
 		<div class="menu">
-			<a href="' . Blog_file . '"><img src="./images/home.png" alt="" /> ' . show_string('index') . '</a>';
+			<a href="' . Blog_file . '">' . ($vienara['setting']['menu_icons'] == 1 ? '<img src="./images/home.png" alt="" /> ' : '') . show_string('index') . '</a>';
 
 			// Custom tabs
 			foreach($vienara['tabs'] as $tab)
@@ -38,14 +38,14 @@ function vienara_header()
 		
 			vienara_hook('menu');
 
-			echo (!vienara_is_logged() ? '<a href="javascript:void(0);" onclick="$(\'.login\').slideToggle(); $(\'.password\').focus();"><img src="./images/login.png" alt="" /> ' . show_string('login') . '</a><br />
+			echo (!vienara_is_logged() ? '<a href="javascript:void(0);" onclick="$(\'.login\').slideToggle(); $(\'.password\').focus();">' . ($vienara['setting']['menu_icons'] == 1 ? '<img src="./images/login.png" alt="" /> ' : '') . show_string('login') . '</a><br />
 			<div style="display: none;" class="login">
 				<form action="' . Blog_file . '?app=login" method="post">
 					' . show_string('password') . ': <input type="password" name="password" class="password" /> <input type="submit" value="' . show_string('login') . '" />
 				</form>
 			</div>' : '
-			<a href="' . Blog_file . '?app=admin"><img src="./images/admin.png" alt="" /> ' . show_string('admin') . '</a>
-			<a href="' . Blog_file . '?app=logout"><img src="./images/logout.png" alt="" /> ' . show_string('logout') . '</a>');
+			<a href="' . Blog_file . '?app=admin">' . ($vienara['setting']['menu_icons'] == 1 ? '<img src="./images/admin.png" alt="" /> ' : '') . show_string('admin') . '</a>
+			<a href="' . Blog_file . '?app=logout">' . ($vienara['setting']['menu_icons'] == 1 ? '<img src="./images/logout.png" alt="" /> ' : '') . show_string('logout') . '</a>');
 
 	echo '
 		</div>
@@ -76,7 +76,7 @@ function vienara_header()
 		}(document, \'script\', \'facebook-jssdk\'));</script>';
 
 	// Are we viewing the frontpage of vienara?
-	if(!isset($_GET['app']))
+	if(!isset($_GET['app']) && vienara_is_logged() && $vienara['setting']['quick_status'] == 1)
 		echo '
 			<br />
 			<div class="cat_bg bg_color">
@@ -978,7 +978,7 @@ function vienara_template_edit($bloginfo = array())
 }
 
 // This will create the page list
-function vienara_page($count = 1, $link = '?page=')
+function vienara_page($count = 1, $link = '?page=', $force = false)
 {
 	global $vienara;
 
@@ -993,7 +993,7 @@ function vienara_page($count = 1, $link = '?page=')
 			<strong>' . show_string('pages') . ':</strong>';
 
 	// Is it just one?
-	if($pages < 1)
+	if($pages < 1 && $force == true)
 		echo '
 			<strong><a href="' . $link . '1">1</a></strong>';
 

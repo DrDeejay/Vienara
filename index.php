@@ -147,6 +147,19 @@ function loadClass($class_name = '')
 // Get the Decoda class
 include 'decoda/Decoda.php';
 
+// We need a new array for the settings
+$vienara['setting'] = array();
+
+// Retrieve the settings from the database
+$result = xensql_query("
+	SELECT id, value
+		FROM {db_pref}settings
+");
+	
+	// Merge them into a settings array
+	foreach($result as $setting)
+		$vienara['setting'][$setting['id']] = $setting['value'];
+
 // Get a hook from an extension
 function vienara_hook($hook_name = '')
 {
@@ -154,6 +167,10 @@ function vienara_hook($hook_name = '')
 
 	// Hmm..
 	if(!file_exists($vienara['extension_dir']))
+		return;
+
+	// Have we enabled extensions?
+	if($vienara['setting']['ext_enable'] == 0)
 		return;
 
 	// Get each directory in the extension directory
@@ -169,7 +186,7 @@ function vienara_hook($hook_name = '')
 				continue;			
 
 			// Is this extension disabled?
-			if(file_exists($vienara['extension_dir'] . '/' . $file . '/disabled.ext'))
+			if(file_exists($vienara['extension_dir'] . '/' . $file . '/disabled.ext') && !$vienara['setting']['ignore_disabled_ext'] == 1)
 				continue;
 			
 			// Check for the hook
@@ -191,19 +208,6 @@ function vienara_hook($hook_name = '')
 
 // Extra includes
 vienara_hook('pre_include');
-
-// We need a new array for the settings
-$vienara['setting'] = array();
-
-// Retrieve the settings from the database
-$result = xensql_query("
-	SELECT id, value
-		FROM {db_pref}settings
-");
-	
-	// Merge them into a settings array
-	foreach($result as $setting)
-		$vienara['setting'][$setting['id']] = $setting['value'];
 
 // Create a new array, which we will need for the custom tabs
 $vienara['tabs'] = array();
@@ -1021,6 +1025,7 @@ function vienara_act_admin()
 				'order' => array('select', 'order', array('desc', 'asc')),
 			'',
 				'top_button' => array('check', 'top_button'),
+				'menu_icons' => array('check', 'menu_icons'),
 			'',
 				'enable_extra_title' => array('check', 'enable_extra_title'),
 				'extra_title' => array('text', 'extra_title'),
@@ -1035,8 +1040,12 @@ function vienara_act_admin()
 			'',
 				'enable_likes' => array('check', 'enable_likes'),
 				'enable_comments' => array('check', 'enable_comments'),
+				'quick_status' => array('check', 'quick_status'),
 			'',
-				'avatar' => array('text', 'avatar')
+				'avatar' => array('text', 'avatar'),
+			'',	
+				'ignore_disabled_ext' => array('check', 'ignore_disabled_ext'),
+				'ext_enable' => array('check', 'ext_enable')
 		);
 
 		// Extra settings! ;)

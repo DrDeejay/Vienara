@@ -35,7 +35,11 @@ INSERT INTO {db_pref}settings (`id`, `value`) VALUES
 ('enable_comments', '0'),
 ('avatar', 'images/no_ava.png'),
 ('enable_likes', '0'),
+('quick_status', '0'),
+('menu_icons', '1'),
 ('css_cache_version', 'vienara10'),
+('ignore_disabled_ext', '0'),
+('ext_enable', '1'),
 ('width', '90');
 
 CREATE TABLE {db_pref}menu (
