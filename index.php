@@ -1602,6 +1602,19 @@ function vienara_act_admin()
 		// Attempting to save it?
 		if(!empty($_POST['new_style'])) {
 
+			// Backup it before saving?
+			if(isset($_POST['css_backup'])) {
+
+				// The old file
+				$oldfile = 'style.css';
+
+				// And the new file
+				$newfile  = 'StyleBackups/style-' . date('YmdHis') . '.css';
+
+				// Save it
+				copy($oldfile, $newfile);
+			}
+
 			// Put the contents into the file
 			file_put_contents('style.css', $_POST['new_style']);
 

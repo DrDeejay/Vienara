@@ -151,6 +151,7 @@ $txt['quick_status'] = 'Enable quick status updates';
 $txt['menu_icons'] = 'Enable menu icons';
 $txt['ignore_disabled_ext'] = 'Always load extensions';
 $txt['ext_enable'] = 'Enable extensions';
+$txt['backup_css'] = 'Backup this file before saving it';
 
 // Pages
 $txt['page_not_found'] = 'Page not found';

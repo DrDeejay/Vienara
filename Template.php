@@ -692,7 +692,7 @@ function template_admin($admin = array())
 			<div class="cat_bg bg_color">
 				' . show_string('repair_optimize') . '
 			</div>
-			<div class="padding bg_color4">';
+			<div class="bg_color4">';
 
 		// Done?
 		if(isset($vienara['repair_fail'])) {
@@ -712,9 +712,14 @@ function template_admin($admin = array())
 			<form action="' . Blog_file . '?app=admin&section=repairtable" method="post">
 			<div class="list_tables">';
 
-		foreach($vienara['admin_tables'] as $table)
+		$variant = 5;
+
+		foreach($vienara['admin_tables'] as $table) {
 			echo '
-				<input type="radio" name="repair_database" value="' . $table[0] . '" />' . $table[0] . '<br />';
+				<div class="padding bg_color' . $variant . '"><input type="radio" name="repair_database" value="' . $table[0] . '" />' . $table[0] . '</div>';
+
+			$variant = ($variant == 5 ? 4 : 5);
+		}
 
 		echo '
 			</div>
@@ -902,6 +907,8 @@ function template_admin($admin = array())
 				<form action="' . Blog_file . '?app=admin&section=css" method="post">
 					<div class="bg_color5 padding">
 						<textarea name="new_style" class="editor new_post" rows="1" cols="1">' . $vienara['style'] . '</textarea><br /><br />
+						<input type="checkbox" name="css_backup" checked="checked" /> ' . show_string('backup_css') . '
+						<br /><br />
 						<input type="submit" value="' . show_string('submit') . '" />
 					</div>
 				</form>';

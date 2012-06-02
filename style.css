@@ -224,7 +224,6 @@ input[type="submit"], .more, button {
 .list_tables {
 	max-height: 300px;
 	overflow-y: auto;
-	font-size: 11px;
 }
 .result_good {
 	padding: 5px;
