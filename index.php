@@ -108,7 +108,8 @@ function fatal_error($error = '', $include_fail = false)
 $vienara['includes'] = array(
 	'Config.php',
 	'Template.php',
-	'xensql/XenSql.php'
+	'xensql/XenSql.php',
+	'Imik.php'
 );
 
 	// Include them
@@ -146,6 +147,9 @@ function loadClass($class_name = '')
 
 // Get the Decoda class
 include 'decoda/Decoda.php';
+
+// Setup imik
+$imik = new Imik;
 
 // We need a new array for the settings
 $vienara['setting'] = array();
