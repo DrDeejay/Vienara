@@ -1056,6 +1056,10 @@ function template_search()
 				<div class="bg_color4 padding"><input type="radio" name="type" value="videos" /> ' . show_string('search_videos') . '</div><br />
 			<div class="bg_color padding">' . show_string('extra_search_args') . '</div>
 				<div class="bg_color5 padding"><input type="checkbox" name="thissite"/> ' . show_string('search_this') . '</div>
-				<div class="bg_color4 padding"><input type="checkbox" name="exact" /> ' . show_string('search_exact') . '</div>
+				<div class="bg_color4 padding"><input type="checkbox" name="exact" /> ' . show_string('search_exact') . '</div><br /><br />
+			<div class="bg_color padding"><a href="javascript:void(0);" onclick="$(\'#privacy\').slideToggle(\'slow\')">' . show_string('privacy_policy') . '</a></div>
+			<div id="privacy" class="padding bg_color5" style="display: none;">
+				' . show_string('google_policy') . '
+			</div>
 		</form>';
 }

@@ -37,6 +37,8 @@ $txt['extra_search_args'] = 'Optional settings';
 $txt['search_this'] = 'Only show results from this site';
 $txt['search_exact'] = 'Only show exact matches';
 $txt['search_fail'] = 'Failed to perform search. Make sure you have redirects enabled within your browser.';
+$txt['privacy_policy'] = 'Privacy policy';
+$txt['google_policy'] = 'Before using the search feature, please keep in mind that Google is known for saving search history of its users. We (the Vienara team) have nothing to do with that. We simply provide a search feature that redirects you to Google. While this may not be a problem for most of you, we would like to recommend you not to use the search feature for searching things that you would like to keep private.';
 
 // Blogs
 $txt['blog_not_found'] = 'The blog you are looking for hasn\'t been found.';

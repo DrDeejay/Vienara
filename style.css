@@ -273,3 +273,10 @@ input.searchsubmit {
 	padding: 10px;
 	border-radius: 0;
 }
+input.searchsubmit:hover {
+	background: #656565;
+	border-top: 1px solid #656565;
+}
+.bg_color a {
+	color: white;
+}
