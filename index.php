@@ -60,6 +60,7 @@ $vienara = array();
 define('Version', '1.0 Alpha 1');
 define('Website_Url', 'http://vienara.co.cc'); // Don't change this!
 define('Blog_file', 'index.php');
+define('Branch', '1.0');
 
 // Have we set a blog?
 if(isset($_GET['blog'])) {

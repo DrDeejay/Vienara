@@ -252,7 +252,8 @@ input[type="submit"], .more, button {
 .changelog {
 	height: 200px;
 	overflow-y: scroll;
-	font-size: 12px;
+	font-size: 10px;
+	font-family: Courier New;
 }
 .new_status {
 	height: 50px;
@@ -279,4 +280,8 @@ input.searchsubmit:hover {
 }
 .bg_color a {
 	color: white;
+}
+.update_req {
+	color: red;
+	font-weight: bold;
 }

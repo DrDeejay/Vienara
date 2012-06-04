@@ -291,6 +291,26 @@ function template_admin($admin = array())
 			<div class="' . $admin['notice']['class'] . '">
 				' . $admin['notice']['string'] . '
 			</div><br />
+			<table width="100%" cellspacing="1">
+				<tr>
+					<td width="50%" class="bg_color5 padding"><strong>' . show_string('blog_version') . ':</strong></td>
+					<td width="50%" class="bg_color4 padding">' . Version . '</td>
+				</tr>
+				<tr>
+					<td width="50%" class="bg_color5 padding"><strong>' . show_string('db_version') . ':</strong></td>
+					<td width="50%" class="bg_color4 padding">' . $vienara['setting']['version'] . '
+					' . (Version != $vienara['setting']['version'] ? '<a href="upgrade.php" class="update_req">' . show_string('update_required') . '</a>' : '') . '</td>
+				</tr>
+				<tr>
+					<td width="50%" class="bg_color5 padding"><strong>' . show_string('blog_branch') . ':</strong></td>
+					<td width="50%" class="bg_color4 padding">' . Branch . '</td>
+				</tr>
+				<tr>
+					<td width="50%" class="bg_color5 padding"><strong>' . show_string('blog_support') . ':</strong></td>
+					<td width="50%" class="bg_color4 padding"><a href="' . Website_Url . '">' . Website_Url . '</a></td>
+				</tr>
+			</table>
+			<br /><br />
 			<div class="cat_bg bg_color">
 				' . show_string('version_history') . '
 			</div>

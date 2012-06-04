@@ -167,6 +167,11 @@ $txt['ignore_disabled_ext'] = 'Always load extensions';
 $txt['ext_enable'] = 'Enable extensions';
 $txt['backup_css'] = 'Backup this file before saving it';
 $txt['enable_search'] = 'Enable search feature';
+$txt['blog_version'] = 'Software version';
+$txt['db_version'] = 'Database version';
+$txt['blog_branch'] = 'Branch';
+$txt['blog_support'] = 'Support url';
+$txt['update_required'] = '[Upgrade required]';
 
 // Pages
 $txt['page_not_found'] = 'Page not found';
