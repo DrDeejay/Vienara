@@ -790,11 +790,11 @@ function template_admin($admin = array())
 			echo '
 				<table style="width: 100%" cellspacing="0">
 					<tr>
-						<td class="bg_color3 padding" width="40%">' . show_string('ext_title') . '</td>
+						<td class="bg_color3 padding" width="30%">' . show_string('ext_title') . '</td>
 						<td class="bg_color3 padding" width="10%">' . show_string('ext_version') . '</td>
 						<td class="bg_color3 padding" width="20%">' . show_string('ext_author') . '</td>
 						<td class="bg_color3 padding" width="10%">' . show_string('ext_enabled') . '</td>
-						<td class="bg_color3 padding" width="20%">' . show_string('ext_actions') . '</td>
+						<td class="bg_color3 padding" width="30%">' . show_string('ext_actions') . '</td>
 					</tr>';
 
 			$variation = 5;
@@ -810,6 +810,7 @@ function template_admin($admin = array())
 						<td class="bg_color' . $variation . ' padding">
 							[<a href="' . Blog_file . '?app=admin&section=extensions&delete=' . urlencode($extension['dir']) . '">' . show_string('delete') . '</a>]
 							[<a href="' . Blog_file . '?app=admin&section=extensions&changestatus=' . urlencode($extension['dir']) . '">' . ($extension['enabled'] == true ? show_string('disable') : show_string('enable')) . '</a>]
+							[<a href="' . Blog_file . '?app=admin&section=extensions&install=' . urlencode($extension['dir']) . '">' . show_string('run_installer') . '</a>]
 						</td>
 					</tr>';
 

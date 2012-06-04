@@ -172,6 +172,7 @@ $txt['db_version'] = 'Database version';
 $txt['blog_branch'] = 'Branch';
 $txt['blog_support'] = 'Support url';
 $txt['update_required'] = '[Upgrade required]';
+$txt['run_installer'] = 'Run install';
 
 // Pages
 $txt['page_not_found'] = 'Page not found';

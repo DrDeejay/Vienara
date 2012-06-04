@@ -824,6 +824,8 @@ function zip_extract($filename, $directory)
 			// Close.
 			fclose($result);
 	}
+
+	return $vienara['extension_dir'] . '/' . $directory;
 }
 
 // The administration panel. Isn't it pretty?
@@ -1421,6 +1423,14 @@ function vienara_act_admin()
 			remove_dir($dir);
 		}
 
+		// Install one?
+		elseif(isset($_GET['install'])) {
+
+			// Check if there is an installer
+			if(file_exists($vienara['extension_dir'] . '/' . $_GET['install'] . '/install.php'))
+				include $vienara['extension_dir'] . '/' . $_GET['install'] . '/install.php';
+		}
+
 		// Enable or disable an extension
 		elseif(isset($_GET['changestatus'])) {
 
@@ -1484,7 +1494,11 @@ function vienara_act_admin()
 					chmod($vienara['extension_dir'] . '/' . $name, 0775);
 
 					// Get the file
-					zip_extract($vienara['extension_dir'] . '/' . $name, $new_dirname);
+					$install = zip_extract($vienara['extension_dir'] . '/' . $name, $new_dirname);
+
+					// Check for a sql file
+					if(file_exists($install . '/install.php'))
+						include $install . '/install.php';
 				}
 			}
 		}
