@@ -422,6 +422,10 @@ function vienara_get_app($application = '')
 		// Extra actions
 		vienara_hook('apps');
 
+		// Do we want to show the search page?
+		if($vienara['setting']['enable_search'] == 1)
+			$vienara_acts['search'] = 'search';
+
 		// Is it set?
 		if(isset($vienara_acts[$application]))
 			call_user_func('vienara_act_' . $application);
@@ -687,6 +691,68 @@ function vienara_act_site($all = false)
 	// Found?
 	if(!isset($found))
 		die_nice(show_string('page_not_found'));
+}
+
+// Search through the site
+function vienara_act_search()
+{
+	global $vienara;
+
+	// There might be a chance that we have already entered something to search for.
+	if(isset($_POST['keywords'])) {
+
+		// Search types
+		$types = array(
+			'normal' => 'normal',
+			'images' => 'images',
+			'maps' => 'maps',
+			'videos' => 'videos'
+		);
+
+		// Ok, we need to make sure that we have a type set
+		if(empty($_POST['type']))
+			$_POST['type'] = 'normal';
+		elseif(!in_array($_POST['type'], $types))
+			$_POST['type'] = 'normal';
+
+		// We need valid urls
+		$_POST['keywords'] = str_replace(' ', '+', $_POST['keywords']);
+
+		// Exact values?
+		if(isset($_POST['exact']))
+			$_POST['keywords'] = '"' . $_POST['keywords'] . '"';
+
+		// And do we only want results from this site?
+		if(isset($_POST['thissite']))
+			$_POST['keywords'] .= ' site:' . $vienara['setting']['blog_url'];
+
+		// Define the modus
+		if($_POST['type'] == 'normal')
+			$modus = 'search';
+		elseif($_POST['type'] == 'images')
+			$modus = 'imghp';
+		elseif($_POST['type'] == 'maps')
+			$modus = 'maps';
+		elseif($_POST['type'] == 'videos')
+			$modus = 'videohp';
+		else
+			$modus = 'search';
+
+		// The google url
+		$url = 'http://www.google.com/' . $modus . '?q=' . $_POST['keywords'];
+
+		// Clean the contents of the screen
+		ob_get_clean();
+
+		// Redirect to Google!
+		header('Location: ' . $url);
+
+		// An exit, in case redirects don't work
+		exit(show_string('search_fail'));
+	}
+
+	// There isn't much to do here. Make sure we show the template
+	template_search();
 }
 
 // Remove a directory and all its files
@@ -1045,11 +1111,12 @@ function vienara_act_admin()
 				'enable_likes' => array('check', 'enable_likes'),
 				'enable_comments' => array('check', 'enable_comments'),
 				'quick_status' => array('check', 'quick_status'),
+				'enable_search' => array('check', 'enable_search'),
 			'',
 				'avatar' => array('text', 'avatar'),
 			'',	
 				'ignore_disabled_ext' => array('check', 'ignore_disabled_ext'),
-				'ext_enable' => array('check', 'ext_enable')
+				'ext_enable' => array('check', 'ext_enable'),
 		);
 
 		// Extra settings! ;)

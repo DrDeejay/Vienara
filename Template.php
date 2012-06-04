@@ -38,6 +38,10 @@ function vienara_header()
 		
 			vienara_hook('menu');
 
+			if($vienara['setting']['enable_search'] == 1)
+				echo '
+					<a href="' . Blog_file . '?app=search">' . ($vienara['setting']['menu_icons'] == 1 ? '<img src="./images/search.png" alt="" /> ' : '') . show_string('search') . '</a>';
+
 			echo (!vienara_is_logged() ? '<a href="javascript:void(0);" onclick="$(\'.login\').slideToggle(); $(\'.password\').focus();">' . ($vienara['setting']['menu_icons'] == 1 ? '<img src="./images/login.png" alt="" /> ' : '') . show_string('login') . '</a><br />
 			<div style="display: none;" class="login">
 				<form action="' . Blog_file . '?app=login" method="post">
@@ -1032,4 +1036,26 @@ function template_page($info = array())
 			<div class="bg_color5 padding">
 				' . $info['page_body'] . '
 			</div>';
+}
+
+// Search.
+function template_search()
+{
+	echo '
+		<form action="' . Blog_file . '?app=search" method="post">
+			<table width="100%">
+				<tr>
+					<td width="90%"><input type="text" class="search" name="keywords" autofocus="autofocus" /></td>
+					<td width="10%"><input type="submit" class="searchsubmit" value="' . show_string('search') . '" /></td>
+				</tr>
+			</table><br /><br />
+			<div class="bg_color padding">' . show_string('search_for') . '</div>
+				<div class="bg_color5 padding"><input type="radio" name="type" value="normal" checked="checked" /> ' . show_string('search_normal') . '</div>
+				<div class="bg_color4 padding"><input type="radio" name="type" value="images" /> ' . show_string('search_images') . '</div>
+				<div class="bg_color5 padding"><input type="radio" name="type" value="maps" /> ' . show_string('search_maps') . '</div>
+				<div class="bg_color4 padding"><input type="radio" name="type" value="videos" /> ' . show_string('search_videos') . '</div><br />
+			<div class="bg_color padding">' . show_string('extra_search_args') . '</div>
+				<div class="bg_color5 padding"><input type="checkbox" name="thissite"/> ' . show_string('search_this') . '</div>
+				<div class="bg_color4 padding"><input type="checkbox" name="exact" /> ' . show_string('search_exact') . '</div>
+		</form>';
 }

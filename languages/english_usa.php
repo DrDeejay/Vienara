@@ -19,12 +19,24 @@ $vienara['lang']['code'] = 'en';
 $txt['index'] = 'Index';
 $txt['login'] = 'Login';
 $txt['settings'] = 'Settings';
+$txt['search'] = 'Search';
 $txt['logout'] = 'Logout';
 
 // Login and logout
 $txt['incorrect_pass'] = 'Incorrect password.';
 $txt['logged_out'] = 'You have now been logged out.';
 $txt['password'] = 'Password';
+
+// Searching
+$txt['search_for'] = 'Search for';
+$txt['search_normal'] = 'Regular results';
+$txt['search_images'] = 'Images';
+$txt['search_maps'] = 'Maps';
+$txt['search_videos'] = 'Videos';
+$txt['extra_search_args'] = 'Optional settings';
+$txt['search_this'] = 'Only show results from this site';
+$txt['search_exact'] = 'Only show exact matches';
+$txt['search_fail'] = 'Failed to perform search. Make sure you have redirects enabled within your browser.';
 
 // Blogs
 $txt['blog_not_found'] = 'The blog you are looking for hasn\'t been found.';
@@ -152,6 +164,7 @@ $txt['menu_icons'] = 'Enable menu icons';
 $txt['ignore_disabled_ext'] = 'Always load extensions';
 $txt['ext_enable'] = 'Enable extensions';
 $txt['backup_css'] = 'Backup this file before saving it';
+$txt['enable_search'] = 'Enable search feature';
 
 // Pages
 $txt['page_not_found'] = 'Page not found';
@@ -228,6 +241,8 @@ $txt['doc']['ignore_disabled_ext'] = 'Setting - Always load extensions';
 $txt['doc']['doc_ignore_disabled_ext'] = 'This setting makes the extension loader ignore disabled.ext files. This makes sure that extensions are always loaded, even if they are disabled. This will only have effect on loading them. The extension management screen will not be effected by this setting. It is not recommended to enable this setting.';
 $txt['doc']['ext_enable'] = 'Setting - Enable extensions';
 $txt['doc']['doc_ext_enable'] = 'When disabled, extensions will not be loaded.';
+$txt['doc']['enable_search'] = 'Setting - Enable search';
+$txt['doc']['doc_enable_search'] = 'The search page allows users to search through your site by using Google. Users also have the ability to specify extra terms.';
 
 // Dates
 $txt['jan'] = 'Jan';

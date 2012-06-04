@@ -22,6 +22,7 @@ INSERT INTO {db_pref}settings (`id`, `value`) VALUES
 ('title', 'My Blog'), 
 ('blogsperpage', '10'),
 ('order', 'DESC'),
+('enable_search', '1'),
 ('top_button', '1'),
 ('timezone', 'America/New_York'),
 ('enable_extra_title', '0'),

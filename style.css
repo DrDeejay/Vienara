@@ -261,3 +261,15 @@ input[type="submit"], .more, button {
 	font-size: inherit;
 	font-family: inherit;
 }
+input.search {
+	width: 100%;
+	font-size: 20px;
+	padding: 7px;
+}
+input.searchsubmit {
+	background: #333333;
+	border: 0;
+	border-top: 1px solid #333333;
+	padding: 10px;
+	border-radius: 0;
+}
