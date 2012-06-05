@@ -20,7 +20,7 @@ if(!defined('Vienara'))
 
 // Just add the comments table
 xensql_query("
-	CREATE TABLE IF NOT EXISTS `{db_pref]guestbook` (
+	CREATE TABLE IF NOT EXISTS `{db_pref}guestbook` (
 	  `id_comment` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	  `ip_adress` text NOT NULL,
 	  `message` longtext NOT NULL,
