@@ -301,6 +301,9 @@ function install_step_2()
 	// Hash the password
 	$_POST['password'] = sha1($_POST['password']);
 
+	// Set the blogurl (thanks Yoshi)
+	$blogurl = 'http://' . $_SERVER['SERVER_ADDR'] . str_ireplace('/index.php', '', $_SERVER['REQUEST_URI']);
+
 	// Insert everything into the database
 	$query = file_get_contents('install.sql');
 
@@ -315,6 +318,9 @@ function install_step_2()
 
 		// Set the username correct
 		$query = str_replace('{user_password}', $_POST['password'], $query);
+
+		// Fix the blogurl
+		$query = str_replace('{blogurl}', $blogurl, $query);
 
 		// Execute the queries
 		mysqli_multi_query($db, $query);

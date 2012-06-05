@@ -119,6 +119,9 @@ function vienara_act_guestbook()
 		// Let's parse bbc
 		$comment['message'] = $viencode->parse($comment['message']);
 
+		// Make new lines work
+		$comment['message'] = nl2br($comment['message']);
+
 		// This is just template stuff
 		echo '
 			<tr>

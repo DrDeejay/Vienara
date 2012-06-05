@@ -32,7 +32,7 @@ INSERT INTO {db_pref}settings (`id`, `value`) VALUES
 ('enable_custom_copyright', '0'),
 ('custom_copyright', ''),
 ('copyright_link_to', ''),
-('blog_url', 'http://example.com'),
+('blog_url', '{blogurl}'),
 ('enable_comments', '0'),
 ('avatar', 'images/no_ava.png'),
 ('enable_likes', '0'),
