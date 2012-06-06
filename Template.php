@@ -34,7 +34,7 @@ function vienara_header()
 			// Custom tabs
 			foreach($vienara['tabs'] as $tab)
 				echo '
-					<a href="' . $tab['tab_link'] . '">' . $tab['tab_label'] . '</a>';
+					' . (file_exists('MenuIcons/tab_' . $tab['tab_position']  . '.png') ? '<img src="MenuIcons/tab_' . $tab['tab_position']  . '.png" alt="" /> ' : '') . '<a href="' . $tab['tab_link'] . '">' . $tab['tab_label'] . '</a>';
 		
 			vienara_hook('menu');
 
@@ -308,6 +308,10 @@ function template_admin($admin = array())
 				<tr>
 					<td width="50%" class="bg_color5 padding"><strong>' . show_string('blog_support') . ':</strong></td>
 					<td width="50%" class="bg_color4 padding"><a href="' . Website_Url . '">' . Website_Url . '</a></td>
+				</tr>
+				<tr>
+					<td width="50%" class="bg_color5 padding"><strong>' . show_string('jquery_v') . ':</strong></td>
+					<td width="50%" class="bg_color4 padding">' . JqueryVersion . '</td>
 				</tr>
 			</table>
 			<br /><br />

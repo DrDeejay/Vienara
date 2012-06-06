@@ -161,7 +161,9 @@ function vienara_act_guestbook()
 					</tr>
 				</table><br /><br />
 				When sending a comment, your ip-adress will be saved. It will only be used for anti-spam purposes and will not be published
-				anywhere. When submitting this form, you will agree to that.<br /><br />
+				anywhere. When submitting this form, you will agree to that. After you submitted this form, you cannot delete or edit your 
+				message. Messages can only be deleted by administrators. You can ask them to remove your comment if you want to, but when
+				submitting this form, you agree to it that the administrator does not have to obey your request.<br /><br />
 				<input type="submit" value="' . show_string('submit') . '" />
 			</form>
 		</div>';

@@ -173,6 +173,7 @@ $txt['blog_branch'] = 'Branch';
 $txt['blog_support'] = 'Support url';
 $txt['update_required'] = '[Upgrade required]';
 $txt['run_installer'] = 'Run install';
+$txt['jquery_v'] = 'Jquery version';
 
 // Pages
 $txt['page_not_found'] = 'Page not found';
@@ -251,6 +252,16 @@ $txt['doc']['ext_enable'] = 'Setting - Enable extensions';
 $txt['doc']['doc_ext_enable'] = 'When disabled, extensions will not be loaded.';
 $txt['doc']['enable_search'] = 'Setting - Enable search';
 $txt['doc']['doc_enable_search'] = 'The search page allows users to search through your site by using Google. Users also have the ability to specify extra terms.';
+$txt['doc']['extensions_dont_work'] = 'One of my extensions doesn\'t work correctly. What should I do?';
+$txt['doc']['doc_extensions_dont_work'] = 'There are multiple reasons that might have caused this.<br /><br />
+		<ul>
+			<li><strong>Run the installer:</strong> Extensions should automatically be installed when uploading an extension. But, it is also possible to manually upload extensions. When you do that, the installer won\'t be executed. There is no problem with uploading extensions manually, but uploading them manually requires an extra step: running the installer. You can run the installer of the extension by clicking on "[Run install]" in the extension management page of the admin panel. This is also required for built-in extensions, like the guestbook. You need to follow this step before you can use the guestbook.</li>
+			<li><strong>Make sure you use the right version:</strong> Some extensions do not work with the current version of Vienara you are using. You can check if the extension is compatible with your Vienara version by going back to the page where you downloaded it. Also, make sure that you\'re using the newest version of Vienara. Maybe there is a bug in your version of Vienara that has been resolved in newer versions.</li>
+			<li><strong>Install all extensions this extension depends on:</strong> There might be extensions for Vienara that require other extensions to be installed. You need to install them first in order to use the extension.</li>
+		</ul><br />
+		If you are still having issues with an extension, feel free to request help at the Vienara support forum or in the support topic of the extension.';
+$txt['doc']['add_tab_icon'] = 'How do I add an icon to my tab?';
+$txt['doc']['doc_add_tab_icon'] = 'Adding an icon to your tab is fairly simple. You only need an image, ftp access and the position of your tab. Let\'s say we have a tab, with "1" as position. Then we would upload an image to the "MenuIcons" directory, named "tab_1.png". Let\'s say it\'s not 1 that is the position, but 2 instead. Then we should name our image tab_2.png instead. Fairly simple, no?';
 
 // Dates
 $txt['jan'] = 'Jan';

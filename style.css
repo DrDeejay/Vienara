@@ -106,7 +106,6 @@ hr {
 	left: 10;
 	font-family: inherit;
 	border: grey 1px solid;
-	border-radius: 5px;
 	font-size: 14px;
 }
 .floatright {
@@ -166,7 +165,7 @@ input[type="submit"], .more, button {
 .sidebar_link {
 	display: block;
 	padding: 10px;
-	margin-bottom: 1px!important;
+	margin-top: 1px!important;
 	color: dimgrey!important;
 	line-height: 25px;
 	border-left: 10px solid #C3D5AF;
@@ -284,4 +283,7 @@ input.searchsubmit:hover {
 .update_req {
 	color: red;
 	font-weight: bold;
+}
+strong {
+	color: #232323;
 }

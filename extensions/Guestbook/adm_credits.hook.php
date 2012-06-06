@@ -20,6 +20,7 @@ global $admin;
 $admin['credits']['extensions']['teams']['guestbook'] = array(
 	'label' => 'Guestbook',
 	'members' => array(
-		'Dr. Deejay'
+		'Dr. Deejay',
+		'Yoshi2889'
 	),
 );
