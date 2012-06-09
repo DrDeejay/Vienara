@@ -851,8 +851,9 @@ function template_admin($admin = array())
 				<table width="100%" cellspacing="0">
 					<tr>
 						<td class="padding bg_color2" width="5%">' . show_string('page_id') . '</td>
-						<td class="padding bg_color2" width="50%">' . show_string('page_title') . '</td>
-						<td class="padding bg_color2" width="20%">' . show_string('page_header') . '</td>
+						<td class="padding bg_color2" width="40%">' . show_string('page_title') . '</td>
+						<td class="padding bg_color2" width="15%">' . show_string('page_type') . '</td>
+						<td class="padding bg_color2" width="15%">' . show_string('page_header') . '</td>
 						<td class="padding bg_color2" width="25%">' . show_string('page_tools') . '</td>
 					</tr>';
 
@@ -861,8 +862,9 @@ function template_admin($admin = array())
 					<tr>
 						<td class="padding bg_color5">' . $page['id_page'] . '</td>
 						<td class="padding bg_color4"><a class="grey" href="' . Blog_file . '?app=site&id=' . $page['id_page'] . '">' . $page['page_title'] . '</a></td>
-						<td class="padding bg_color5">' . ($page['show_header'] == 1 ? show_string('enabled') : show_string('disabled')) . '</td>
-						<td class="padding bg_color4">
+						<td class="padding bg_color5">' . ($page['is_php'] == 1 ? 'PHP' : 'HTML') . '</td>
+						<td class="padding bg_color4">' . ($page['show_header'] == 1 ? show_string('enabled') : show_string('disabled')) . '</td>
+						<td class="padding bg_color5">
 							<a href="' . Blog_file . '?app=admin&section=pages&delete=' . $page['id_page'] . '">' . show_string('page_delete') . '</a>
 							<a href="' . Blog_file . '?app=admin&section=pages&edit=' . $page['id_page'] . '">' . show_string('page_edit') . '</a>
 						</td>
@@ -882,7 +884,11 @@ function template_admin($admin = array())
 							</tr>
 							<tr>
 								<td width="20%"><strong>' . show_string('show_header') . ':</strong></td>
-								<td width="80%"><input type="checkbox" name="page_header" checked/></td>
+								<td width="80%"><input type="checkbox" name="page_header" checked /></td>
+							</tr>
+							<tr>
+								<td width="20%"><strong>' . show_string('php_page') . ':</strong></td>
+								<td width="80%"><input type="checkbox" name="page_php" /></td>
 							</tr>
 							<tr>
 								<td width="20%"><strong>' . show_string('page_content') . ':</strong></td>
@@ -913,6 +919,10 @@ function template_admin($admin = array())
 							<tr>
 								<td width="20%"><strong>' . show_string('show_header') . ':</strong></td>
 								<td width="80%"><input type="checkbox" name="page_header"' . ($vienara['pages'][$_GET['edit']]['show_header'] == 1 ? ' checked' : '') . ' /></td>
+							</tr>
+							<tr>
+								<td width="20%"><strong>' . show_string('php_page') . ':</strong></td>
+								<td width="80%"><input type="checkbox" name="page_php"' . ($vienara['pages'][$_GET['edit']]['is_php'] == 1 ? ' checked' : '') . ' /></td>
 							</tr>
 							<tr>
 								<td width="20%"><strong>' . show_string('page_content') . ':</strong></td>
@@ -1058,8 +1068,14 @@ function template_page($info = array())
 
 	// Regular content
 	echo '
-			<div class="bg_color5 padding">
-				' . $info['page_body'] . '
+			<div class="bg_color5 padding">';
+
+	if($info['is_php'] == 0)
+		echo $info['page_body'];
+	else
+		eval($info['page_body']);
+
+	echo '
 			</div>';
 }
 

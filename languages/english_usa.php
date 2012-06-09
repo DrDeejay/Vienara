@@ -174,6 +174,8 @@ $txt['blog_support'] = 'Support url';
 $txt['update_required'] = '[Upgrade required]';
 $txt['run_installer'] = 'Run install';
 $txt['jquery_v'] = 'Jquery version';
+$txt['php_page'] = 'This is a PHP page';
+$txt['page_type'] = 'Type';
 
 // Pages
 $txt['page_not_found'] = 'Page not found';

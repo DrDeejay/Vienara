@@ -55,5 +55,6 @@ CREATE TABLE {db_pref}pages (
   `id_page` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `page_title` text NOT NULL,
   `page_body` longtext NOT NULL,
-  `show_header` tinyint NOT NULL
+  `show_header` tinyint NOT NULL,
+  `is_php` tinyint NOT NULL
 ) ENGINE=MyIsam CHARACTER SET utf8 COLLATE 'utf8_bin';

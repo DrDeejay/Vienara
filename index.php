@@ -665,7 +665,7 @@ function vienara_act_site($all = false)
 
 	// Get the page(s) from the database
 	$result = xensql_query("
-		SELECT id_page, page_body, page_title, show_header
+		SELECT id_page, page_body, page_title, show_header, is_php
 			FROM {db_pref}pages
 			" . ($all == false ? "WHERE id_page='$page'" : "") . "
 			ORDER BY page_title ASC
@@ -1621,12 +1621,19 @@ function vienara_act_admin()
 			else
 				$showheader = 0;
 
+			// Is it php?
+			if(isset($_POST['page_php']))
+				$isphp = 1;
+			else
+				$isphp = 0;
+
 			// Update-vous!
 			xensql_query("
 				UPDATE {db_pref}pages
 					SET page_title = '" . $_POST['page_title'] . "',
 						page_body = '" . $_POST['page_content'] . "',
-						show_header = '$showheader'
+						show_header = '$showheader',
+						is_php = '$isphp'
 					WHERE
 						id_page = '" . $_POST['page_id'] . "'
 			");
@@ -1661,6 +1668,12 @@ function vienara_act_admin()
 			else
 				$showheader = 0;
 
+			// Is it php?
+			if(isset($_POST['page_php']))
+				$isphp = 1;
+			else
+				$isphp = 0;
+
 			// Update-vous!
 			xensql_query("
 				INSERT 
@@ -1669,7 +1682,8 @@ function vienara_act_admin()
 					'',
 					'" . $_POST['page_title'] . "',
 					'" . $_POST['page_content'] . "',
-					'$showheader'
+					'$showheader',
+					'$isphp'
 				)
 			");
 
