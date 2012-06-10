@@ -73,8 +73,11 @@ if(isset($_GET['blog'])) {
 	exit;
 }
 
+// Define the home directory
+$directory = dirname(__FILE__);
+
 // The extension directory
-$vienara['extension_dir'] = 'extensions';
+$vienara['extension_dir'] = $directory . '/extensions';
 
 // Because sometimes, we need to fix stuff
 function br2nl($text = '')
