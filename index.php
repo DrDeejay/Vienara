@@ -192,7 +192,9 @@ function vienara_hook($hook_name = '')
 			if($file == '.')
 				continue;
 			if($file == '..')
-				continue;			
+				continue;
+			if(!is_dir($file))
+				continue;
 
 			// Is this extension disabled?
 			if(file_exists($vienara['extension_dir'] . '/' . $file . '/disabled.ext') && !$vienara['setting']['ignore_disabled_ext'] == 1)
