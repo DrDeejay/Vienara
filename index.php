@@ -58,7 +58,7 @@ $vienara = array();
 
 // What version are we using? And what is the link to the website?
 define('Version', '1.0 Alpha 1');
-define('Website_Url', 'http://vienara.co.cc'); // Don't change this!
+define('Website_Url', 'http://vienara.bplaced.net'); // Don't change this!
 define('Blog_file', 'index.php');
 define('Branch', '1.0');
 define('JqueryVersion', '1.7.2');
