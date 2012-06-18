@@ -486,6 +486,8 @@ if(vienara_is_logged()) {
 				define('Editor_HTML', 1);
 			elseif(isset($_GET['section']) && $_GET['section'] == 'newblog')
 				define('Editor_BBC', 1);
+			elseif(isset($_GET['section']) && $_GET['section'] == 'edit')
+				define('Editor_BBC', 1);
 		}
 	}
 }
@@ -1077,6 +1079,31 @@ function vienara_act_admin()
 	{
 		global $admin_show, $vienara;
 
+		// Update blogs?
+		if(!empty($_POST['updateBlog']) && is_array($_POST['updateBlog'])) {
+
+			// Fetch through the blogposts
+			foreach($_POST['updateBlog'] as $blogId) {
+
+				// Hmm..
+				if(!is_numeric($blogId))
+					continue;
+
+				// Make it safe
+				$blogId = xensql_escape_string($blogId);
+
+				// Delete the message
+				xensql_query("
+					DELETE
+						FROM {db_pref}content
+						WHERE id_blog='$blogId'
+				");
+			}
+
+			// We're done
+			done('?app=admin&section=blogs');
+		}
+
 		// Just in case
 		$end = 10;
 	
@@ -1295,6 +1322,31 @@ function vienara_act_admin()
 	function admin_section_menu()
 	{
 		global $vienara;
+
+		// Update tabs?
+		if(!empty($_POST['updateTab']) && is_array($_POST['updateTab'])) {
+
+			// Fetch through the tabs
+			foreach($_POST['updateTab'] as $tabId) {
+
+				// Hmm..
+				if(!is_numeric($tabId))
+					continue;
+
+				// Make it safe
+				$tabId = xensql_escape_string($tabId);
+
+				// Delete the tabs
+				xensql_query("
+					DELETE
+						FROM {db_pref}menu
+						WHERE id_tab='$tabId'
+				");
+			}
+
+			// We're done
+			done('?app=admin&section=menu');
+		}
 
 		// Are we attempting to save a menu tab?
 		if(isset($_POST['menu_label'])) {
@@ -1611,6 +1663,31 @@ function vienara_act_admin()
 	function admin_section_pages()
 	{
 		global $vienara;
+
+		// Update pages?
+		if(!empty($_POST['updatePage']) && is_array($_POST['updatePage'])) {
+
+			// Fetch through the pages
+			foreach($_POST['updatePage'] as $pageId) {
+
+				// Hmm..
+				if(!is_numeric($pageId))
+					continue;
+
+				// Make it safe
+				$pageId = xensql_escape_string($pageId);
+
+				// Delete the page
+				xensql_query("
+					DELETE
+						FROM {db_pref}pages
+						WHERE id_page='$pageId'
+				");
+			}
+
+			// We're done
+			done('?app=admin&section=pages');
+		}
 
 		// Get the pages
 		$vienara['pages'] = vienara_act_site(true);

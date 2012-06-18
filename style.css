@@ -134,7 +134,7 @@ input[type="submit"], .more, button {
 	background: #A7C78C url(./images/bg_color.png) repeat-x;
 	border-radius: 5px;
 	padding: 5px;
-	width: 100px;
+	min-width: 100px;
 	color: white;
 	border: 1px solid #639E48;
 	font-weight: normal;

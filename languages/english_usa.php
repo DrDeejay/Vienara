@@ -59,6 +59,7 @@ $txt['not_approved'] = 'This post has not been published yet. You need to publis
 $txt['is_status'] = 'Is status update';
 $txt['new_status'] = 'New status update';
 $txt['status_title'] = 'Status update';
+$txt['delete_selection'] = 'Delete Selection';
 
 // Altering settings
 $txt['old_pass'] = 'Old password';

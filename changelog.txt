@@ -3,6 +3,9 @@
 ! Vienara.js is gone. So no need to call it
 + Added support for SCEditor
 ! Don't allow php tags in the page editor
+! The editor didn't show up when editing a blog (Thanks Yoshi)
+# Small button style change
++ Added bulk actions for blogs, tabs and pages
 
 1.0 Beta 1
 --------------------------------------------------------------------

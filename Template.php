@@ -433,44 +433,51 @@ function template_admin($admin = array())
 			<div class="cat_bg bg_color">
 				' . show_string('blogs') . '
 			</div>
-			<div class="admin_blogs">';
+			<form action="' . Blog_file . '?app=admin&section=blogs" method="post">
+				<div class="admin_blogs">';
 
-		// Show the contents
-		foreach($admin_show as $blog) {
+			// Show the contents
+			foreach($admin_show as $blog) {
 
-			// Parse bbc
-			$blog['blog_content'] = $viencode->parse($blog['blog_content']);
+				// Parse bbc
+				$blog['blog_content'] = $viencode->parse($blog['blog_content']);
 
-			// Show!
-			echo '
-				<div class="adm_blog bg_color' . $class . '">
-						<a href="' . Blog_file . '?app=admin&section=publish&id=' . $blog['id_blog'] . '">
-						' . ($blog['published'] == 1 ? '
-							<img src="./images/accept.png" alt="" />' : '
-							<img src="./images/cancel.png" alt="" />') . ' 
-						</a>
-				' . ($blog['published'] == 0 ? '<em>' : '') . '<a href="javascript:void(0);" onclick="$(\'#adm_blog_' . $blog['id_blog'] . '\').slideToggle(\'slow\');">' . $blog['blog_title'] . '</a>' . ($blog['published'] == 0 ? '</em>' : '') . '
-					<div class="floatright" style="width: 40px;">
-						<a href="' . Blog_file . '?app=delete&id=' . $blog['id_blog'] . '" /><img src="./images/delete.png" alt="' . show_string('delete') . '" /></a>
-						<a href="' . Blog_file . '?app=admin&section=edit&id=' . $blog['id_blog'] . '" /><img src="./images/edit.png" alt="' . show_string('edit') . '" /></a>
+				// Show!
+				echo '
+					<div class="adm_blog bg_color' . $class . '">
+							<input type="checkbox" name="updateBlog[]" value="' . $blog['id_blog'] . '" />
+							<a href="' . Blog_file . '?app=admin&section=publish&id=' . $blog['id_blog'] . '">
+							' . ($blog['published'] == 1 ? '
+								<img src="./images/accept.png" alt="" />' : '
+								<img src="./images/cancel.png" alt="" />') . ' 
+							</a>
+					' . ($blog['published'] == 0 ? '<em>' : '') . '<a href="javascript:void(0);" onclick="$(\'#adm_blog_' . $blog['id_blog'] . '\').slideToggle(\'slow\');">' . $blog['blog_title'] . '</a>' . ($blog['published'] == 0 ? '</em>' : '') . '
+						<div class="floatright" style="width: 40px;">
+							<a href="' . Blog_file . '?app=delete&id=' . $blog['id_blog'] . '" /><img src="./images/delete.png" alt="' . show_string('delete') . '" /></a>
+							<a href="' . Blog_file . '?app=admin&section=edit&id=' . $blog['id_blog'] . '" /><img src="./images/edit.png" alt="' . show_string('edit') . '" /></a>
+						</div>
+						<br class="clear" />
 					</div>
-					<br class="clear" />
-				</div>
-				<div style="display: none;" id="adm_blog_' . $blog['id_blog'] . '">
-					<div class="padding">
-						' . ($blog['published'] == 0 ? '<div class="notice">' . show_string('not_approved') . '</div>' : '') . '
-						' . nl2br($blog['blog_content']) . '
-					</div>
-				</div>';
+					<div style="display: none;" id="adm_blog_' . $blog['id_blog'] . '">
+						<div class="padding">
+							' . ($blog['published'] == 0 ? '<div class="notice">' . show_string('not_approved') . '</div>' : '') . '
+							' . nl2br($blog['blog_content']) . '
+						</div>
+					</div>';
 
-			// Reset the background color
-			$class = $class == '5' ? 4 : 5;
-		}
+				// Reset the background color
+				$class = $class == '5' ? 4 : 5;
+			}
 	
 		echo '
-			</div>';
+				</div>';
 
 		vienara_page($vienara['blog_count'], Blog_file . '?app=admin&section=blogs&page=');
+
+		echo '
+				<br /><br />
+				<input type="submit" value="' . show_string('delete_selection') . '" />
+			</form>';
 	}
 
 	// Manage our settings
@@ -738,14 +745,18 @@ function template_admin($admin = array())
 						<div class="cat_bg bg_color">
 							' . show_string('remove_tab') . '
 						</div>
-						<ul>';
+						<form action="' . Blog_file . '?app=admin&section=menu" method="post">
+							<div class="padding bg_color4">';
 
-					foreach($vienara['tabs'] as $tab)
-						echo '
-							<li><a href="' . Blog_file . '?app=admin&section=menu&delete=' . $tab['id_tab'] . '"><img src="./images/delete_tab.png" alt="*" /></a> ' . $tab['tab_label'] . '</li>';
+						foreach($vienara['tabs'] as $tab)
+							echo '
+								<input type="checkbox" name="updateTab[]" value="' . $tab['id_tab'] . '" /> ' . $tab['tab_label'] . '<br />';
 
-				echo '
-						</ul>';
+					echo '
+								<br /><br />
+								<input type="submit" value="' . show_string('delete_selection') . '" />
+							</div>
+						</form>';
 			}
 		}
 	}
@@ -886,13 +897,14 @@ function template_admin($admin = array())
 				<div class="cat_bg bg_color">
 					' . show_string('manage_pages') . '
 				</div>
+				<form action="' . Blog_file . '?app=admin&section=pages" method="post">
 				<table width="100%" cellspacing="0">
 					<tr>
 						<td class="padding bg_color2" width="5%">' . show_string('page_id') . '</td>
 						<td class="padding bg_color2" width="40%">' . show_string('page_title') . '</td>
 						<td class="padding bg_color2" width="15%">' . show_string('page_type') . '</td>
 						<td class="padding bg_color2" width="15%">' . show_string('page_header') . '</td>
-						<td class="padding bg_color2" width="25%">' . show_string('page_tools') . '</td>
+						<td class="padding bg_color2" colspan="2">' . show_string('page_tools') . '</td>
 					</tr>';
 
 			foreach($vienara['pages'] as $page)
@@ -906,6 +918,9 @@ function template_admin($admin = array())
 							<a href="' . Blog_file . '?app=admin&section=pages&delete=' . $page['id_page'] . '">' . show_string('page_delete') . '</a>
 							<a href="' . Blog_file . '?app=admin&section=pages&edit=' . $page['id_page'] . '">' . show_string('page_edit') . '</a>
 						</td>
+						<td class="padding bg_color4">
+							<input type="checkbox" name="updatePage[]" value="' . $page['id_page'] . '" />
+						</td>
 					</tr>';
 
 			if(empty($vienara['pages']))
@@ -915,7 +930,15 @@ function template_admin($admin = array())
 					</tr>';
 
 			echo '
-				</table><br /><br />
+				</table>';
+
+			if(!empty($vienara['pages']))
+				echo '
+					<br />
+					<input type="submit" value="' . show_string('delete_selection') . '" />';	
+
+			echo '				
+				</form><br /><br />
 				<div class="cat_bg bg_color">
 					' . show_string('new_page') . '
 				</div>
