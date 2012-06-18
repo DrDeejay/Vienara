@@ -1,3 +1,19 @@
+1.0 Alpha 2
+--------------------------------------------------------------------
+- Show the privacy policy by default on the search page.
+- The default timezone is now Los Angeles. This will have no effect on existing installations.
+! Normal text should also be white in the navigation bar
++ Adding a new bar above the header that displays the current time
+# Increasing padding of the wrapper
+# Changed the font of the css editor
+! There should be a license in the blog root too
+! The installer only checked for 'index.php' for generating the url
+! Creating a database doesn't make sense as it doesn't work anyway
+! Fixing major bug in extensions. Extensions didn't work due a wrong statement in the hook loader function
+
 1.0 Alpha 1
 --------------------------------------------------------------------
 - Initial release
+
+
+Changes go downwards, versions go upwards

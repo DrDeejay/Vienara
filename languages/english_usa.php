@@ -82,6 +82,7 @@ $txt['icons_by'] = 'Icons by ';
 $txt['top_button'] = 'Show the top button at the bottom of the blog';
 $txt['rss'] = 'RSS';
 $txt['rss_purpose'] = 'Feed of the latest 15 blogs.';
+$txt['cur_time'] = 'Current time';
 
 // The administration panel and its strings
 $txt['admin'] = 'Administration';

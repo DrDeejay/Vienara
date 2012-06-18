@@ -9,7 +9,7 @@
 * not use the name "Vienara" as name for your project
 * either. Thanks for understanding.
 *
-* @version: 1.0 Alpha 1
+* @version: 1.0 Alpha 2
 * @copyright 2012: Vienara
 * @developed by: Dr. Deejay and Thomas de Roo
 * @package: Vienara
@@ -57,7 +57,7 @@ ob_start('vienara_pretty');
 $vienara = array();
 
 // What version are we using? And what is the link to the website?
-define('Version', '1.0 Alpha 1');
+define('Version', '1.0 Alpha 2');
 define('Website_Url', 'http://vienara.bplaced.net'); // Don't change this!
 define('Blog_file', 'index.php');
 define('Branch', '1.0');
@@ -193,7 +193,7 @@ function vienara_hook($hook_name = '')
 				continue;
 			if($file == '..')
 				continue;
-			if(!is_dir($file))
+			if(!is_dir($vienara['extension_dir'] . '/' . $file))
 				continue;
 
 			// Is this extension disabled?
@@ -289,6 +289,9 @@ function parse_date($date = '')
 	// Return
 	return $date;
 }
+
+// The current time
+$vienara['cur_time'] = parse_date(date("M j, Y, g:i a"));
 
 // Get the blogcount
 $vienara['blog_count'] = xensql_count_rows("

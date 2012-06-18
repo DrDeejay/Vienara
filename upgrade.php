@@ -9,7 +9,7 @@
 * not use the name "Vienara" as name for your project
 * either. Thanks for understanding.
 *
-* @version: 1.0 Alpha 1
+* @version: 1.0 Alpha 2
 * @copyright 2012: Vienara
 * @developed by: Dr. Deejay and Thomas de Roo
 * @package: Vienara
@@ -29,13 +29,15 @@ ini_set('magic_quotes_runtime', 0);
 
 // Useful information will be provided below
 define('Blog_Branch', '1.0');
+define('Upgrade_from', '1.0 Alpha 1');
+define('Upgrade_to', '1.0 Alpha 2');
 
 // Variables that we need later
 $vienara = array();
 $user = array();
 
 // Settings!
-$vienara['install_file'] = 'install.php';
+$vienara['upgrade_file'] = 'upgrade.php';
 
 // No html ;)
 foreach($_POST as $key => $value)
@@ -177,7 +179,7 @@ function vienara_header()
 <body>
 	<div id="wrapper">
 		<div id="header" class="bg_color">
-			Vienara installation
+			Vienara upgrade tools
 		</div>';
 }
 
@@ -207,21 +209,18 @@ function die_nice($message = '')
 }
 
 // This will show the main installation page
-function install_main()
+function upgrade_main()
 {
 	global $vienara;
 
 	// Show some pretty information.
 	echo '
 		<div class="padding">
-			Hello! Welcome to the installation of <strong>Vienara</strong>!
-			You are about to install Vienara ' . Blog_Branch . '. Thanks
-			for choosing for our software. The
-			installation shouldn\'t be hard and only requires a few minutes. Maybe just a
-			few seconds. Please fill in the fields below and you are ready to begin the
-			installation. Good luck and enjoy!
+			Hello! Welcome to the upgrade tools of Vienara. This script will update your Vienara installation
+			from ' . Upgrade_from . ' to ' . Upgrade_to . '. This will just take a few seconds. Please fill in
+			the fields below and you\'re ready to begin!
 			<hr />
-			<form action="' . $vienara['install_file'] . '?step=2" method="post">
+			<form action="' . $vienara['upgrade_file'] . '?step=2" method="post">
 				<table width="100%" cellpadding="5" cellspacing="0">
 					<tr class="cat_bg bg_color">
 						<td class="cat_bg bg_color" width="50%">Setting</td>
@@ -247,13 +246,6 @@ function install_main()
 						<td class="bg_color5" width="50%"><strong>Database prefix:</strong></td>
 						<td class="bg_color4" width="50%"><input type="text" name="db_prefix" value="vienara_" /></td>
 					</tr>
-					<tr class="cat_bg bg_color">
-						<td class="cat_bg bg_color" colspan="2">Creating administrator password</td>					
-					</tr>
-					<tr>
-						<td class="bg_color5" width="50%"><strong>Password:</strong></td>
-						<td class="bg_color4" width="50%"><input type="password" name="password" value="" /></td>
-					</tr>
 					<tr>
 						<td colspan="2"><input type="submit" value="Submit" /></td>					
 					</tr>
@@ -266,7 +258,7 @@ function install_main()
 $available_steps = array(2);
 
 // Step 2. Insert everything into the database and connect.
-function install_step_2()
+function upgrade_step_2()
 {
 	global $vienara;
 
@@ -297,49 +289,21 @@ function install_step_2()
 		// Did it work?
 		if(!$db)
 			die_nice('Database connection failed.');
-	
-	// Hash the password
-	$_POST['password'] = sha1($_POST['password']);
-
-	// Set the blogurl (thanks Yoshi)
-	$blogurl = 'http://' . $_SERVER['SERVER_ADDR'] . str_ireplace('/' . $vienara['install_file'], '', $_SERVER['REQUEST_URI']);
 
 	// Insert everything into the database
-	$query = file_get_contents('install.sql');
+	$query = file_get_contents('upgrade.sql');
 
 		// Replace the database prefix
 		$query = str_replace('{db_pref}', $_POST['db_prefix'], $query);
-		
-		// Give the correct time
-		$query = str_replace('{cur_time}', time(), $query);
 
-		// Set the username correct
-		$query = str_replace('{user_password}', $_POST['password'], $query);
-
-		// Fix the blogurl
-		$query = str_replace('{blogurl}', $blogurl, $query);
+		// The new version
+		$query = str_replace('{cur_version}', Upgrade_to, $query);
 
 		// Execute the queries
 		mysqli_multi_query($db, $query);
 
-	// Update index.php
-	$file = file_get_contents('./Config.php');
-
-	// Get the existing configuration settings
-	include 'Config.php';
-
-		// Replace important stuff
-		$file = str_replace("'server' => '" . $db_settings['server'] . "',", "'server' => '" . $_POST['db_server'] . "',", $file);
-		$file = str_replace("'username' => '" . $db_settings['username'] . "',", "'username' => '" . $_POST['db_user'] . "',", $file);
-		$file = str_replace("'password' => '" . $db_settings['password'] . "',", "'password' => '" . $_POST['db_password'] . "',", $file);
-		$file = str_replace("'dbname' => '" . $db_settings['dbname'] . "',", "'dbname' => '" . $_POST['db_name'] . "',", $file);
-		$file = str_replace("'prefix' => '" . $db_settings['prefix'] . "'", "'prefix' => '" . $_POST['db_prefix'] . "'", $file);
-
-		// Update the file
-		file_put_contents('./Config.php', $file);
-
 	// Say that we are done.
-	die_nice('Installation done. You can now login into your blog. Thanks for using our software and don\'t forget to remove the installer.');
+	die_nice('Upgrade done. You can now login into your blog. Thanks for using our software and don\'t forget to remove the upgrade tools.');
 }
 
 // Call the header
@@ -347,15 +311,15 @@ vienara_header();
 
 // So what do we want to do?
 if(!isset($_GET['step']))
-	install_main();
+	upgrade_main();
 
 // We've got a step to execute
 elseif(isset($_GET['step']) && in_array($_GET['step'], $available_steps))
-	call_user_func('install_step_' . $_GET['step']);
+	call_user_func('upgrade_step_' . $_GET['step']);
 
 // Or just show the frontpage
 else
-	install_main();
+	upgrade_main();
 
 // And call the footer. We're done now
 vienara_footer();

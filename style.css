@@ -18,7 +18,7 @@ a.grey {
 	min-width: 500px;
 }
 .reg_content {
-	padding: 10px;
+	padding: 20px;
 }
 .padding {
 	padding: 5px;
@@ -87,6 +87,7 @@ hr {
 .menu {
 	background: #78945B;
 	padding: 5px;
+	color: white;
 }
 .menu a {
 	color: white;
@@ -286,4 +287,8 @@ input.searchsubmit:hover {
 }
 strong {
 	color: #232323;
+}
+.css_edit {
+	font-size: 12px;
+	font-family: Courier New;
 }

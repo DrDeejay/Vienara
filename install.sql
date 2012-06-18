@@ -24,7 +24,7 @@ INSERT INTO {db_pref}settings (`id`, `value`) VALUES
 ('order', 'DESC'),
 ('enable_search', '1'),
 ('top_button', '1'),
-('timezone', 'America/New_York'),
+('timezone', 'America/Los_Angeles'),
 ('enable_extra_title', '0'),
 ('extra_title', ''),
 ('language', 'english_usa'),

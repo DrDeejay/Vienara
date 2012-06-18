@@ -25,6 +25,9 @@ function vienara_header()
 <body class="vienara">
 	<div id="editorhere_after"></div>
 	<div id="wrapper" style="width: ' . $vienara['setting']['width'] . '%;">
+		<div class="menu">
+			' . show_string('cur_time') . ': ' . $vienara['cur_time'] . '
+		</div>
 		<div id="header" class="bg_color">
 			' . $vienara['setting']['title'] . '
 		</div>
@@ -945,7 +948,7 @@ function template_admin($admin = array())
 				</div>
 				<form action="' . Blog_file . '?app=admin&section=css" method="post">
 					<div class="bg_color5 padding">
-						<textarea name="new_style" class="editor new_post" rows="1" cols="1">' . $vienara['style'] . '</textarea><br /><br />
+						<textarea name="new_style" class="editor new_post css_edit" rows="1" cols="1">' . $vienara['style'] . '</textarea><br /><br />
 						<input type="checkbox" name="css_backup" checked="checked" /> ' . show_string('backup_css') . '
 						<br /><br />
 						<input type="submit" value="' . show_string('submit') . '" />
@@ -1099,7 +1102,7 @@ function template_search()
 				<div class="bg_color5 padding"><input type="checkbox" name="thissite"/> ' . show_string('search_this') . '</div>
 				<div class="bg_color4 padding"><input type="checkbox" name="exact" /> ' . show_string('search_exact') . '</div><br /><br />
 			<div class="bg_color padding"><a href="javascript:void(0);" onclick="$(\'#privacy\').slideToggle(\'slow\')">' . show_string('privacy_policy') . '</a></div>
-			<div id="privacy" class="padding bg_color5" style="display: none;">
+			<div id="privacy" class="padding bg_color5">
 				' . show_string('google_policy') . '
 			</div>
 		</form>';
