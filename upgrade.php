@@ -9,7 +9,7 @@
 * not use the name "Vienara" as name for your project
 * either. Thanks for understanding.
 *
-* @version: 1.0 Alpha 2
+* @version: 1.0 Beta 1
 * @copyright 2012: Vienara
 * @developed by: Dr. Deejay and Thomas de Roo
 * @package: Vienara
@@ -29,8 +29,8 @@ ini_set('magic_quotes_runtime', 0);
 
 // Useful information will be provided below
 define('Blog_Branch', '1.0');
-define('Upgrade_from', '1.0 Alpha 1');
-define('Upgrade_to', '1.0 Alpha 2');
+define('Upgrade_from', '1.0 Beta 1');
+define('Upgrade_to', '1.0 Beta 1 Public');
 
 // Variables that we need later
 $vienara = array();
@@ -269,7 +269,7 @@ function upgrade_step_2()
 	// Check if everything is filled in
 	$vienara['important_fields'] = array(
 		'db_server', 'db_user', 'db_password', 'db_name',
-		'db_prefix', 'password'
+		'db_prefix'
 	);
 
 		// These fields shouldn't be empty

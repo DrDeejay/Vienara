@@ -9,7 +9,7 @@
 * not use the name "Vienara" as name for your project
 * either. Thanks for understanding.
 *
-* @version: 1.0 Alpha 2
+* @version: 1.0 Beta 1
 * @copyright 2012: Vienara
 * @developed by: Dr. Deejay and Thomas de Roo
 * @package: Vienara
@@ -57,7 +57,7 @@ ob_start('vienara_pretty');
 $vienara = array();
 
 // What version are we using? And what is the link to the website?
-define('Version', '1.0 Alpha 2');
+define('Version', '1.0 Beta 1 Public');
 define('Website_Url', 'http://vienara.bplaced.net'); // Don't change this!
 define('Blog_file', 'index.php');
 define('Branch', '1.0');
@@ -134,6 +134,12 @@ $db = xensql_connect($db_settings['server'], $db_settings['username'], $db_setti
 	// Did it work?
 	if(!$db)
 		fatal_error('Database connection failed.');
+
+// Because HTML is a weirdo
+function parseUrl($url)
+{
+	return str_replace('&', '&amp;', $url);
+}
 
 // Load a class
 function loadClass($class_name = '')
@@ -264,10 +270,10 @@ function show_string($string = '')
 }
 
 // Parse dates
-function parse_date($date = '')
+function parse_date($date = '', $full = false)
 {
 	// An array with things that should be translated
-	$dates = array(
+	$sdates = array(
 		'Jan' => show_string('jan'),
 		'Feb' => show_string('feb'),
 		'Mar' => show_string('mar'),
@@ -282,9 +288,29 @@ function parse_date($date = '')
 		'Dec' => show_string('dec')
 	);
 
+	// And complete month names
+	$fdates = array(
+		'January' => show_string('month_january'),
+		'February' => show_string('month_february'),
+		'March' => show_string('month_march'),
+		'April' => show_string('month_april'),
+		'May' => show_string('month_may'),
+		'June' => show_string('month_june'),
+		'July' => show_string('month_july'),
+		'August' => show_string('month_august'),
+		'September' => show_string('month_september'),
+		'October' => show_string('month_october'),
+		'November' => show_string('month_november'),
+		'December' => show_string('month_december')
+	);
+
 	// Translate them
-	foreach($dates as $key => $value)
-		$date = str_replace($key, $value, $date);
+	if($full == false)
+		foreach($sdates as $key => $value)
+			$date = str_ireplace($key, $value, $date);
+	else
+		foreach($fdates as $key => $value)
+			$date = str_ireplace($key, $value, $date);
 
 	// Return
 	return $date;
@@ -443,6 +469,24 @@ function vienara_get_app($application = '')
 		// Nope
 		else
 			vienara();
+	}
+}
+
+// Check if we need to load the editor
+if(vienara_is_logged()) {
+
+	// Check if we have an app
+	if(!empty($_GET['app'])) {
+
+		// It's the admin panel!
+		if($_GET['app'] == 'admin') {
+
+			// Pages!
+			if(isset($_GET['section']) && $_GET['section'] == 'pages')
+				define('Editor_HTML', 1);
+			elseif(isset($_GET['section']) && $_GET['section'] == 'newblog')
+				define('Editor_BBC', 1);
+		}
 	}
 }
 
@@ -1635,6 +1679,12 @@ function vienara_act_admin()
 			else
 				$isphp = 0;
 
+			// If this is a php page, remove php tags
+			if($isphp == 1) {
+				$_POST['page_content'] = str_ireplace('<?php', '', $_POST['page_content']);
+				$_POST['page_content'] = str_ireplace('?>', '', $_POST['page_content']);
+			}
+
 			// Update-vous!
 			xensql_query("
 				UPDATE {db_pref}pages
@@ -1681,6 +1731,12 @@ function vienara_act_admin()
 				$isphp = 1;
 			else
 				$isphp = 0;
+
+			// If this is a php page, remove php tags
+			if($isphp == 1) {
+				$_POST['page_content'] = str_ireplace('<?php', '', $_POST['page_content']);
+				$_POST['page_content'] = str_ireplace('?>', '', $_POST['page_content']);
+			}
 
 			// Update-vous!
 			xensql_query("
@@ -1944,5 +2000,5 @@ vienara_footer();
 // Flush!
 ob_flush();
 
-// We need to close the script because we don't really want malware
+// Abandon ship!!
 die;

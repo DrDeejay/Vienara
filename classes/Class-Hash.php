@@ -9,7 +9,7 @@
 * not use the name "Vienara" as name for your project
 * either. Thanks for understanding.
 *
-* @version: 1.0 Alpha 1
+* @version: 1.0 Beta 1
 * @copyright 2012: Vienara
 * @developed by: Dr. Deejay and Thomas de Roo
 * @package: Vienara
@@ -70,5 +70,21 @@ class Hash {
 
 		// It's fine. Hash it.
 		return $_POST['type']($_POST['hash']);
+	}
+
+	/**
+	 * Raw hashing stuff
+	*/
+	function raw()
+	{
+		// We do have anything set, right?
+		if(!isset($_POST['hash']))
+			return false;
+
+		// We need to make sure that we don't have HTML
+		$_POST['hash'] = htmlspecialchars($_POST['hash'], ENT_NOQUOTES, 'UTF-8', false);
+
+		// Return the result
+		return $_POST['hash'];
 	}
 }

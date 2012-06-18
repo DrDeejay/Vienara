@@ -4,7 +4,7 @@
  *
  * Translation by: Winterkip7
  * For: Vienara
- * Version: 1.0 Alpha 1
+ * Version: 1.0 Beta 1
  *
  * License: BSD
 */
@@ -180,6 +180,7 @@ $txt['page_type'] = 'Type';
 
 // Pages
 $txt['page_not_found'] = 'Page not found';
+$txt['no_pages'] = 'There are no pages created.';
 
 // Blog editing
 $txt['edit'] = 'Edit';
@@ -268,7 +269,7 @@ $txt['doc']['doc_add_tab_icon'] = 'Adding an icon to your tab is fairly simple. 
 
 // Dates
 $txt['jan'] = 'Jan';
-$txt['def'] = 'Feb';
+$txt['feb'] = 'Feb';
 $txt['mar'] = 'Mar';
 $txt['apr'] = 'Apr';
 $txt['may'] = 'May';
@@ -279,6 +280,18 @@ $txt['sep'] = 'Sep';
 $txt['oct'] = 'Oct';
 $txt['nov'] = 'Nov';
 $txt['dec'] = 'Dec';
+$txt['month_january'] = 'January';
+$txt['month_february'] = 'February';
+$txt['month_march'] = 'March';
+$txt['month_april'] = 'April';
+$txt['month_may'] = 'May';
+$txt['month_june'] = 'June';
+$txt['month_july'] = 'July';
+$txt['month_august'] = 'August';
+$txt['month_september'] = 'September';
+$txt['month_october'] = 'October';
+$txt['month_november'] = 'November';
+$txt['month_december'] = 'December';
 
 // Terminal
 $txt['terminal'] = 'Terminal';

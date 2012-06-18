@@ -1,3 +1,21 @@
+1.0 Beta 1 Public
+--------------------------------------------------------------------
+! Vienara.js is gone. So no need to call it
++ Added support for SCEditor
+! Don't allow php tags in the page editor
+
+1.0 Beta 1
+--------------------------------------------------------------------
+! Fixing bug in upgrade tools.
++ Adding url parser. Because HTML is a weirdo.
+! The manage pages section should tell the administrator that there are no pages created rather than showing nothing
+! The original text shouldn't be removed after using the hash function
+# Decreasing the font size of the css editor
+! Fixing small bug in date parser
++ Adding full month translation support (For example: January becomes Januari when using the Dutch language pack)
+- Use str_ireplace rather than str_replace to make sure the date parser works most of the time
+! Don't show the remove tab section when there are no tabs
+
 1.0 Alpha 2
 --------------------------------------------------------------------
 - Show the privacy policy by default on the search page.

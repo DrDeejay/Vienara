@@ -12,13 +12,35 @@ function vienara_header()
 <html xmlns="http://www.w3.org/1999/xhtml"' . $is_rtl . ' lang="' . $vienara['lang']['code'] . '">
 <head>
 	<script type="text/javascript" src="javascript/Jquery.js?' . $vienara['setting']['css_cache_version'] . '"></script>
-	<script type="text/javascript" src="javascript/Vienara.js?' . $vienara['setting']['css_cache_version'] . '"></script>
+	<script type="text/javascript" src="javascript/SCEditor.js?' . $vienara['setting']['css_cache_version'] . '"></script>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="stylesheet" type="text/css" href="style.css?' . $vienara['setting']['css_cache_version'] . '" />
+	<link rel="stylesheet" href="SCEditor.css" type="text/css" />
 	<title>' . $vienara['setting']['title'] . ($vienara['setting']['enable_extra_title'] == 1 ? ' | ' . $vienara['setting']['extra_title'] : '') . '</title>';
 	
 	// Custom header scripts
 	vienara_hook('html_header');	
+
+	if(defined('Editor_BBC'))
+		echo '
+			<script>
+				$(document).ready(function() {
+					$("textarea.new_post").sceditorBBCodePlugin({
+						// Buttons
+						toolbar: "bold,italic,underline,strike|image,link|quote,code|source",
+					});
+				});
+			</script>';
+	elseif(defined('Editor_HTML'))
+		echo '
+			<script>
+				$(document).ready(function() {
+					$("textarea.new_post").sceditor({
+						// Buttons
+						toolbar: "bold,italic,underline,strike|image,link|quote,code|source",
+					});
+				});
+			</script>';
 
 	echo '
 </head>
@@ -166,7 +188,7 @@ function vienara_show_blog($information = '', $is_status = false)
 					<div class="title">
 						<a href="#' . $information['id_blog'] . '" id="' . $information['id_blog'] . '">' . $information['blog_title'] . '</a>
 					</div>
-					' . show_string('posted_on') . ': ' . date("F j, Y, g:i a", $information['post_date']) . '
+					' . show_string('posted_on') . ': ' . parse_date(date("F j, Y, g:i a", $information['post_date']), true) . '
 				</div>
 				<br class="clear" />
 				<div class="blog_content">
@@ -279,7 +301,7 @@ function template_admin($admin = array())
 		// Show the administration navigation
 		foreach($admin['sidebar'] as $item)
 			echo '
-				<a href="' . $item['href'] . '" class="sidebar_link"><img src="./images/' . $item['icon'] . '" alt="" /> ' . $item['title'] . '</a>';
+				<a href="' . parseUrl($item['href']) . '" class="sidebar_link"><img src="./images/' . $item['icon'] . '" alt="" /> ' . $item['title'] . '</a>';
 
 	echo '
 			</div>
@@ -582,6 +604,15 @@ function template_admin($admin = array())
 			// Get the hash types
 			$hash_types = $hash->get();
 
+			// The original text
+			$hash_clean = $hash->raw();
+
+		// What should we show?
+		if(!empty($hash_clean))
+			$hash_result = $hash_clean;
+		else
+			$hash_result = show_string('hashthis');
+
 		echo '
 			<div class="cat_bg bg_color">
 				' . show_string('hash') . '
@@ -599,7 +630,7 @@ function template_admin($admin = array())
 			echo '
 						</select>
 					<br />
-					<textarea class="editor" cols="1" rows="1" name="hash">' . show_string('hashthis') . '</textarea><br />
+					<textarea class="editor" cols="1" rows="1" name="hash">' . $hash_result . '</textarea><br />
 					<input type="submit" value="' . show_string('hash_now') . '" />
 				</form>
 			</div>';
@@ -700,18 +731,22 @@ function template_admin($admin = array())
 						</table><br /><br />
 						<input type="submit" value="' . show_string('submit') . '" />
 					</form>
-				</div><br /><br />
-				<div class="cat_bg bg_color">
-					' . show_string('remove_tab') . '
-				</div>
-				<ul>';
+				</div>';
 
-			foreach($vienara['tabs'] as $tab)
+			if(!empty($vienara['tabs'])) {
+				echo '<br /><br />
+						<div class="cat_bg bg_color">
+							' . show_string('remove_tab') . '
+						</div>
+						<ul>';
+
+					foreach($vienara['tabs'] as $tab)
+						echo '
+							<li><a href="' . Blog_file . '?app=admin&section=menu&delete=' . $tab['id_tab'] . '"><img src="./images/delete_tab.png" alt="*" /></a> ' . $tab['tab_label'] . '</li>';
+
 				echo '
-					<li><a href="' . Blog_file . '?app=admin&section=menu&delete=' . $tab['id_tab'] . '"><img src="./images/delete_tab.png" alt="*" /></a> ' . $tab['tab_label'] . '</li>';
-
-		echo '
-				</ul>';
+						</ul>';
+			}
 		}
 	}
 
@@ -871,6 +906,12 @@ function template_admin($admin = array())
 							<a href="' . Blog_file . '?app=admin&section=pages&delete=' . $page['id_page'] . '">' . show_string('page_delete') . '</a>
 							<a href="' . Blog_file . '?app=admin&section=pages&edit=' . $page['id_page'] . '">' . show_string('page_edit') . '</a>
 						</td>
+					</tr>';
+
+			if(empty($vienara['pages']))
+				echo '
+					<tr>
+						<td class="padding bg_color5" colspan="5">' . show_string('no_pages') . '</td>
 					</tr>';
 
 			echo '
