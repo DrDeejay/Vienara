@@ -9,7 +9,7 @@
 * not use the name "Vienara" as name for your project
 * either. Thanks for understanding.
 *
-* @version: 1.0 Beta 1 Public
+* @version: 1.0 Beta 2
 * @copyright 2012: Vienara
 * @developed by: Dr. Deejay and Thomas de Roo
 * @package: Vienara
@@ -57,7 +57,7 @@ ob_start('vienara_pretty');
 $vienara = array();
 
 // What version are we using? And what is the link to the website?
-define('Version', '1.0 Beta 1 Public');
+define('Version', '1.0 Beta 2');
 define('Website_Url', 'http://vienara.bplaced.net'); // Don't change this!
 define('Blog_file', 'index.php');
 define('Branch', '1.0');
@@ -136,6 +136,8 @@ if(isset($_GET['normal']) && isset($_SESSION['is_mobile'])) {
 	include 'Template.php';
 	unset($_SESSION['is_mobile']);
 }
+elseif(isset($_GET['normal']))
+	include 'Template-Mobile.php';
 elseif($mobile->isMobile())
 	include 'Template-Mobile.php';
 elseif(isset($_SESSION['is_mobile']))

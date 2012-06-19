@@ -27,6 +27,7 @@ function vienara_footer()
 
 	echo '
 		<br />
+	<a href="' . Blog_file . '">' . show_string('index') . '</a><br />
 	<a href="' . Blog_file . '?rss">' . show_string('rss') . '</a><br />
 	<a href="' . Blog_file . '?app=search">' . show_string('search') . '</a><br />
 	<a href="' . Blog_file . '?normal">' . show_string('full_version') . '</a>

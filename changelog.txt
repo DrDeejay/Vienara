@@ -1,3 +1,8 @@
+1.0 Beta 2
+--------------------------------------------------------------------
+! There should always be a link to the frontpage when using the mobile style
+! The font size of the mobile theme is too small
+
 1.0 Beta 1 Public
 --------------------------------------------------------------------
 ! Vienara.js is gone. So no need to call it
