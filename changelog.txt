@@ -9,6 +9,12 @@
 ! The editor css file should have a cache variable
 + Added mobile theme
 + Added automatic mobile detection
++ Adding custom css setting
+! Don't show SCEditor when editing PHP pages
+! Hopefully fixed the extra quotes bug, which breaks PHP pages.
+! The simple theme should have pagination
+! Fixed upgrade tools title
+! Finally squashed the annoying magic quotes bug
 
 1.0 Beta 1
 --------------------------------------------------------------------

@@ -172,6 +172,10 @@ if(!defined('Xensql'))
 		// We don't need to parse anything if there isn't anything to parse
 		if(empty($string))
 			return $string;
+
+		// Because Magic Quotes just suck..
+		if(get_magic_quotes_gpc())
+			return $string;
 	
 		// Use stripslashes but make sure it works
 		$result = addslashes($string);

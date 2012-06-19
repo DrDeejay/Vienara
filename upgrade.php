@@ -9,7 +9,7 @@
 * not use the name "Vienara" as name for your project
 * either. Thanks for understanding.
 *
-* @version: 1.0 Beta 1
+* @version: 1.0 Beta 1 Public
 * @copyright 2012: Vienara
 * @developed by: Dr. Deejay and Thomas de Roo
 * @package: Vienara
@@ -174,7 +174,7 @@ function vienara_header()
 			color: dimgrey;
 		}
 	</style>
-	<title>Vienara installation</title>
+	<title>Vienara upgrade tools</title>
 </head>
 <body>
 	<div id="wrapper">

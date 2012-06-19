@@ -21,6 +21,10 @@ function vienara_footer()
 {
 	global $vienara;
 
+	// We don't want to display this when we're in the admin panel or anywhere else
+	if(!isset($_GET['app']))
+		vienara_page($vienara['blog_count'], Blog_file . '?page=');
+
 	echo '
 		<br />
 	<a href="' . Blog_file . '?rss">' . show_string('rss') . '</a><br />

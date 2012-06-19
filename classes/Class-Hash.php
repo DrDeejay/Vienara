@@ -9,7 +9,7 @@
 * not use the name "Vienara" as name for your project
 * either. Thanks for understanding.
 *
-* @version: 1.0 Beta 1
+* @version: 1.0 Beta 1 Public
 * @copyright 2012: Vienara
 * @developed by: Dr. Deejay and Thomas de Roo
 * @package: Vienara

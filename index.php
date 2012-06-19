@@ -9,7 +9,7 @@
 * not use the name "Vienara" as name for your project
 * either. Thanks for understanding.
 *
-* @version: 1.0 Beta 1
+* @version: 1.0 Beta 1 Public
 * @copyright 2012: Vienara
 * @developed by: Dr. Deejay and Thomas de Roo
 * @package: Vienara
@@ -26,7 +26,7 @@ session_start();
 function vienara_pretty($buffer)
 {
 	// Replace all slashes
-	$buffer = stripslashes($buffer);
+	//$buffer = stripslashes($buffer);
 
 	// Fix bad characters
 	$char_table = get_html_translation_table(HTML_ENTITIES);
@@ -1226,6 +1226,8 @@ function vienara_act_admin()
 			'',	
 				'ignore_disabled_ext' => array('check', 'ignore_disabled_ext'),
 				'ext_enable' => array('check', 'ext_enable'),
+			'',
+				'custom_css' => array('largetext', 'custom_css')
 		);
 
 		// Extra settings! ;)

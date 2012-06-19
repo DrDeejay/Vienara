@@ -208,7 +208,7 @@ input[type="submit"], .more, button {
 .bgwhite {
 	background: white;
 }
-.new_post {
+.new_post, .new_postPHP {
 	height: 600px;
 }
 .news {

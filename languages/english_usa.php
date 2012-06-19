@@ -4,7 +4,7 @@
  *
  * Translation by: Winterkip7
  * For: Vienara
- * Version: 1.0 Beta 1
+ * Version: 1.0 Beta 1 Public
  *
  * License: BSD
 */
@@ -179,6 +179,7 @@ $txt['run_installer'] = 'Run install';
 $txt['jquery_v'] = 'Jquery version';
 $txt['php_page'] = 'This is a PHP page';
 $txt['page_type'] = 'Type';
+$txt['custom_css'] = 'Custom css';
 
 // Pages
 $txt['page_not_found'] = 'Page not found';
@@ -268,6 +269,8 @@ $txt['doc']['doc_extensions_dont_work'] = 'There are multiple reasons that might
 		If you are still having issues with an extension, feel free to request help at the Vienara support forum or in the support topic of the extension.';
 $txt['doc']['add_tab_icon'] = 'How do I add an icon to my tab?';
 $txt['doc']['doc_add_tab_icon'] = 'Adding an icon to your tab is fairly simple. You only need an image, ftp access and the position of your tab. Let\'s say we have a tab, with "1" as position. Then we would upload an image to the "MenuIcons" directory, named "tab_1.png". Let\'s say it\'s not 1 that is the position, but 2 instead. Then we should name our image tab_2.png instead. Fairly simple, no?';
+$txt['doc']['custom_css'] = 'Setting - Custom css';
+$txt['doc']['doc_custom_css'] = 'When upgrading your blog, the changes you made to the css file will be lost. If you need to use custom css in one of your pages, you might want to consider putting custom css in this field instead. This setting won\'t be touched during the upgrade, so your changes won\'t be lost after upgrading.';
 
 // Dates
 $txt['jan'] = 'Jan';

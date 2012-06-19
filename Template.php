@@ -19,7 +19,14 @@ function vienara_header()
 	<title>' . $vienara['setting']['title'] . ($vienara['setting']['enable_extra_title'] == 1 ? ' | ' . $vienara['setting']['extra_title'] : '') . '</title>';
 	
 	// Custom header scripts
-	vienara_hook('html_header');	
+	vienara_hook('html_header');
+
+	// Custom css?
+	if(empty($vienara['setting']['custom_css']))
+		echo '
+	<style type="text/css">
+		' . $vienara['setting']['custom_css'] . '
+	</style>';	
 
 	if(defined('Editor_BBC'))
 		echo '
@@ -993,7 +1000,7 @@ function template_admin($admin = array())
 							</tr>
 							<tr>
 								<td width="20%"><strong>' . show_string('page_content') . ':</strong></td>
-								<td width="80%"><textarea class="editor new_post" rows="1" cols="1" name="page_content">' . $vienara['pages'][$_GET['edit']]['page_body'] . '</textarea></td>
+								<td width="80%"><textarea class="editor new_post' . ($vienara['pages'][$_GET['edit']]['is_php'] == 1 ? 'PHP' : '') . '" rows="1" cols="1" name="page_content">' . $vienara['pages'][$_GET['edit']]['page_body'] . '</textarea></td>
 							</tr>
 						</table><br /><br />
 						<input type="submit" value="' . show_string('submit') . '" />
