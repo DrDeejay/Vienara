@@ -1079,7 +1079,8 @@ function vienara_act_admin()
 					'members' => array(
 						'<a href="http://www.famfamfam.com/lab/icons/silk/">FamFamFam</a>',
 						'<a href="http://www.fatcow.com/free-icons">Fatcow</a>',
-						'<a href="http://milesj.me/code/php/decoda">Decoda</a>'
+						'<a href="http://milesj.me/code/php/decoda">Decoda</a>',
+						'<a href="http://samclarke.com">Sam Clarke</a>'
 					),
 				)
 			)

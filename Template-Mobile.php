@@ -70,3 +70,36 @@ function template_search()
 			</div>
 		</form>';
 }
+
+// This will create the page list
+function vienara_page($count = 1, $link = '?page=')
+{
+	global $vienara;
+
+	// Nothing?
+	if($count == 0)
+		return;
+
+	// How many results do we have?
+	$pages = ceil($count / $vienara['setting']['blogsperpage']);
+
+	echo '
+			<strong>' . show_string('pages') . ':</strong>';
+
+	// Is it just one?
+	if($pages < 1)
+		echo '
+			<strong><a href="' . $link . '1">1</a></strong>';
+
+	// Show each page
+	for($p = 1; $p <= $pages; $p++) {
+
+		// Show it
+		echo '
+			' . (isset($_GET['page']) && $_GET['page'] == $p ? '<strong>' : '') . '<a href="' . $link . $p . '">' . $p . '</a>' . (isset($_GET['page']) && $_GET['page'] == $p ? '</strong>' : '');
+	}
+
+	// We're almost done
+	echo '
+		<br />';
+}

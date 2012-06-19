@@ -15,6 +15,9 @@
 ! The simple theme should have pagination
 ! Fixed upgrade tools title
 ! Finally squashed the annoying magic quotes bug
+! The pagination function was missing from the mobile theme
+- Added Sam Clarke to the credits
+! When creating a new PHP page, the editor goes in view source mode, so it doesn't add <br />'s anymore
 
 1.0 Beta 1
 --------------------------------------------------------------------

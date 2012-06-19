@@ -47,6 +47,9 @@ function vienara_header()
 						toolbar: "bold,italic,underline,strike|image,link|quote,code|source",
 					});
 				});
+				function toggleEditor() {
+					$("textarea.new_post").data("sceditor").toggleTextMode();
+				}
 			</script>';
 
 	echo '
@@ -962,7 +965,7 @@ function template_admin($admin = array())
 							</tr>
 							<tr>
 								<td width="20%"><strong>' . show_string('php_page') . ':</strong></td>
-								<td width="80%"><input type="checkbox" name="page_php" /></td>
+								<td width="80%"><input type="checkbox" name="page_php" id="toggle_editor" onchange="javascript:toggleEditor()" /></td>
 							</tr>
 							<tr>
 								<td width="20%"><strong>' . show_string('page_content') . ':</strong></td>
