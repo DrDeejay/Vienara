@@ -9,7 +9,7 @@
 * not use the name "Vienara" as name for your project
 * either. Thanks for understanding.
 *
-* @version: 1.0 Beta 1 Public
+* @version: 1.0 Beta 2
 * @copyright 2012: Vienara
 * @developed by: Dr. Deejay and Thomas de Roo
 * @package: Vienara
@@ -29,8 +29,8 @@ ini_set('magic_quotes_runtime', 0);
 
 // Useful information will be provided below
 define('Blog_Branch', '1.0');
-define('Upgrade_from', '1.0 Beta 1');
-define('Upgrade_to', '1.0 Beta 1 Public');
+define('Upgrade_from', '1.0 Beta 1 Public');
+define('Upgrade_to', '1.0 Beta 2');
 
 // Variables that we need later
 $vienara = array();
