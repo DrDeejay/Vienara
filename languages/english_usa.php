@@ -84,6 +84,7 @@ $txt['top_button'] = 'Show the top button at the bottom of the blog';
 $txt['rss'] = 'RSS';
 $txt['rss_purpose'] = 'Feed of the latest 15 blogs.';
 $txt['cur_time'] = 'Current time';
+$txt['simple_theme'] = 'Simple';
 
 // The administration panel and its strings
 $txt['admin'] = 'Administration';
@@ -298,3 +299,6 @@ $txt['month_december'] = 'December';
 $txt['terminal'] = 'Terminal';
 $txt['no_command'] = '<em>No command executed</em>';
 $txt['command_not_found'] = '<em>Command not found.</em>';
+
+// Strings for the mobile version
+$txt['full_version'] = 'Full version';

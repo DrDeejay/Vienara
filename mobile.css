@@ -1,0 +1,46 @@
+body {
+	font-size: 12px;
+	font-family: Verdana, Arial, Helvetica;
+	margin: 0;
+	padding: 0;
+}
+.category {
+	background: #97CA62;
+	padding: 10px;
+	color: white;
+	font-size: 20px;
+}
+.padding {
+	padding: 10px;
+}
+.background {
+	background: #EBEBEB;
+}
+input[type="text"], input[type="password"], select, input[type="checkbox"] {
+	padding: 5px;
+	border: 1px solid grey;
+	margin: 2px;
+	background: #F7F7F7;
+}
+a {
+	color: #7AA350;
+	text-decoration: none;
+}
+.title {
+	background: #7AA350;
+	color: white;
+	font-size: 20px;
+	font-weight: bold;
+	padding: 10px;
+}
+input.search {
+	width: 100%;
+	font-size: 20px;
+	padding: 7px;
+}
+input.searchsubmit {
+	background: #333333;
+	border: 0;
+	padding: 10px;
+	border-radius: 0;
+}

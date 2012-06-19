@@ -6,6 +6,9 @@
 ! The editor didn't show up when editing a blog (Thanks Yoshi)
 # Small button style change
 + Added bulk actions for blogs, tabs and pages
+! The editor css file should have a cache variable
++ Added mobile theme
++ Added automatic mobile detection
 
 1.0 Beta 1
 --------------------------------------------------------------------

@@ -112,7 +112,7 @@ function fatal_error($error = '', $include_fail = false)
 // Important includes
 $vienara['includes'] = array(
 	'Config.php',
-	'Template.php',
+	'classes/Class-MobileDetect.php',
 	'xensql/XenSql.php',
 	'Imik.php'
 );
@@ -127,6 +127,25 @@ $vienara['includes'] = array(
 		if($result == false)
 			fatal_error('Failed to include file: ' . $include);
 	}
+
+// Setup the mobile detection class
+$mobile = new Mobile_Detect;
+
+// This will load the correct template file
+if(isset($_GET['normal']) && isset($_SESSION['is_mobile'])) {
+	include 'Template.php';
+	unset($_SESSION['is_mobile']);
+}
+elseif($mobile->isMobile())
+	include 'Template-Mobile.php';
+elseif(isset($_SESSION['is_mobile']))
+	include 'Template-Mobile.php';
+elseif(isset($_GET['mobile'])) {
+	include 'Template-Mobile.php';
+	$_SESSION['is_mobile'] = 1;
+}
+else
+	include 'Template.php';
 
 // Connect with the database
 $db = xensql_connect($db_settings['server'], $db_settings['username'], $db_settings['password'], $db_settings['dbname']);
@@ -461,6 +480,13 @@ function vienara_get_app($application = '')
 		// Do we want to show the search page?
 		if($vienara['setting']['enable_search'] == 1)
 			$vienara_acts['search'] = 'search';
+
+		// Only allow the search and pages thing when using the mobile version
+		if(!empty($_SESSION['is_mobile']))
+			$vienara_acts = array(
+				'search' => 'search',
+				'site' => 'site'
+			);
 
 		// Is it set?
 		if(isset($vienara_acts[$application]))

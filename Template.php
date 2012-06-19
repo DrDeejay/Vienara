@@ -15,7 +15,7 @@ function vienara_header()
 	<script type="text/javascript" src="javascript/SCEditor.js?' . $vienara['setting']['css_cache_version'] . '"></script>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<link rel="stylesheet" type="text/css" href="style.css?' . $vienara['setting']['css_cache_version'] . '" />
-	<link rel="stylesheet" href="SCEditor.css" type="text/css" />
+	<link rel="stylesheet" href="SCEditor.css?' . $vienara['setting']['css_cache_version'] . '" type="text/css" />
 	<title>' . $vienara['setting']['title'] . ($vienara['setting']['enable_extra_title'] == 1 ? ' | ' . $vienara['setting']['extra_title'] : '') . '</title>';
 	
 	// Custom header scripts
@@ -148,7 +148,7 @@ function vienara_footer()
 		<a href="' . Website_Url . '">' . show_string('powered_by') . 'Vienara ' . show_string('version') . Version . '</a><br />
 		' . show_string('icons_by') . '<a href="http://www.famfamfam.com/lab/icons/silk/">FamFamFam</a> ' . show_string('and') . ' <a href="http://www.fatcow.com/free-icons">Fatcow</a>' . ($vienara['setting']['enable_custom_copyright'] == 1 ? '
 			<br />' . (!empty($vienara['setting']['copyright_link_to']) ? '<a href="' . $vienara['setting']['copyright_link_to'] . '">' : '') . $vienara['setting']['custom_copyright'] . (!empty($vienara['setting']['copyright_link_to']) ? '</a>' : '') : '') . '<br />
-		<a href="' . Blog_file . '?rss">' . show_string('rss') . '</a>
+		<a href="' . Blog_file . '?rss">' . show_string('rss') . '</a> | <a href="' . Blog_file . '?mobile">' . show_string('simple_theme') . '</a>
 	</div>
 </body>
 </html>';
