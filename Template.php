@@ -199,6 +199,7 @@ function vienara_show_blog($information = '', $is_status = false)
 						<a href="#' . $information['id_blog'] . '" id="' . $information['id_blog'] . '">' . $information['blog_title'] . '</a>
 					</div>
 					' . show_string('posted_on') . ': ' . parse_date(date("F j, Y, g:i a", $information['post_date']), true) . '
+					' . (vienara_is_logged() ? '<br /><a href="' . Blog_file . '?app=admin&section=edit&id=' . $information['id_blog'] . '">[' . show_string('edit') . ']</a>' : '') . '
 				</div>
 				<br class="clear" />
 				<div class="blog_content">
