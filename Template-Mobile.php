@@ -27,10 +27,11 @@ function vienara_footer()
 
 	echo '
 		<br />
-	<a href="' . Blog_file . '">' . show_string('index') . '</a><br />
-	<a href="' . Blog_file . '?rss">' . show_string('rss') . '</a><br />
-	<a href="' . Blog_file . '?app=search">' . show_string('search') . '</a><br />
-	<a href="' . Blog_file . '?normal">' . show_string('full_version') . '</a>
+	<a class="menu" href="' . Blog_file . '">' . show_string('index') . '</a>
+	<a class="menu" href="' . Blog_file . '?rss">' . show_string('rss') . '</a>
+	<a class="menu" href="' . Blog_file . '?app=search">' . show_string('search') . '</a>
+	<a class="menu" href="' . Blog_file . '?normal">' . show_string('full_version') . '</a><br /><br />
+	<a href="' . Website_Url . '">' . show_string('powered_by') . 'Vienara ' . show_string('version') . Version . '</a> | <a href="http://graywebhost.com">' . show_string('sponsored_by') . 'Graywebhost</a><br /><br />
 </body>
 </html>';
 }

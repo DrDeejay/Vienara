@@ -155,7 +155,7 @@ function vienara_footer()
 		</div>
 	</div>
 	<div class="copyright">
-		<a href="' . Website_Url . '">' . show_string('powered_by') . 'Vienara ' . show_string('version') . Version . '</a><br />
+		<a href="' . Website_Url . '">' . show_string('powered_by') . 'Vienara ' . show_string('version') . Version . '</a> | <a href="http://graywebhost.com">' . show_string('sponsored_by') . 'Graywebhost</a><br />
 		' . show_string('icons_by') . '<a href="http://www.famfamfam.com/lab/icons/silk/">FamFamFam</a> ' . show_string('and') . ' <a href="http://www.fatcow.com/free-icons">Fatcow</a>' . ($vienara['setting']['enable_custom_copyright'] == 1 ? '
 			<br />' . (!empty($vienara['setting']['copyright_link_to']) ? '<a href="' . $vienara['setting']['copyright_link_to'] . '">' : '') . $vienara['setting']['custom_copyright'] . (!empty($vienara['setting']['copyright_link_to']) ? '</a>' : '') : '') . '<br />
 		<a href="' . Blog_file . '?rss">' . show_string('rss') . '</a> | <a href="' . Blog_file . '?mobile">' . show_string('simple_theme') . '</a>

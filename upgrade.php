@@ -13,7 +13,8 @@
 * @copyright 2012: Vienara
 * @developed by: Dr. Deejay and Thomas de Roo
 * @package: Vienara
-* @news, support and updates at: http://vienara.co.cc
+* @news, support and updates at: http://vienara.org
+* @sponsored by: Graywebhost (http://graywebhost.com)
 *
 * @license MIT
 */

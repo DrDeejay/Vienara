@@ -9,11 +9,12 @@
 * not use the name "Vienara" as name for your project
 * either. Thanks for understanding.
 *
-* @version: 1.0 Beta 1 Public
+* @version: 1.0 Beta 2
 * @copyright 2012: Vienara
 * @developed by: Dr. Deejay and Thomas de Roo
 * @package: Vienara
-* @news, support and updates at: http://vienara.co.cc
+* @news, support and updates at: http://vienara.org
+* @sponsored by: Graywebhost (http://graywebhost.com)
 *
 * @license MIT
 */

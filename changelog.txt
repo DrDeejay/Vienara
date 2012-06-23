@@ -3,6 +3,17 @@
 ! There should always be a link to the frontpage when using the mobile style
 ! The font size of the mobile theme is too small
 + Added quick edit link
+! The installer installed the blog with a wrong version number
+! Fixed small bug in installer, the wrong path was provided when installing
+! The css editor doesn't function correctly when magic quotes are enabled
+! Text in the search submit button should be white, so it's readable (Thanks Phantom)
+! Switching themes didn't work (Thanks Yoshi)
+! Made the links more visible
+# Decreased the padding of navigation links in the mobile theme
+! Fixed display issue in the mobile theme (Thanks Phantom)
+- Updated the copyright to add a sponsored by.
+- Updated the header comment blocks
+! There was no copyright displayed in the simple theme
 
 1.0 Beta 1 Public
 --------------------------------------------------------------------

@@ -9,11 +9,12 @@
 * not use the name "Vienara" as name for your project
 * either. Thanks for understanding.
 *
-* @version: 1.0 Beta 1 Public
+* @version: 1.0 Beta 2
 * @copyright 2012: Vienara
 * @developed by: Dr. Deejay and Thomas de Roo
 * @package: Vienara
-* @news, support and updates at: http://vienara.co.cc
+* @news, support and updates at: http://vienara.org
+* @sponsored by: Graywebhost (http://graywebhost.com)
 *
 * @license MIT
 */
@@ -29,6 +30,7 @@ ini_set('magic_quotes_runtime', 0);
 
 // Useful information will be provided below
 define('Blog_Branch', '1.0');
+define('BlogVersion', '1.0 Beta 2');
 
 // Variables that we need later
 $vienara = array();
@@ -302,7 +304,7 @@ function install_step_2()
 	$_POST['password'] = sha1($_POST['password']);
 
 	// Set the blogurl (thanks Yoshi)
-	$blogurl = 'http://' . $_SERVER['SERVER_ADDR'] . str_ireplace('/' . $vienara['install_file'], '', $_SERVER['REQUEST_URI']);
+	$blogurl = 'http://' . $_SERVER['SERVER_ADDR'] . str_ireplace('/' . $vienara['install_file'] . '?step=2', '', $_SERVER['REQUEST_URI']);
 
 	// Insert everything into the database
 	$query = file_get_contents('install.sql');
@@ -318,6 +320,9 @@ function install_step_2()
 
 		// Fix the blogurl
 		$query = str_replace('{blogurl}', $blogurl, $query);
+
+		// Define the blog version
+		$query = str_replace('{cur_version}', BlogVersion, $query);
 
 		// Execute the queries
 		mysqli_multi_query($db, $query);

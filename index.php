@@ -13,7 +13,8 @@
 * @copyright 2012: Vienara
 * @developed by: Dr. Deejay and Thomas de Roo
 * @package: Vienara
-* @news, support and updates at: http://vienara.co.cc
+* @news, support and updates at: http://vienara.org
+* @sponsored by: Graywebhost (http://graywebhost.com)
 *
 * @license MIT
 */
@@ -58,7 +59,7 @@ $vienara = array();
 
 // What version are we using? And what is the link to the website?
 define('Version', '1.0 Beta 2');
-define('Website_Url', 'http://vienara.bplaced.net'); // Don't change this!
+define('Website_Url', 'http://vienara.org'); // Don't change this!
 define('Blog_file', 'index.php');
 define('Branch', '1.0');
 define('JqueryVersion', '1.7.2');
@@ -137,7 +138,7 @@ if(isset($_GET['normal']) && isset($_SESSION['is_mobile'])) {
 	unset($_SESSION['is_mobile']);
 }
 elseif(isset($_GET['normal']))
-	include 'Template-Mobile.php';
+	include 'Template.php';
 elseif($mobile->isMobile())
 	include 'Template-Mobile.php';
 elseif(isset($_SESSION['is_mobile']))
@@ -1874,6 +1875,10 @@ function vienara_act_admin()
 
 		// Attempting to save it?
 		if(!empty($_POST['new_style'])) {
+
+			// Remove the slashes that Magic Quotes added
+			if(get_magic_quotes_gpc())
+				$_POST['new_style'] = stripslashes($_POST['new_style']);
 
 			// Backup it before saving?
 			if(isset($_POST['css_backup'])) {

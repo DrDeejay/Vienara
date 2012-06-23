@@ -24,8 +24,7 @@ input[type="text"], input[type="password"], select, input[type="checkbox"] {
 }
 a {
 	color: #7AA350;
-	font-size: 14px;
-	text-decoration: none;
+	font-size: 15px;
 }
 .title {
 	background: #7AA350;
@@ -35,13 +34,21 @@ a {
 	padding: 10px;
 }
 input.search {
-	width: 100%;
+	width: 98%;
 	font-size: 20px;
 	padding: 7px;
 }
 input.searchsubmit {
 	background: #333333;
+	color: white;
 	border: 0;
 	padding: 10px;
 	border-radius: 0;
+}
+a.menu {
+	background: #8FBE7A url(./images/bg_color.png);
+	color: white;
+	text-decoration: none;
+	margin: 5px;
+	padding: 5px;
 }

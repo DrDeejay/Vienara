@@ -2,11 +2,11 @@
 /**
  * English USA translation
  *
- * Translation by: Winterkip7
+ * Translation by: Dr. Deejay
  * For: Vienara
  * Version: 1.0 Beta 1 Public
  *
- * License: BSD
+ * License: MIT
 */
 
 /**
@@ -85,6 +85,7 @@ $txt['rss'] = 'RSS';
 $txt['rss_purpose'] = 'Feed of the latest 15 blogs.';
 $txt['cur_time'] = 'Current time';
 $txt['simple_theme'] = 'Simple';
+$txt['sponsored_by'] = 'Sponsored by ';
 
 // The administration panel and its strings
 $txt['admin'] = 'Administration';
