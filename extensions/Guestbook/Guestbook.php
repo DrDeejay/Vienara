@@ -39,7 +39,7 @@ function vienara_act_guestbook()
 		// Do we have a username set?
 		if(empty($_POST['username']) && !vienara_is_logged())
 			$_POST['username'] = 'Guest';
-		elseif(empty($_POST['user']) && vienara_is_logged())
+		elseif(empty($_POST['username']) && vienara_is_logged())
 			$_POST['username'] = 'Admin';
 
 		// Get the ip adress

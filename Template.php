@@ -145,7 +145,7 @@ function vienara_footer()
 
 	
 	// We don't want to display this when we're in the admin panel or anywhere else
-	if(!isset($_GET['app']))
+	if(!isset($_GET['app']) && !isset($_GET['blog']))
 		vienara_page($vienara['blog_count'], Blog_file . '?page=');
 
 		echo '
@@ -165,7 +165,7 @@ function vienara_footer()
 }
 
 // Show a blog
-function vienara_show_blog($information = '', $is_status = false)
+function vienara_show_blog($information = '', $is_status = false, $single = false)
 {
 	global $vienara;
 
@@ -187,7 +187,7 @@ function vienara_show_blog($information = '', $is_status = false)
 			</div>';
 	else
 		echo '
-			<div class="blogpost">
+			' . ($single ? '' : '<div class="blogpost">') . '
 				<div class="floatleft">
 					<div class="date">
 						<span class="daymonth">' . parse_date(date("M j", $information['post_date'])) . '</span><br />
@@ -196,7 +196,7 @@ function vienara_show_blog($information = '', $is_status = false)
 				</div>
 				<div style="width: 90%">
 					<div class="title">
-						<a href="#' . $information['id_blog'] . '" id="' . $information['id_blog'] . '">' . $information['blog_title'] . '</a>
+						<a href="' . Blog_file . '?blog=' . $information['id_blog'] . '" id="' . $information['id_blog'] . '">' . $information['blog_title'] . '</a>
 					</div>
 					' . show_string('posted_on') . ': ' . parse_date(date("F j, Y, g:i a", $information['post_date']), true) . '
 					' . (vienara_is_logged() ? '<br /><a href="' . Blog_file . '?app=admin&section=edit&id=' . $information['id_blog'] . '">[' . show_string('edit') . ']</a>' : '') . '
@@ -204,10 +204,76 @@ function vienara_show_blog($information = '', $is_status = false)
 				<br class="clear" />
 				<div class="blog_content">
 					' . $information['blog_content'] . '
+					' . (!$single ? '<br /><br /><a href="' . Blog_file . '?blog=' . $information['id_blog'] . '">' . show_string('read_more') . '</a> | <a href="' . Blog_file . '?blog=' . $information['id_blog'] . '#new_comment">' . show_string('reply_this') . '</a>' : '') . '
 					' . ($vienara['setting']['enable_likes'] == 1 ? '<br /><br /><iframe src="https://www.facebook.com/plugins/like.php?href=' . $vienara['setting']['blog_url'] . '?blog=' . $information['id_blog'] . '" style="border:none!important; width:450px; height:80px"></iframe>' : '') . '
 				' . ($vienara['setting']['enable_likes'] == 1 ? '<br /><div class="fb-comments" data-href="' . $vienara['setting']['blog_url'] . '?blog=' . $information['id_blog'] . '" data-num-posts="5" data-width="470"></div>' : '') . '
 				</div>
+			' . ($single ? '' : '
+			</div> ');
+
+	// The comment thing. Only if we're viewing a single post, though.
+	if($single) {
+
+		echo '
+			<br />
+			<div class="cat_bg bg_color">
+				' . show_string('comments') . '
+			</div>
+				<table width="100%" cellspacing="1">';
+
+		// Get the comments
+		foreach($vienara['comments'] as $comment)
+			echo '
+					<tr>
+						<td width="15%" class="padding bg_color5" valign="top"><span style="font-size: 14px;">' . $comment['username'] . '</span><br />
+							' . ($comment['isadmin'] == 1 ? show_string('administrator') . '<br /><img src="' . $vienara['setting']['avatar'] . '" alt="" /><br />' : '<img src="images/vienara_guest.png" alt="" /><br />') . '
+							' . (!empty($comment['website']) ? '<a href="' . $comment['website'] . '">[' . show_string('website') . ']</a><br />' : '') . '
+							' . (vienara_is_logged() ? '<a href="http://www.stopforumspam.com/ipcheck/' . $comment['ip'] . '">[' . show_string('trace_ip') . ']</a>' : '') . '
+						</td>
+						<td width="85%" class="padding bg_color4" valign="top">
+							' . (vienara_is_logged() ? '<a href="' . Blog_file . '?blog=' . $information['id_blog'] . '&deletecomment=' . $comment['id_comment'] . '">[' . show_string('delete') . ']</a><br />' : '') . '
+							' . $comment['message'] . '<br />
+							<em>' . show_string('post_date') . ': ' . parse_date(date("F j, Y, g:i a", $comment['poster_time'])) . '</em>
+						</td>
+					</tr>';
+
+		// No comments?
+		if(empty($vienara['comments']))
+			echo '
+					<tr>
+						<td colspan="2" class="padding bg_color5">
+							' . show_string('no_comments') . '
+						</td>
+					</tr>';
+
+		echo '
+				</table>
+			<br />
+			<div class="cat_bg bg_color">
+				<a href="#new_comment" name="new_comment">' . show_string('new_comment') . '</a>
+			</div>
+			<div class="padding bg_color5">
+				' . ($vienara['setting']['reg_comments'] == 1 ? '
+					<form action="' . Blog_file . '?blog=' . $information['id_blog'] . '" method="post">
+						<table width="100%">
+							<tr>
+								<td width="20%" valign="top"><strong>' . show_string('name') . ':</strong></td>
+								<td width="80%"><input type="text" name="username" /></td>
+							</tr>
+							<tr>
+								<td width="20%" valign="top"><strong>' . show_string('website') . ':</strong></td>
+								<td width="80%"><input type="text" name="website" /></td>
+							</tr>
+							<tr>
+								<td width="20%" valign="top"><strong>' . show_string('message') . ':</strong></td>
+								<td width="80%"><textarea class="editor" name="message" rows="5" cols="50"></textarea></td>
+							</tr>
+						</table><br /><br />
+						' . show_string('comment_policy') . '<br /><br />
+						<input type="submit" value="' . show_string('submit') . '" />
+					</form>' : show_string('comments_disabled')) . '
 			</div>';
+	}
 }
 
 // The help template

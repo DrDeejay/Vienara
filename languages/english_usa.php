@@ -60,6 +60,19 @@ $txt['is_status'] = 'Is status update';
 $txt['new_status'] = 'New status update';
 $txt['status_title'] = 'Status update';
 $txt['delete_selection'] = 'Delete Selection';
+$txt['comments_disabled'] = 'The comments feature is currently disabled.';
+$txt['comment_policy'] = 'When sending a comment, your ip-adress will be saved. It will only be used for anti-spam purposes and will not be published anywhere. When submitting this form, you will agree to that. After you submitted this form, you cannot delete or edit your message. Messages can only be deleted by administrators. You can ask them to remove your comment if you want to, but when submitting this form, you agree to it that the administrator does not have to obey your request.';
+$txt['name'] = 'Name';
+$txt['comments'] = 'Comments';
+$txt['website'] = 'Website';
+$txt['trace_ip'] = 'Check ip';
+$txt['no_comments'] = 'There are no comments on this post, yet.';
+$txt['user_admin'] = 'Admin';
+$txt['user_guest'] = 'Guest';
+$txt['administrator'] = 'Administrator';
+$txt['post_date'] = 'Posted on';
+$txt['not_allowed'] = 'You are not allowed to perform that action';
+$txt['comment_not_found'] = 'The requested comment could not be found.';
 
 // Altering settings
 $txt['old_pass'] = 'Old password';
@@ -74,6 +87,9 @@ $txt['items_per_page'] = 'Items per page';
 $txt['new_name'] = 'New name';
 $txt['change_pass'] = 'Change password';
 $txt['rename_blog'] = 'Rename blog';
+$txt['read_more'] = 'Read more';
+$txt['reply_this'] = 'Reply to this blogpost';
+$txt['new_comment'] = 'Comment on this blogpost';
 
 // General strings
 $txt['top'] = 'Top';
@@ -181,6 +197,7 @@ $txt['jquery_v'] = 'Jquery version';
 $txt['php_page'] = 'This is a PHP page';
 $txt['page_type'] = 'Type';
 $txt['custom_css'] = 'Custom css';
+$txt['reg_comments'] = 'Enable built-in comments';
 
 // Pages
 $txt['page_not_found'] = 'Page not found';
@@ -272,6 +289,8 @@ $txt['doc']['add_tab_icon'] = 'How do I add an icon to my tab?';
 $txt['doc']['doc_add_tab_icon'] = 'Adding an icon to your tab is fairly simple. You only need an image, ftp access and the position of your tab. Let\'s say we have a tab, with "1" as position. Then we would upload an image to the "MenuIcons" directory, named "tab_1.png". Let\'s say it\'s not 1 that is the position, but 2 instead. Then we should name our image tab_2.png instead. Fairly simple, no?';
 $txt['doc']['custom_css'] = 'Setting - Custom css';
 $txt['doc']['doc_custom_css'] = 'When upgrading your blog, the changes you made to the css file will be lost. If you need to use custom css in one of your pages, you might want to consider putting custom css in this field instead. This setting won\'t be touched during the upgrade, so your changes won\'t be lost after upgrading.';
+$txt['doc']['reg_comments'] = 'Setting - Regular comments';
+$txt['doc']['doc_reg_comments'] = 'Enable the built-in comments feature.';
 
 // Dates
 $txt['jan'] = 'Jan';

@@ -64,16 +64,6 @@ define('Blog_file', 'index.php');
 define('Branch', '1.0');
 define('JqueryVersion', '1.7.2');
 
-// Have we set a blog?
-if(isset($_GET['blog'])) {
-
-	// Redirect to the blog
-	header('Location: ' . Blog_file . '#' . $_GET['blog']);
-
-	// Exit, just to be sure
-	exit;
-}
-
 // Define the home directory
 $directory = dirname(__FILE__);
 
@@ -535,47 +525,173 @@ function die_nice($message = '')
 }
 
 // This displays the frontpage
-function vienara()
+function vienara($single = '')
 {
 	global $vienara, $viencode;
 
 	// We're viewing the frontpage
 	define('VienaraFront', 1);
 
-	// Just in case
-	$end = 10;
-	
-	// Int?
-	if(isset($_GET['page']) && !is_numeric($_GET['page']))
-		die_nice(show_string('bad_request'));
+	// There is a chance we posted a comment. Check it.
+	if(!empty($_POST['message']) && !empty($single)) {
 
-	// We didn't set a page
-	if(!isset($_GET['page']))
-		$_GET['page'] = 1;
+		// Do we have a username set?
+		if(empty($_POST['username']) && !vienara_is_logged())
+			$_POST['username'] = show_string('user_guest');
+		elseif(empty($_POST['username']) && vienara_is_logged())
+			$_POST['username'] = show_string('user_admin');
 
-	// How many messages should we load?
-	if(isset($_GET['page'])) {
+		// Clean the fields
+		$_POST['username'] = xensql_escape_string($_POST['username']);
+		$_POST['website'] = xensql_escape_string($_POST['website']);
+		$_POST['message'] = xensql_escape_string($_POST['message']);
+		$_GET['blog'] = xensql_escape_string($_GET['blog']);
 
-		// Begin with..
-		$begin = ($_GET['page']-1) * $vienara['setting']['blogsperpage'];
+		// Escape the html
+		$_POST['username'] = htmlspecialchars($_POST['username'], ENT_NOQUOTES, 'UTF-8', false);
+		$_POST['website'] = htmlspecialchars($_POST['website'], ENT_NOQUOTES, 'UTF-8', false);
+		$_POST['message'] = htmlspecialchars($_POST['message'], ENT_NOQUOTES, 'UTF-8', false);
 
-		// Or is it one?
-		if($_GET['page'] == 1)
-			$begin = 0;
+		// Check if the blog exists
+		$result = xensql_query("
+			SELECT id_blog
+				FROM {db_pref}content
+				WHERE id_blog = '" . $_GET['blog'] . "'
+		");
 
-		// How many should we load?
-		$end = $vienara['setting']['blogsperpage'];
+			// So, does it?
+			if(empty($result))
+				die_nice(show_string('blog_not_found'));
+
+		// Get the ip adress
+		$ip = $_SERVER['REMOTE_ADDR'];
+
+		// Add it to the database.
+		xensql_query("
+			INSERT
+				INTO {db_pref}comments
+			VALUES(
+				'',
+				'" . (int) $_GET['blog'] . "',
+				'" . (vienara_is_logged() ? 1 : 0) . "',
+				'$ip',
+				'" . $_POST['website'] . "',
+				'" . $_POST['message'] . "',
+				UNIX_TIMESTAMP(),
+				'" . $_POST['username'] . "'
+			)
+		");
 	}
 
-	// Just load 10
-	else
+	// Deleting an existing comment? Only if we are allowed to do that.
+	elseif(isset($_GET['deletecomment'])) {
+
+		// We should be allowed to remove comments
+		if(!vienara_is_logged())
+			die_nice(show_string('not_allowed'));
+
+		// Is it empty?
+		if(empty($_GET['deletecomment']) || !is_numeric($_GET['deletecomment']))
+			die_nice(show_string('comment_not_found'));
+
+		// Make sure we have a valid id
+		$id = xensql_escape_string($_GET['deletecomment']);
+
+		// Check if the message is set
+		$result = xensql_count_rows("
+			SELECT id_comment
+				FROM {db_pref}comments
+				WHERE id_comment='$id'
+		");
+
+			// How many?
+			if($result == 0)
+				die_nice(show_string('comment_not_found'));
+
+		// Found. Now delete it
+		xensql_query("
+			DELETE
+				FROM {db_pref}comments
+				WHERE id_comment='$id'
+		");
+
+		// We're done
+		done('?blog=' . $_GET['blog']);
+	}
+
+	// Setup a clean comment array
+	$vienara['comments'] = array();
+
+	// Do we only want to display ONE blog?
+	if(!empty($single))	{
+
+		// Escape it.
+		$single = xensql_escape_string($single);
+
+		// Make sure it is numeric
+		$single = (int) $single;	
+
+		// We only want one result
+		$showsingle = "AND id_blog='$single'";
+
+		// We don't want undefined variables, do we?
 		$begin = 0;
+		$end = 10;
+
+		// Get the comments that belong to this post
+		$result = xensql_query("
+			SELECT id_comment, id_blog, ip, website, poster_time, message, username, isadmin
+				FROM {db_pref}comments
+				WHERE id_blog = '$single'
+				ORDER BY poster_time DESC
+		");
+
+		// Set it up
+		$vienara['comments'] = $result;
+	}
+
+	// Nope, it's the frontpage
+	else {
+
+		// Just in case
+		$end = 10;
+	
+		// Int?
+		if(isset($_GET['page']) && !is_numeric($_GET['page']))
+			die_nice(show_string('bad_request'));
+
+		// We didn't set a page
+		if(!isset($_GET['page']))
+			$_GET['page'] = 1;
+
+		// How many messages should we load?
+		if(isset($_GET['page'])) {
+
+			// Begin with..
+			$begin = ($_GET['page']-1) * $vienara['setting']['blogsperpage'];
+
+			// Or is it one?
+			if($_GET['page'] == 1)
+				$begin = 0;
+
+			// How many should we load?
+			$end = $vienara['setting']['blogsperpage'];
+		}
+
+		// Just load 10
+		else
+			$begin = 0;
+
+		// We don't have this one set when we're viewing the frontpage
+		$showsingle = '';
+	}
 
 	// Get the blogs from the blog table
 	$result = xensql_query("
 		SELECT id_blog, blog_title, blog_content, published, post_date, is_status
 			FROM {db_pref}content
 			WHERE published = 1
+				$showsingle
 			ORDER BY post_date " . $vienara['setting']['order'] . "
 			LIMIT $begin, $end
 	");
@@ -593,8 +709,12 @@ function vienara()
 			vienara_hook('single_blog');
 
 			// Finally show everything
-			vienara_show_blog($blog, ($blog['is_status'] == 1 ? true : false));
+			vienara_show_blog($blog, ($blog['is_status'] == 1 ? true : false), !empty($single));
 		}
+
+	// Found anything?
+	if(empty($result) && !empty($single))
+		echo show_string('blog_not_found');
 }
 
 // Check if we want to post a message
@@ -1225,6 +1345,7 @@ function vienara_act_admin()
 				'enable_comments' => array('check', 'enable_comments'),
 				'quick_status' => array('check', 'quick_status'),
 				'enable_search' => array('check', 'enable_search'),
+				'reg_comments' => array('check', 'reg_comments'),
 			'',
 				'avatar' => array('text', 'avatar'),
 			'',	
@@ -2097,8 +2218,10 @@ if(isset($_POST['old_password'])) {
 }
 
 // What do we want to do?
-if(!isset($_GET['app']))
+if(!isset($_GET['app']) && !isset($_GET['blog']))
 	vienara();
+elseif(isset($_GET['blog']) && !isset($_GET['app']))
+	vienara($_GET['blog']);
 elseif(!empty($_GET['app']))
 	vienara_get_app($_GET['app']);
 else

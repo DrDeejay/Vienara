@@ -43,6 +43,7 @@ INSERT INTO {db_pref}settings (`id`, `value`) VALUES
 ('ignore_disabled_ext', '0'),
 ('ext_enable', '1'),
 ('version', '{cur_version}'),
+('reg_comments', '1'),
 ('width', '90');
 
 CREATE TABLE {db_pref}menu (
@@ -58,4 +59,14 @@ CREATE TABLE {db_pref}pages (
   `page_body` longtext NOT NULL,
   `show_header` tinyint NOT NULL,
   `is_php` tinyint NOT NULL
+) ENGINE=MyIsam CHARACTER SET utf8 COLLATE 'utf8_bin';
+
+CREATE TABLE {db_pref}comments (
+  `id_comment` int(11) NOT NULL AUTO_INCREMENT,
+  `id_blog` int(11) NOT NULL,
+  `isadmin` int(1) NOT NULL,
+  `ip` text NOT NULL,
+  `website` text NOT NULL,
+  `message` longtext NOT NULL,
+  `poster_time` int(11) NOT NULL
 ) ENGINE=MyIsam CHARACTER SET utf8 COLLATE 'utf8_bin';
