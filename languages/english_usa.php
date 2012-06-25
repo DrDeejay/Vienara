@@ -105,6 +105,7 @@ $txt['sponsored_by'] = 'Sponsored by ';
 
 // The administration panel and its strings
 $txt['admin'] = 'Administration';
+$txt['administration_panel'] = ' - Administration Panel';
 $txt['version_history'] = 'Version history';
 $txt['changelog_fail'] = 'Failed to load version history';
 $txt['admin_not_allowed'] = 'You are not allowed to access the administration panel!';
@@ -116,6 +117,8 @@ $txt['special_thanks'] = 'Special thanks';
 $txt['credits'] = 'Credits';
 $txt['developers'] = 'Development team';
 $txt['extensions'] = 'Extensions';
+$txt['support_team'] = 'Support team';
+$txt['site_team'] = 'Site team';
 $txt['and'] = 'and';
 $txt['blog_title'] = 'The title of your blog';
 $txt['action_done'] = 'Action completed';
@@ -198,6 +201,7 @@ $txt['php_page'] = 'This is a PHP page';
 $txt['page_type'] = 'Type';
 $txt['custom_css'] = 'Custom css';
 $txt['reg_comments'] = 'Enable built-in comments';
+$txt['back_to_site'] = 'Site home';
 
 // Pages
 $txt['page_not_found'] = 'Page not found';

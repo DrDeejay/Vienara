@@ -123,7 +123,9 @@ $vienara['includes'] = array(
 $mobile = new Mobile_Detect;
 
 // This will load the correct template file
-if(isset($_GET['normal']) && isset($_SESSION['is_mobile'])) {
+if(isset($_GET['app']) && $_GET['app'] == 'admin' && !$mobile->isMobile())
+	include 'Template-Admin.php';
+elseif(isset($_GET['normal']) && isset($_SESSION['is_mobile'])) {
 	include 'Template.php';
 	unset($_SESSION['is_mobile']);
 }
@@ -1044,9 +1046,6 @@ function vienara_act_admin()
 	// Setup a fresh admin array
 	$admin = array();
 
-	// Setup the title
-	$admin['title'] = $vienara['setting']['title'] . ' - ' . show_string('admin');
-
 	// This will setup the sidebar
 	$admin['sidebar'] = array(
 		'home' => array(
@@ -1054,6 +1053,12 @@ function vienara_act_admin()
 			'href' => Blog_file . '?app=admin',
 			'show' => true,
 			'icon' => 'home.png'
+		),
+		'site' => array(
+			'title' => show_string('back_to_site'),
+			'href' => Blog_file,
+			'show' => true,
+			'icon' => 'back.png'
 		),
 		'extensions' => array(
 			'title' => show_string('extensions'),
@@ -1067,13 +1072,13 @@ function vienara_act_admin()
 			'show' => true,
 			'icon' => 'terminal.png'
 		),
-		'post_blog' => array(
+		'newblog' => array(
 			'title' => show_string('new_post'),
 			'href' => Blog_file . '?app=admin&section=newblog',
 			'show' => true,
 			'icon' => 'new.png'
 		),
-		'blog_list' => array(
+		'blogs' => array(
 			'title' => show_string('list_blogs'),
 			'href' => Blog_file . '?app=admin&section=blogs',
 			'show' => true,
@@ -1103,19 +1108,19 @@ function vienara_act_admin()
 			'show' => true,
 			'icon' => 'hash.png'
 		),
-		'edit_menu' => array(
+		'menu' => array(
 			'title' => show_string('edit_menu'),
 			'href' => Blog_file . '?app=admin&section=menu',
 			'show' => true,
 			'icon' => 'menu_edit.png'
 		),
-		'table_repair' => array(
+		'repairtable' => array(
 			'title' => show_string('repair_optimize'),
 			'href' => Blog_file . '?app=admin&section=repairtable',
 			'show' => true,
 			'icon' => 'wrench.png'
 		),
-		'style_edit' => array(
+		'css' => array(
 			'title' => show_string('style_edit'),
 			'href' => Blog_file . '?app=admin&section=css',
 			'show' => true,
@@ -1183,6 +1188,18 @@ function vienara_act_admin()
 					'members' => array(
 						'Dr. Deejay'
 					),
+				),
+				'support' => array(
+					'label' => show_string('support_team'),
+					'members' => array(
+						'Yoshi2889'
+					)
+				),
+				'site' => array(
+					'label' => show_string('site_team'),
+					'members' => array(
+						'Colin'
+					)
 				)
 			)
 		),
@@ -1314,7 +1331,7 @@ function vienara_act_admin()
 		loadClass('Timezones');
 
 		// Setup the class
-		$timezones = new Timezone();
+		$timezones = new Timezones();
 
 		// The list of settings
 		$admin['settings'] = array(

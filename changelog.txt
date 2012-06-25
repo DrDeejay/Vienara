@@ -18,6 +18,10 @@
 ! Fixed display issues on the search page
 ! Fixed small bug in guestbook: when posting a comment as an admin, the guestbook always used 'Admin' as username
 + Added built-in comment support.
++ Updated the credits
+- Separated the theme of the administration panel and main site
+- Renamed the timezone class to timezones
+! The 'public $txt' isn't used in the timezone class, so it should be removed
 
 1.0 Beta 1 Public
 --------------------------------------------------------------------

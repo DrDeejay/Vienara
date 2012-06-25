@@ -62,11 +62,12 @@ CREATE TABLE {db_pref}pages (
 ) ENGINE=MyIsam CHARACTER SET utf8 COLLATE 'utf8_bin';
 
 CREATE TABLE {db_pref}comments (
-  `id_comment` int(11) NOT NULL AUTO_INCREMENT,
+  `id_comment` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `id_blog` int(11) NOT NULL,
   `isadmin` int(1) NOT NULL,
   `ip` text NOT NULL,
   `website` text NOT NULL,
   `message` longtext NOT NULL,
-  `poster_time` int(11) NOT NULL
+  `poster_time` int(11) NOT NULL,
+  `username` text NOT NULL
 ) ENGINE=MyIsam CHARACTER SET utf8 COLLATE 'utf8_bin';

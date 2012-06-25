@@ -24,9 +24,7 @@ if(!defined('Vienara'))
 	die();
 
 // The timezone class
-class Timezone {
-
-	public $txt;
+class Timezones {
 
 	// Get the timezones
 	function zones()
