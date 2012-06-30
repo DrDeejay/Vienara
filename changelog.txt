@@ -1,3 +1,21 @@
+1.0 Release Candidate 1
+--------------------------------------------------------------------
+! Removed the 'v'-part from the copyright, as it looks kinda weird
+! Fixed bug that made blogs uneditable (Thanks Phantom)
+! The edit blog page looks kinda weird without padding
+! The fatal error template should be available in the admin panel too
+! Removed hardcoded strings (Thanks Phantom)
+! There should be some spacing above Action Completed messages
+! Don't say the upgrade is done when it isn't
+! Use rtl declaration in the header section of the help page when using an RTL language
+! The language code should be defined when using the help page
+! The custom css function didn't work because of a wrong statement
+! The edit link contained invalid HTML
+! Only show the 'Run Install' link when there is an install available
+! When trying to repair or optimize a table, the error box should be used rather than a weird sql error
+! Fixed small mistake in the admin css file
+! Added pre-PHP 5.3 compatibility for timezones (Thanks Phantom)
+
 1.0 Beta 2
 --------------------------------------------------------------------
 ! There should always be a link to the frontpage when using the mobile style

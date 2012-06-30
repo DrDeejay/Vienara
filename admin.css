@@ -99,9 +99,8 @@ hr {
 	position: relative;
 	top: 10;
 	left: 10;
-	font-family: inherit;
+	font-family: inherit!important;
 	border: grey 1px solid;
-	font-size: 14px;
 }
 .floatright {
 	float: right;
@@ -232,7 +231,7 @@ input[type="submit"], .more, button {
 }
 .result_bad {
 	padding: 5px;
-	border-top: 2px solid #6EAD53;
+	border-top: 2px solid #AD5953;
 	border-bottom: 2px solid #AD5953;
 	color: #AD5953;
 	background: #F1D7E2;

@@ -9,7 +9,7 @@
 * not use the name "Vienara" as name for your project
 * either. Thanks for understanding.
 *
-* @version: 1.0 Beta 2
+* @version: 1.0 Release Candidate 1
 * @copyright 2012: Vienara
 * @developed by: Dr. Deejay and Thomas de Roo
 * @package: Vienara
@@ -58,7 +58,7 @@ ob_start('vienara_pretty');
 $vienara = array();
 
 // What version are we using? And what is the link to the website?
-define('Version', '1.0 Beta 2');
+define('Version', '1.0 Release Candidate 1');
 define('Website_Url', 'http://vienara.org'); // Don't change this!
 define('Blog_file', 'index.php');
 define('Branch', '1.0');
@@ -1622,9 +1622,9 @@ function vienara_act_admin()
 
 			// Repair or optimize?
 			if(!isset($_POST['optimize']))
-				$result = xensql_query('REPAIR TABLE ' . $_POST['repair_database']);
+				$result = xensql_query('REPAIR TABLE ' . $_POST['repair_database'], null, 'silent');
 			else
-				$result = xensql_query('OPTIMIZE TABLE ' . $_POST['repair_database']);
+				$result = xensql_query('OPTIMIZE TABLE ' . $_POST['repair_database'], null, 'silent');
 
 			// Did it work?
 			if(!$result)
@@ -1814,13 +1814,20 @@ function vienara_act_admin()
 				else
 					$isEnabled = true;
 
+				// Check if we can install it
+				if(file_exists($dir . '/' . $value . '/install.php'))
+					$canInstall = true;
+				else
+					$canInstall = false;
+
 				// Add the information to the array
 				$vienara['extensions'][] = array(
 					'author' => $mod['author'],
 					'version' => $mod['version'],
 					'title' => $mod['title'],
 					'enabled' => $isEnabled,
-					'dir' => $value
+					'dir' => $value,
+					'caninstall' => $canInstall
 				);
 			}
 		}

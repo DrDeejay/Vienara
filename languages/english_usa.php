@@ -4,7 +4,7 @@
  *
  * Translation by: Dr. Deejay
  * For: Vienara
- * Version: 1.0 Beta 1 Public
+ * Version: 1.0 Beta 2
  *
  * License: MIT
 */
@@ -94,7 +94,6 @@ $txt['new_comment'] = 'Comment on this blogpost';
 // General strings
 $txt['top'] = 'Top';
 $txt['powered_by'] = 'Powered by ';
-$txt['version'] = 'v';
 $txt['icons_by'] = 'Icons by ';
 $txt['top_button'] = 'Show the top button at the bottom of the blog';
 $txt['rss'] = 'RSS';
@@ -202,6 +201,8 @@ $txt['page_type'] = 'Type';
 $txt['custom_css'] = 'Custom css';
 $txt['reg_comments'] = 'Enable built-in comments';
 $txt['back_to_site'] = 'Site home';
+$txt['asc'] = 'Ascending';
+$txt['desc'] = 'Descending';
 
 // Pages
 $txt['page_not_found'] = 'Page not found';

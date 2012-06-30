@@ -235,7 +235,7 @@ input[type="submit"], .more, button {
 }
 .result_bad {
 	padding: 5px;
-	border-top: 2px solid #6EAD53;
+	border-top: 2px solid #AD5953;
 	border-bottom: 2px solid #AD5953;
 	color: #AD5953;
 	background: #F1D7E2;

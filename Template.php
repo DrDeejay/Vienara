@@ -22,7 +22,7 @@ function vienara_header()
 	vienara_hook('html_header');
 
 	// Custom css?
-	if(empty($vienara['setting']['custom_css']))
+	if(!empty($vienara['setting']['custom_css']))
 		echo '
 	<style type="text/css">
 		' . $vienara['setting']['custom_css'] . '
@@ -155,7 +155,7 @@ function vienara_footer()
 		</div>
 	</div>
 	<div class="copyright">
-		<a href="' . Website_Url . '">' . show_string('powered_by') . 'Vienara ' . show_string('version') . Version . '</a> | <a href="http://graywebhost.com">' . show_string('sponsored_by') . 'Graywebhost</a><br />
+		<a href="' . Website_Url . '">' . show_string('powered_by') . 'Vienara ' . Version . '</a> | <a href="http://graywebhost.com">' . show_string('sponsored_by') . 'Graywebhost</a><br />
 		' . show_string('icons_by') . '<a href="http://www.famfamfam.com/lab/icons/silk/">FamFamFam</a> ' . show_string('and') . ' <a href="http://www.fatcow.com/free-icons">Fatcow</a>' . ($vienara['setting']['enable_custom_copyright'] == 1 ? '
 			<br />' . (!empty($vienara['setting']['copyright_link_to']) ? '<a href="' . $vienara['setting']['copyright_link_to'] . '">' : '') . $vienara['setting']['custom_copyright'] . (!empty($vienara['setting']['copyright_link_to']) ? '</a>' : '') : '') . '<br />
 		<a href="' . Blog_file . '?rss">' . show_string('rss') . '</a> | <a href="' . Blog_file . '?mobile">' . show_string('simple_theme') . '</a>
@@ -199,7 +199,7 @@ function vienara_show_blog($information = '', $is_status = false, $single = fals
 						<a href="' . Blog_file . '?blog=' . $information['id_blog'] . '" id="' . $information['id_blog'] . '">' . $information['blog_title'] . '</a>
 					</div>
 					' . show_string('posted_on') . ': ' . parse_date(date("F j, Y, g:i a", $information['post_date']), true) . '
-					' . (vienara_is_logged() ? '<br /><a href="' . Blog_file . '?app=admin&section=edit&id=' . $information['id_blog'] . '">[' . show_string('edit') . ']</a>' : '') . '
+					' . (vienara_is_logged() ? '<br /><a href="' . Blog_file . '?app=admin&amp;section=edit&amp;id=' . $information['id_blog'] . '">[' . show_string('edit') . ']</a>' : '') . '
 				</div>
 				<br class="clear" />
 				<div class="blog_content">
@@ -279,8 +279,10 @@ function vienara_show_blog($information = '', $is_status = false, $single = fals
 // The help template
 function template_help($doc_message = '', $title = '')
 {
+	global $is_rtl;
+
 	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml"' . $is_rtl . ' lang="' . $vienara['lang']['code'] . '">
 	<head>
 		<style type="text/css">
 			body {
@@ -375,35 +377,6 @@ function done($link = '')
 
 	// Die!
 	die_nice();
-}
-
-// Edit a blog
-function vienara_template_edit($bloginfo = array())
-{
-	echo '
-		<div id="editor">
-			<div class="cat_bg bg_color newblog_title">
-				' . show_string('edit_post') . '
-			</div>
-			<div class="padding bg_color5">
-				<form action="' . Blog_file . '?app=admin&section=edit&id=' . $bloginfo['id_blog'] . '" method="post">
-					<input type="hidden" name="adm_post" />
-					<table width="100%">
-						<tr class="subject">
-							<td width="20%"><strong id="title_desc">' . show_string('post_title') . ':</strong></td>
-							<td width="80%"><input type="text" id="post_title" name="post_title" value="' . $bloginfo['blog_title'] . '" /></td>
-						</tr>
-						<tr>
-							<td width="20%" class="blog_msg"><strong>' . show_string('message') . ':</strong></td>
-							<td width="80%"><textarea class="editor new_post" name="edit_content" rows="1" cols="1">' . br2nl($bloginfo['blog_content']) . '</textarea></td>
-						</tr>
-					</table>
-					<input type="submit" id="editor_submit" value="' . show_string('submit') . '" />
-					<a href="' . Blog_file . '?app=admin&section=blogs" class="more" style="color: white">' . show_string('cancel_edit') . '</a>
-				</form>
-			</div>
-			<br />
-		</div>';
 }
 
 // This will create the page list

@@ -246,6 +246,10 @@ if(!defined('Xensql'))
 			$query_exec = @sqlite_exec($xensql['connect'][$xensql['unique_id']], $query);
 		else
 			$query_exec = @mysql_query($query);
+
+		// Silent error?
+		if(!$query_exec && $fatal == 'silent')
+			return false;
 		
 		// Show an error and die if it's fatal
 		if(!$query_exec && $fatal == true && $xensql['db_type'] == 'mysqli')

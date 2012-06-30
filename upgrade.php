@@ -9,7 +9,7 @@
 * not use the name "Vienara" as name for your project
 * either. Thanks for understanding.
 *
-* @version: 1.0 Beta 2
+* @version: 1.0 Release Candidate 1
 * @copyright 2012: Vienara
 * @developed by: Dr. Deejay and Thomas de Roo
 * @package: Vienara
@@ -30,8 +30,8 @@ ini_set('magic_quotes_runtime', 0);
 
 // Useful information will be provided below
 define('Blog_Branch', '1.0');
-define('Upgrade_from', '1.0 Beta 1 Public');
-define('Upgrade_to', '1.0 Beta 2');
+define('Upgrade_from', '1.0 Beta 2');
+define('Upgrade_to', '1.0 Release Candidate 1');
 
 // Variables that we need later
 $vienara = array();
@@ -301,7 +301,11 @@ function upgrade_step_2()
 		$query = str_replace('{cur_version}', Upgrade_to, $query);
 
 		// Execute the queries
-		mysqli_multi_query($db, $query);
+		$result = mysqli_multi_query($db, $query);
+
+			// Did it work?
+			if(!$result)
+				die_nice('Upgrade failed. Please make sure you entered the correct database prefix.');
 
 	// Say that we are done.
 	die_nice('Upgrade done. You can now login into your blog. Thanks for using our software and don\'t forget to remove the upgrade tools.');

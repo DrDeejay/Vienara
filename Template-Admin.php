@@ -21,7 +21,7 @@ function vienara_header()
 	vienara_hook('html_header');
 
 	// Custom css?
-	if(empty($vienara['setting']['custom_css']))
+	if(!empty($vienara['setting']['custom_css']))
 		echo '
 	<style type="text/css">
 		' . $vienara['setting']['custom_css'] . '
@@ -80,7 +80,7 @@ function vienara_footer()
 		</div>
 	</div>
 	<div class="copyright">
-		<a href="' . Website_Url . '">' . show_string('powered_by') . 'Vienara ' . show_string('version') . Version . '</a> | <a href="http://graywebhost.com">' . show_string('sponsored_by') . 'Graywebhost</a><br />
+		<a href="' . Website_Url . '">' . show_string('powered_by') . 'Vienara ' . Version . '</a> | <a href="http://graywebhost.com">' . show_string('sponsored_by') . 'Graywebhost</a><br />
 	</div>
 </body>
 </html>';
@@ -361,8 +361,28 @@ function template_admin($admin = array())
 							</tr>';
 					}
 
+					// It's the sorting method.
+					elseif($key == 'order') {
+
+						// Echo it
+						echo '					
+							<tr>
+								<td width="50%"><a href="help.php?id=' . $key . '" target="_blank">' . show_string('help') . '</a> ' . $spage[1] . ':</td>
+								<td width="50%"><select name="' . $key . '">';
+
+							// Show the languages
+							foreach($spage[2] as $item => $value)
+								echo '
+									<option value="' . $value. '"' . ($value == $vienara['setting'][$key] ? ' selected="selected"' : '') . '>' . ($value == 'asc' ? show_string('asc') : show_string('desc')) . '</option>';
+
+							echo '
+								</select></td>
+							</tr>';
+					}
+
 					// Nope
 					else {
+
 						// Echo it
 						echo '					
 							<tr>
@@ -664,8 +684,14 @@ function template_admin($admin = array())
 						<td class="bg_color' . $variation . ' padding">' . ($extension['enabled'] == true ? show_string('enabled') : show_string('disabled')) . '</td>
 						<td class="bg_color' . $variation . ' padding">
 							[<a href="' . Blog_file . '?app=admin&section=extensions&delete=' . urlencode($extension['dir']) . '">' . show_string('delete') . '</a>]
-							[<a href="' . Blog_file . '?app=admin&section=extensions&changestatus=' . urlencode($extension['dir']) . '">' . ($extension['enabled'] == true ? show_string('disable') : show_string('enable')) . '</a>]
-							[<a href="' . Blog_file . '?app=admin&section=extensions&install=' . urlencode($extension['dir']) . '">' . show_string('run_installer') . '</a>]
+							[<a href="' . Blog_file . '?app=admin&section=extensions&changestatus=' . urlencode($extension['dir']) . '">' . ($extension['enabled'] == true ? show_string('disable') : show_string('enable')) . '</a>]';
+
+					// Is there an install available?
+					if($extension['caninstall'] == true)
+						echo '
+							[<a href="' . Blog_file . '?app=admin&section=extensions&install=' . urlencode($extension['dir']) . '">' . show_string('run_installer') . '</a>]';
+
+					echo '
 						</td>
 					</tr>';
 
@@ -848,6 +874,7 @@ function template_admin($admin = array())
 function done($link = '')
 {
 	echo '
+			<br />
 			<div class="done">
 				<div class="cat_bg bg_color">
 					' . show_string('action_done') . '
@@ -939,4 +966,33 @@ function screenofdeath_footer()
 	</div>
 </body>
 </html>';
+}
+
+// Edit a blog
+function vienara_template_edit($bloginfo = array())
+{
+	echo '
+		<div id="editor" class="padding">
+			<div class="cat_bg bg_color newblog_title">
+				' . show_string('edit_post') . '
+			</div>
+			<div class="padding bg_color5">
+				<form action="' . Blog_file . '?app=admin&section=edit&id=' . $bloginfo['id_blog'] . '" method="post">
+					<input type="hidden" name="adm_post" />
+					<table width="100%">
+						<tr class="subject">
+							<td width="20%"><strong id="title_desc">' . show_string('post_title') . ':</strong></td>
+							<td width="80%"><input type="text" id="post_title" name="post_title" value="' . $bloginfo['blog_title'] . '" /></td>
+						</tr>
+						<tr>
+							<td width="20%" class="blog_msg"><strong>' . show_string('message') . ':</strong></td>
+							<td width="80%"><textarea class="editor new_post" name="edit_content" rows="1" cols="1">' . br2nl($bloginfo['blog_content']) . '</textarea></td>
+						</tr>
+					</table>
+					<input type="submit" id="editor_submit" value="' . show_string('submit') . '" />
+					<a href="' . Blog_file . '?app=admin&section=blogs" class="more" style="color: white">' . show_string('cancel_edit') . '</a>
+				</form>
+			</div>
+			<br />
+		</div>';
 }
