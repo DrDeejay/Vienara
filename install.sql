@@ -44,6 +44,7 @@ INSERT INTO {db_pref}settings (`id`, `value`) VALUES
 ('ext_enable', '1'),
 ('version', '{cur_version}'),
 ('reg_comments', '1'),
+('cutoff', '1000'),
 ('width', '90');
 
 CREATE TABLE {db_pref}menu (
@@ -69,5 +70,15 @@ CREATE TABLE {db_pref}comments (
   `website` text NOT NULL,
   `message` longtext NOT NULL,
   `poster_time` int(11) NOT NULL,
+  `username` text NOT NULL
+) ENGINE=MyIsam CHARACTER SET utf8 COLLATE 'utf8_bin';
+
+CREATE TABLE IF NOT EXISTS `{db_pref}guestbook` (
+  `id_comment` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `ip_adress` text NOT NULL,
+  `message` longtext NOT NULL,
+  `time` int(11) NOT NULL,
+  `isadmin` tinyint NOT NULL,
+  `website` mediumtext NOT NULL,
   `username` text NOT NULL
 ) ENGINE=MyIsam CHARACTER SET utf8 COLLATE 'utf8_bin';

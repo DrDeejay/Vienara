@@ -26,9 +26,6 @@ session_start();
 // Make our pages pretty. Remove ugly stuff
 function vienara_pretty($buffer)
 {
-	// Replace all slashes
-	//$buffer = stripslashes($buffer);
-
 	// Fix bad characters
 	$char_table = get_html_translation_table(HTML_ENTITIES);
 	
@@ -260,9 +257,12 @@ date_default_timezone_set($vienara['setting']['timezone']);
 // Always load the english language file
 include 'languages/english_usa.php';
 
+// Set the language
+$cur_lang = str_replace(' ', '_', $vienara['setting']['language']);
+
 // What language should we load?
-if(file_exists('languages/' . $vienara['setting']['language'] . '.php'))
-	include 'languages/' . $vienara['setting']['language'] . '.php';
+if(file_exists('languages/' . $cur_lang . '.php') && $cur_lang != 'english_usa')
+	include 'languages/' . $cur_lang . '.php';
 
 // Are we using an RTL language?
 if(!empty($vienara['lang'][$vienara['setting']['language']]['rtl']))
@@ -701,6 +701,13 @@ function vienara($single = '')
 		// Get the right template
 		foreach($result as $blog) {
 
+			// Cutoff when we need to
+			if(empty($single) && strlen($blog['blog_content']) > $vienara['setting']['cutoff'] && $vienara['setting']['cutoff'] != 0 && strpos($blog['blog_content'], '[cutoff]'))
+				$blog['blog_content'] = substr($blog['blog_content'], 0, $vienara['setting']['cutoff']) . '...';
+
+			// Remove the cutoff tag
+			$blog['blog_content'] = str_replace('[cutoff]', '', $blog['blog_content']);
+
 			// We need new lines
 			$blog['blog_content'] = nl2br($blog['blog_content']);
 
@@ -830,6 +837,9 @@ if(@$directory = opendir('languages'))
 
 		// Remove the extension
 		$file = str_replace('.php', '', $file);		
+
+		// Prettier format
+		$file = str_replace('_', ' ', $file);
 	
 		// Just add it to the array
 		$vienara['languages'][] = $file;
@@ -856,6 +866,10 @@ if(isset($_GET['rss'])) {
 function vienara_act_site($all = false)
 {
 	global $vienara;
+
+	// In case we prefer using '?page=blah'
+	if(!empty($_GET['page']) && !$all)
+		$_GET['id'] = $_GET['page'];
 
 	// Make it safe
 	if(empty($_GET['id']) && !$all)
@@ -1343,6 +1357,7 @@ function vienara_act_admin()
 				'blogsperpage' => array('number', 'items_per_page'),
 				'width' => array('number', 'width'),
 				'order' => array('select', 'order', array('desc', 'asc')),
+				'cutoff' => array('number', 'cutoff'),
 			'',
 				'top_button' => array('check', 'top_button'),
 				'menu_icons' => array('check', 'menu_icons'),

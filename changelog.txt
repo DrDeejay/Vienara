@@ -15,6 +15,11 @@
 ! When trying to repair or optimize a table, the error box should be used rather than a weird sql error
 ! Fixed small mistake in the admin css file
 ! Added pre-PHP 5.3 compatibility for timezones (Thanks Phantom)
++ Added cutoff tag
+! Make the language selection list a little bit prettier
+! No need to load the English US language file twice
+- You can also reach pages with '?page=pageid'
+! The guestbook is now installed by default
 
 1.0 Beta 2
 --------------------------------------------------------------------
