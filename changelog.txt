@@ -20,6 +20,8 @@
 ! No need to load the English US language file twice
 - You can also reach pages with '?page=pageid'
 ! The guestbook is now installed by default
+! Fixed display issue when no pages have been created
+! Fixed undefined variable in the help page
 
 1.0 Beta 2
 --------------------------------------------------------------------

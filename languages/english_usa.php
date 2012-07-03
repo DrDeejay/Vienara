@@ -4,7 +4,7 @@
  *
  * Translation by: Dr. Deejay
  * For: Vienara
- * Version: 1.0 Beta 2
+ * Version: 1.0 Release Candidate 1
  *
  * License: MIT
 */
@@ -297,8 +297,6 @@ $txt['doc']['custom_css'] = 'Setting - Custom css';
 $txt['doc']['doc_custom_css'] = 'When upgrading your blog, the changes you made to the css file will be lost. If you need to use custom css in one of your pages, you might want to consider putting custom css in this field instead. This setting won\'t be touched during the upgrade, so your changes won\'t be lost after upgrading.';
 $txt['doc']['reg_comments'] = 'Setting - Regular comments';
 $txt['doc']['doc_reg_comments'] = 'Enable the built-in comments feature.';
-$txt['doc']['cutoff'] = 'Setting - Cut off';
-$txt['doc']['doc_cutoff'] = 'When you use the [cutoff] tag, posts on the frontpage will be shortened to the specified length. Set 0 to disable.';
 
 // Dates
 $txt['jan'] = 'Jan';

@@ -354,7 +354,7 @@ function template_admin($admin = array())
 							// Show the languages
 							foreach($vienara['languages'] as $language)
 								echo '
-									<option value="' . $language. '"' . ($language == $vienara['setting']['language'] ? ' selected="selected"' : '') . '>' . $language . '</option>';
+									<option value="' . $language. '"' . ($language == str_replace('_', ' ', $vienara['setting']['language']) ? ' selected="selected"' : '') . '>' . $language . '</option>';
 
 							echo '
 								</select></td>
@@ -754,7 +754,7 @@ function template_admin($admin = array())
 			if(empty($vienara['pages']))
 				echo '
 					<tr>
-						<td class="padding bg_color5" colspan="5">' . show_string('no_pages') . '</td>
+						<td class="padding bg_color5" colspan="6">' . show_string('no_pages') . '</td>
 					</tr>';
 
 			echo '

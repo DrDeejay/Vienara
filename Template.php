@@ -279,7 +279,7 @@ function vienara_show_blog($information = '', $is_status = false, $single = fals
 // The help template
 function template_help($doc_message = '', $title = '')
 {
-	global $is_rtl;
+	global $is_rtl, $vienara;
 
 	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"' . $is_rtl . ' lang="' . $vienara['lang']['code'] . '">

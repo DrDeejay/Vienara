@@ -44,7 +44,6 @@ INSERT INTO {db_pref}settings (`id`, `value`) VALUES
 ('ext_enable', '1'),
 ('version', '{cur_version}'),
 ('reg_comments', '1'),
-('cutoff', '1000'),
 ('width', '90');
 
 CREATE TABLE {db_pref}menu (

@@ -20,10 +20,17 @@ $db = xensql_connect($db_settings['server'], $db_settings['username'], $db_setti
 		fatal_error('Database connection failed.');
 
 // How many posts should we generate?
-$posts = 1000;
+$posts = 30000;
 
 // Status updates?
-$status = 1; # Set to 0 to create blogs, set to 1 to create status updates
+$status = 0; # Set to 0 to create blogs, set to 1 to create status updates
+
+// The content!
+$content = 'Hello all,
+
+This is just one of the many test posts that will be generated. Generating ' . $posts . ' posts makes sure we can test how Vienara works with large sites. The Vienara team would like to thank you for using our software. If you have any questions, please ask!
+
+The Vienara Team';
 
 // Generate the posts
 for($p = 1; $p <= $posts; $p++)
@@ -34,7 +41,7 @@ for($p = 1; $p <= $posts; $p++)
 			VALUES(
 				'',
 				'Another blog - Part $p',
-				'Hi all! This is another blogpost.',
+				'$content',
 				UNIX_TIMESTAMP(),
 				'1',
 				'$status'

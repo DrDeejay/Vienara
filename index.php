@@ -701,9 +701,9 @@ function vienara($single = '')
 		// Get the right template
 		foreach($result as $blog) {
 
-			// Cutoff when we need to
-			if(empty($single) && strlen($blog['blog_content']) > $vienara['setting']['cutoff'] && $vienara['setting']['cutoff'] != 0 && strpos($blog['blog_content'], '[cutoff]'))
-				$blog['blog_content'] = substr($blog['blog_content'], 0, $vienara['setting']['cutoff']) . '...';
+			// Cut off the post if we want to
+			if(!$single && strpos($blog['blog_content'], '[cutoff]'))
+				$blog['blog_content'] = substr($blog['blog_content'], 0, strpos($blog['blog_content'], '[cutoff]')) . '...';
 
 			// Remove the cutoff tag
 			$blog['blog_content'] = str_replace('[cutoff]', '', $blog['blog_content']);
