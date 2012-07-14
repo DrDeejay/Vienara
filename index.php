@@ -55,7 +55,7 @@ ob_start('vienara_pretty');
 $vienara = array();
 
 // What version are we using? And what is the link to the website?
-define('Version', '1.0 Release Candidate 1');
+define('Version', '1.0 Release Candidate 1 - Dev 20120612');
 define('Website_Url', 'http://vienara.org'); // Don't change this!
 define('Blog_file', 'index.php');
 define('Branch', '1.0');
@@ -115,6 +115,10 @@ $vienara['includes'] = array(
 		if($result == false)
 			fatal_error('Failed to include file: ' . $include);
 	}
+
+// Backwards compatibility
+if(!isset($php_pages))
+	$php_pages = true;
 
 // Setup the mobile detection class
 $mobile = new Mobile_Detect;
@@ -1357,7 +1361,6 @@ function vienara_act_admin()
 				'blogsperpage' => array('number', 'items_per_page'),
 				'width' => array('number', 'width'),
 				'order' => array('select', 'order', array('desc', 'asc')),
-				'cutoff' => array('number', 'cutoff'),
 			'',
 				'top_button' => array('check', 'top_button'),
 				'menu_icons' => array('check', 'menu_icons'),
@@ -2092,7 +2095,7 @@ function vienara_act_admin()
 			);
 
 			// Is it set?
-			if(isset($commands[$_POST['command']])) {
+			if(isset($commands[$_POST['command']]) || in_array($_POST['command'], array('haha', 'jack', 'pirates'))) {
 
 				// What should we do?
 				switch($_POST['command']) {
@@ -2130,6 +2133,21 @@ function vienara_act_admin()
 					// The link you can use for getting support
 					case 'support_url':
 						$vienara['current_command'] = '<a href="' . Website_Url . '">' . Website_Url . '</a>';
+						break;
+
+					// What's so funny? ;)
+					case 'haha':
+						$vienara['current_command'] = 'What\'s so funny? ;)';
+						break;
+
+					// Testing!
+					case 'jack':
+						$vienara['current_command'] = '<em>Doesn\'t ring a bell..</em>';
+						break;
+
+					// Arr, matey!
+					case 'pirates':
+						$vienara['current_command'] = 'Arr, matey!';
 						break;
 
 					// Provide a list of commands

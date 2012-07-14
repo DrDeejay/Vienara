@@ -44,7 +44,7 @@ function vienara_header()
 				$(document).ready(function() {
 					$("textarea.new_post").sceditor({
 						// Buttons
-						toolbar: "bold,italic,underline,strike|image,link|quote,code|source",
+						toolbar: "bold,italic,underline,strike|image,link|source",
 					});
 				});
 				function toggleEditor() {
@@ -57,7 +57,7 @@ function vienara_header()
 <body class="vienara">
 	<div id="editorhere_after"></div>
 	<div id="wrapper" style="width: ' . $vienara['setting']['width'] . '%;">
-		<div class="menu">
+		<div class="headerbar">
 			' . show_string('cur_time') . ': ' . $vienara['cur_time'] . '
 		</div>
 		<div id="header" class="bg_color">
@@ -204,7 +204,14 @@ function vienara_show_blog($information = '', $is_status = false, $single = fals
 				<br class="clear" />
 				<div class="blog_content">
 					' . $information['blog_content'] . '
-					' . (!$single ? '<br /><br /><a href="' . Blog_file . '?blog=' . $information['id_blog'] . '">' . show_string('read_more') . '</a> | <a href="' . Blog_file . '?blog=' . $information['id_blog'] . '#new_comment">' . show_string('reply_this') . '</a>' : '') . '
+					' . (!$single ? '<br /><br /><a href="' . Blog_file . '?blog=' . $information['id_blog'] . '">' . show_string('read_more') . '</a>' : '');
+
+			// Are comments enabled?
+			if($vienara['setting']['reg_comments'] == 1 && !$single)
+				echo ' 
+					| <a href="' . Blog_file . '?blog=' . $information['id_blog'] . '#new_comment">' . show_string('reply_this') . '</a>';
+
+			echo '
 					' . ($vienara['setting']['enable_likes'] == 1 ? '<br /><br /><iframe src="https://www.facebook.com/plugins/like.php?href=' . $vienara['setting']['blog_url'] . '?blog=' . $information['id_blog'] . '" style="border:none!important; width:450px; height:80px"></iframe>' : '') . '
 				' . ($vienara['setting']['enable_likes'] == 1 ? '<br /><div class="fb-comments" data-href="' . $vienara['setting']['blog_url'] . '?blog=' . $information['id_blog'] . '" data-num-posts="5" data-width="470"></div>' : '') . '
 				</div>
@@ -428,8 +435,10 @@ function template_page($info = array())
 
 	if($info['is_php'] == 0)
 		echo $info['page_body'];
-	else
+	elseif($info['is_php'] == 1 && $php_pages == true)
 		eval($info['page_body']);
+	else
+		echo $info['page_body'];
 
 	echo '
 			</div>';

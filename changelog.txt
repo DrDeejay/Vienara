@@ -22,6 +22,15 @@
 ! The guestbook is now installed by default
 ! Fixed display issue when no pages have been created
 ! Fixed undefined variable in the help page
+! Fixed typo in the english language file (Thanks Phantom :) )
++ Added option to disable PHP pages in Config.php
+! Only show the 'new comment' link when comments are enabled
+! Don't show quote and code buttons in the HTML editor, because they won't work correctly anyway
+! Added a new css class for the headerbar rather than using the css class of the menu
+! Fixed small mistake in the install sql file
+# Show a more pretty message when there are no tabs available
+! Removed some obsolete css code
+# Cleaned up the css a bit
 
 1.0 Beta 2
 --------------------------------------------------------------------

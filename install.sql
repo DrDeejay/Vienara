@@ -34,7 +34,7 @@ INSERT INTO {db_pref}settings (`id`, `value`) VALUES
 ('copyright_link_to', ''),
 ('blog_url', '{blogurl}'),
 ('enable_comments', '0'),
-('custom_css', '1'),
+('custom_css', ''),
 ('avatar', 'images/no_ava.png'),
 ('enable_likes', '0'),
 ('quick_status', '0'),

@@ -37,3 +37,8 @@ $maintenance = array(
 	'enable' => 0,
 	'message' => 'Temperal blog maintenance. We will be back as soon as possible.'
 );
+
+/**
+ * If you wish to disable PHP pages, this is the setting you are looking for.
+*/
+$php_pages = true;

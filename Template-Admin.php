@@ -532,7 +532,8 @@ function template_admin($admin = array())
 
 			// Did we found anything?
 			if(empty($found))
-				echo show_string('no_tabs_available');
+				echo '
+						<div class="padding bg_color5">' . show_string('no_tabs_available') . '</div>';
 
 			echo '
 					<br />
@@ -720,6 +721,14 @@ function template_admin($admin = array())
 
 		// Do we want to see the regular page screen?
 		if(!isset($_GET['edit'])) {
+
+			global $php_pages;
+
+			// Are PHP pages enabled?
+			if(!$php_pages)
+				echo '
+					<div class="result_bad">' . show_string('php_pages_disallowed') . '</div>';
+
 			// Begin with the template
 			echo '
 				<div class="cat_bg bg_color">

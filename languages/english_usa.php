@@ -123,7 +123,7 @@ $txt['blog_title'] = 'The title of your blog';
 $txt['action_done'] = 'Action completed';
 $txt['continue'] = 'Click here to go back to the page you were coming from';
 $txt['action_done2'] = 'The requested action has been completed. You can now go back to the page you were coming from, or continue doing what you did before.';
-$txt['enable_extra_title'] = 'Enable secundary title';
+$txt['enable_extra_title'] = 'Enable secondary title';
 $txt['extra_title'] = 'Text to use as extra title';
 $txt['timezone'] = 'Timezone';
 $txt['hash'] = 'Hash function';
@@ -203,7 +203,7 @@ $txt['reg_comments'] = 'Enable built-in comments';
 $txt['back_to_site'] = 'Site home';
 $txt['asc'] = 'Ascending';
 $txt['desc'] = 'Descending';
-$txt['cutoff'] = 'Cut off';
+$txt['php_pages_disallowed'] = 'The administrator has disabled PHP pages. PHP pages will be displayed like normal HTML until the administrator enables PHP pages again.';
 
 // Pages
 $txt['page_not_found'] = 'Page not found';
