@@ -31,6 +31,11 @@
 # Show a more pretty message when there are no tabs available
 ! Removed some obsolete css code
 # Cleaned up the css a bit
+# The "upgrade required" link should always be red
+# Cleaned up the css of the admin theme
+- Removed the default page template, as it looks kinda weird sometimes. You can easily get it back by using HTML, though.
+# The repair and optimize section in the admin panel needs some padding
+! Saving pages didn't work after a database change
 
 1.0 Beta 2
 --------------------------------------------------------------------

@@ -55,7 +55,7 @@ ob_start('vienara_pretty');
 $vienara = array();
 
 // What version are we using? And what is the link to the website?
-define('Version', '1.0 Release Candidate 1 - Dev 20120612');
+define('Version', '1.0 Release Candidate 1');
 define('Website_Url', 'http://vienara.org'); // Don't change this!
 define('Blog_file', 'index.php');
 define('Branch', '1.0');
@@ -888,7 +888,7 @@ function vienara_act_site($all = false)
 
 	// Get the page(s) from the database
 	$result = xensql_query("
-		SELECT id_page, page_body, page_title, show_header, is_php
+		SELECT id_page, page_body, page_title, is_php
 			FROM {db_pref}pages
 			" . ($all == false ? "WHERE id_page='$page'" : "") . "
 			ORDER BY page_title ASC
@@ -1939,12 +1939,6 @@ function vienara_act_admin()
 					die_nice(show_string('fill_in_all_fields'));
 			}
 
-			// Should we show the header?
-			if(isset($_POST['page_header']))
-				$showheader = 1;
-			else
-				$showheader = 0;
-
 			// Is it php?
 			if(isset($_POST['page_php']))
 				$isphp = 1;
@@ -1962,7 +1956,6 @@ function vienara_act_admin()
 				UPDATE {db_pref}pages
 					SET page_title = '" . $_POST['page_title'] . "',
 						page_body = '" . $_POST['page_content'] . "',
-						show_header = '$showheader',
 						is_php = '$isphp'
 					WHERE
 						id_page = '" . $_POST['page_id'] . "'
@@ -1992,12 +1985,6 @@ function vienara_act_admin()
 					die_nice(show_string('fill_in_all_fields'));
 			}
 
-			// Should we show the header?
-			if(isset($_POST['page_header']))
-				$showheader = 1;
-			else
-				$showheader = 0;
-
 			// Is it php?
 			if(isset($_POST['page_php']))
 				$isphp = 1;
@@ -2018,7 +2005,6 @@ function vienara_act_admin()
 					'',
 					'" . $_POST['page_title'] . "',
 					'" . $_POST['page_content'] . "',
-					'$showheader',
 					'$isphp'
 				)
 			");

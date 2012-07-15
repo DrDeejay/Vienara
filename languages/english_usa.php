@@ -173,7 +173,6 @@ $txt['manage_pages'] = 'Manage Pages';
 $txt['page_delete'] = '[Delete]';
 $txt['page_title'] = 'Title';
 $txt['page_tools'] = 'Tools';
-$txt['page_header'] = 'Show header';
 $txt['page_edit'] = '[Edit]';
 $txt['page_id'] = 'Id';
 $txt['edit_page'] = 'Edit page';

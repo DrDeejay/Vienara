@@ -422,26 +422,13 @@ function vienara_page($count = 1, $link = '?page=')
 // Show a page
 function template_page($info = array())
 {
-	// Show it
-	if($info['show_header'] == 1)
-		echo '
-			<div class="cat_bg bg_color">
-				' . $info['page_title'] . '
-			</div>';
-
-	// Regular content
-	echo '
-			<div class="bg_color5 padding">';
-
+	// Show the page
 	if($info['is_php'] == 0)
 		echo $info['page_body'];
 	elseif($info['is_php'] == 1 && $php_pages == true)
 		eval($info['page_body']);
 	else
 		echo $info['page_body'];
-
-	echo '
-			</div>';
 }
 
 // Search.

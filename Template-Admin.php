@@ -591,8 +591,7 @@ function template_admin($admin = array())
 		echo '
 			<div class="cat_bg bg_color">
 				' . show_string('repair_optimize') . '
-			</div>
-			<div class="bg_color4">';
+			</div>';
 
 		// Done?
 		if(isset($vienara['repair_fail'])) {
@@ -624,10 +623,11 @@ function template_admin($admin = array())
 		echo '
 			</div>
 				<br />
-				<input type="checkbox" name="optimize" />' . show_string('rather_optimize') . '<br />
-				<input type="submit" value="' . show_string('submit') . '" />
-			</form>
-			</div>';
+				<div class="padding">
+					<input type="checkbox" name="optimize" />' . show_string('rather_optimize') . '<br />
+					<input type="submit" value="' . show_string('submit') . '" />
+				</div>
+			</form>';
 	}
 
 	// Show the help page
@@ -738,9 +738,8 @@ function template_admin($admin = array())
 				<table width="100%" cellspacing="0">
 					<tr>
 						<td class="padding bg_color2" width="5%">' . show_string('page_id') . '</td>
-						<td class="padding bg_color2" width="40%">' . show_string('page_title') . '</td>
+						<td class="padding bg_color2" width="55%">' . show_string('page_title') . '</td>
 						<td class="padding bg_color2" width="15%">' . show_string('page_type') . '</td>
-						<td class="padding bg_color2" width="15%">' . show_string('page_header') . '</td>
 						<td class="padding bg_color2" colspan="2">' . show_string('page_tools') . '</td>
 					</tr>';
 
@@ -750,12 +749,11 @@ function template_admin($admin = array())
 						<td class="padding bg_color5">' . $page['id_page'] . '</td>
 						<td class="padding bg_color4"><a class="grey" href="' . Blog_file . '?app=site&id=' . $page['id_page'] . '">' . $page['page_title'] . '</a></td>
 						<td class="padding bg_color5">' . ($page['is_php'] == 1 ? 'PHP' : 'HTML') . '</td>
-						<td class="padding bg_color4">' . ($page['show_header'] == 1 ? show_string('enabled') : show_string('disabled')) . '</td>
-						<td class="padding bg_color5">
+						<td class="padding bg_color4">
 							<a href="' . Blog_file . '?app=admin&section=pages&delete=' . $page['id_page'] . '">' . show_string('page_delete') . '</a>
 							<a href="' . Blog_file . '?app=admin&section=pages&edit=' . $page['id_page'] . '">' . show_string('page_edit') . '</a>
 						</td>
-						<td class="padding bg_color4">
+						<td class="padding bg_color5">
 							<input type="checkbox" name="updatePage[]" value="' . $page['id_page'] . '" />
 						</td>
 					</tr>';
@@ -787,10 +785,6 @@ function template_admin($admin = array())
 								<td width="80%"><input type="text" name="page_title" /></td>
 							</tr>
 							<tr>
-								<td width="20%"><strong>' . show_string('show_header') . ':</strong></td>
-								<td width="80%"><input type="checkbox" name="page_header" checked /></td>
-							</tr>
-							<tr>
 								<td width="20%"><strong>' . show_string('php_page') . ':</strong></td>
 								<td width="80%"><input type="checkbox" name="page_php" id="toggle_editor" onchange="javascript:toggleEditor()" /></td>
 							</tr>
@@ -819,10 +813,6 @@ function template_admin($admin = array())
 							<tr>
 								<td width="20%"><strong>' . show_string('page_title') . ':</strong></td>
 								<td width="80%"><input type="text" name="page_title" value="' . $vienara['pages'][$_GET['edit']]['page_title'] . '" /></td>
-							</tr>
-							<tr>
-								<td width="20%"><strong>' . show_string('show_header') . ':</strong></td>
-								<td width="80%"><input type="checkbox" name="page_header"' . ($vienara['pages'][$_GET['edit']]['show_header'] == 1 ? ' checked' : '') . ' /></td>
 							</tr>
 							<tr>
 								<td width="20%"><strong>' . show_string('php_page') . ':</strong></td>
