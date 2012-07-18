@@ -145,7 +145,7 @@ function vienara_footer()
 
 	
 	// We don't want to display this when we're in the admin panel or anywhere else
-	if(!isset($_GET['app']) && !isset($_GET['blog']))
+	if(!isset($_GET['app']) && !isset($_GET['blog']) && !isset($_GET['done']))
 		vienara_page($vienara['blog_count'], Blog_file . '?page=');
 
 		echo '
@@ -367,7 +367,7 @@ function screenofdeath_footer()
 }
 
 // We're done with something.
-function done($link = '')
+function template_done($link = '')
 {
 	echo '
 			<div class="done">

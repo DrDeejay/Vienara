@@ -143,6 +143,39 @@ elseif(isset($_GET['mobile'])) {
 else
 	include 'Template.php';
 
+// Because we're done
+function done($link = '')
+{
+	// Are we in the admin panel?
+	if(isset($_GET['app']) && $_GET['app'] == 'admin')
+		$admin = '&app=admin';
+
+	// Encode it
+	$link = base64_encode($link);
+
+	// Redirect to the done page
+	header('Location: ' . Blog_file . '?done=' . $link . $admin);
+
+	// Didn't it work?
+	exit;
+}
+
+// This actually calls the 'Done'-page
+function call_done($link = '')
+{
+	// Decode it
+	$link = base64_decode($link);
+
+	// Make it safe
+	$link = xensql_escape_string($link);
+
+	// No html
+	$link = htmlspecialchars($link);
+
+	// Call the template
+	template_done($link);
+}
+
 // Connect with the database
 $db = xensql_connect($db_settings['server'], $db_settings['username'], $db_settings['password'], $db_settings['dbname']);
 
@@ -792,6 +825,9 @@ if(!empty($_POST['content'])) {
 				'" . $is_status . "'
 		)
 	");
+
+	// We're done
+	done('?app=admin&section=blogs');
 }
 
 // Update settings, to make sure we have the right value in the database
@@ -1219,6 +1255,12 @@ function vienara_act_admin()
 					'label' => show_string('site_team'),
 					'members' => array(
 						'Colin'
+					)
+				),
+				'designers' => array(
+					'label' => show_string('designers'),
+					'members' => array(
+						'Lagom'
 					)
 				)
 			)
@@ -2263,8 +2305,10 @@ if(isset($_POST['old_password'])) {
 }
 
 // What do we want to do?
-if(!isset($_GET['app']) && !isset($_GET['blog']))
+if(!isset($_GET['app']) && !isset($_GET['blog']) && !isset($_GET['done']))
 	vienara();
+elseif(!empty($_GET['done']))
+	call_done($_GET['done']);
 elseif(isset($_GET['blog']) && !isset($_GET['app']))
 	vienara($_GET['blog']);
 elseif(!empty($_GET['app']))

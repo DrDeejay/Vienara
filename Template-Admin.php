@@ -870,7 +870,7 @@ function template_admin($admin = array())
 }
 
 // We're done with something.
-function done($link = '')
+function template_done($link = '')
 {
 	echo '
 			<br />

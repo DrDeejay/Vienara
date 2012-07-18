@@ -43,6 +43,9 @@
 ! Show an error message when someone tries to posts comments by using a custom form even though comments are disabled
 ! Removed unused global in the delete function
 ! Don't show the blogs after deleting one. Rather use a 'Done!' page
+! Show a 'Done!' page after submitting a new post
+! Don't show the page index when you're viewing a done-page
+! Made sure you can't spam by pressing f5 (thanks, Phantom :))
 
 1.0 Beta 2
 --------------------------------------------------------------------

@@ -203,6 +203,7 @@ $txt['back_to_site'] = 'Site home';
 $txt['asc'] = 'Ascending';
 $txt['desc'] = 'Descending';
 $txt['php_pages_disallowed'] = 'The administrator has disabled PHP pages. PHP pages will be displayed like normal HTML until the administrator enables PHP pages again.';
+$txt['designers'] = 'Designers';
 
 // Pages
 $txt['page_not_found'] = 'Page not found';
