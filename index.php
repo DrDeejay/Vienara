@@ -113,7 +113,7 @@ $vienara['includes'] = array(
 
 		// Did it work?
 		if($result == false)
-			fatal_error('Failed to include file: ' . $include);
+			die('Failed to include file: ' . $include);
 	}
 
 // Backwards compatibility
@@ -386,8 +386,6 @@ function vienara_act_logout()
 // Delete a blogpost. For example if we accidentally posted something
 function vienara_act_delete()
 {
-	global $db;
-
 	// Are we logged in?
 	if(!vienara_is_logged())
 		vienara();
@@ -424,8 +422,8 @@ function vienara_act_delete()
 			WHERE id_blog = '{id}'
 	", true);
 
-	// Now show the blogs
-	vienara();
+	// Say we're done
+	done('?app=admin&section=blogs');
 }
 
 // Setup the Viencode class. But load it first
@@ -540,6 +538,10 @@ function vienara($single = '')
 
 	// There is a chance we posted a comment. Check it.
 	if(!empty($_POST['message']) && !empty($single)) {
+
+		// Comments! Make sure they're enabled
+		if($vienara['setting']['reg_comments'] == 0)
+			die_nice(show_string('comments_disabled'));
 
 		// Do we have a username set?
 		if(empty($_POST['username']) && !vienara_is_logged())

@@ -219,7 +219,7 @@ function vienara_show_blog($information = '', $is_status = false, $single = fals
 			</div> ');
 
 	// The comment thing. Only if we're viewing a single post, though.
-	if($single) {
+	if($single && $vienara['setting']['reg_comments'] == 1) {
 
 		echo '
 			<br />
@@ -260,7 +260,6 @@ function vienara_show_blog($information = '', $is_status = false, $single = fals
 				<a href="#new_comment" name="new_comment">' . show_string('new_comment') . '</a>
 			</div>
 			<div class="padding bg_color5">
-				' . ($vienara['setting']['reg_comments'] == 1 ? '
 					<form action="' . Blog_file . '?blog=' . $information['id_blog'] . '" method="post">
 						<table width="100%">
 							<tr>
@@ -278,7 +277,7 @@ function vienara_show_blog($information = '', $is_status = false, $single = fals
 						</table><br /><br />
 						' . show_string('comment_policy') . '<br /><br />
 						<input type="submit" value="' . show_string('submit') . '" />
-					</form>' : show_string('comments_disabled')) . '
+					</form>
 			</div>';
 	}
 }
@@ -422,6 +421,8 @@ function vienara_page($count = 1, $link = '?page=')
 // Show a page
 function template_page($info = array())
 {
+	global $php_pages;
+
 	// Show the page
 	if($info['is_php'] == 0)
 		echo $info['page_body'];

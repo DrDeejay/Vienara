@@ -36,6 +36,13 @@
 - Removed the default page template, as it looks kinda weird sometimes. You can easily get it back by using HTML, though.
 # The repair and optimize section in the admin panel needs some padding
 ! Saving pages didn't work after a database change
+! Don't call to fatal_error when the template of it isn't available
+! Fixed missing global in the ppage template
+# Slightly altered the color of links
+! Don't show existing comments if comments are disabled
+! Show an error message when someone tries to posts comments by using a custom form even though comments are disabled
+! Removed unused global in the delete function
+! Don't show the blogs after deleting one. Rather use a 'Done!' page
 
 1.0 Beta 2
 --------------------------------------------------------------------
