@@ -3,4 +3,10 @@ UPDATE {db_pref}settings
 	WHERE id = 'version';
 
 ALTER TABLE {db_pref}pages
-	DROP 'show_header';
+	DROP COLUMN show_header;
+
+INSERT INTO {db_pref}settings
+VALUES (
+	'form_key',
+	'{form_key}'
+);

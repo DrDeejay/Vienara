@@ -74,7 +74,8 @@ function vienara_footer()
 	// And close the template
 	echo '
 				<div class="aligncenter">
-					<br /><br />' . ($vienara['setting']['top_button'] == 1 ? '<a href="javascript:void(0);" onclick="$(\'html, body\').animate({scrollTop:0}, \'slow\');">' . show_string('top') . '</a>' : '') . '
+					<br /><br />' . ($vienara['setting']['top_button'] == 1 ? '<a href="javascript:void(0);" onclick="$(\'html, body\').animate({scrollTop:0}, \'slow\');">' . show_string('top') . '</a>' : '') . '<br />
+					' . show_string('icons_by') . '<a href="http://www.famfamfam.com/lab/icons/silk/">FamFamFam</a> ' . show_string('and') . ' <a href="http://www.fatcow.com/free-icons">Fatcow</a>
 				</div>
 			</div>
 		</div>
@@ -861,6 +862,22 @@ function template_admin($admin = array())
 					<input type="text" name="command" autofocus="autofocus" style="width: 80%;" />
 					<input type="submit" value="' . show_string('submit') . '" />
 				</form>
+			</div>';
+	}
+
+	// We can generate new keys here
+	elseif(adm_sect == 'forms') {
+
+		echo '
+			<div class="cat_bg bg_color">
+				' . show_string('generate_key') . '
+			</div>
+			<div class="padding bg_color5">
+				' . show_string('generate_key_explain') . '
+			</div><br /><br />
+			<div class="generateKey">
+				<img src="./images/generate_key_big.png" alt="" />
+				<span><a href="' . Blog_file . '?app=admin&section=forms&generate">' . show_string('generate') . '</a></span>
 			</div>';
 	}
 

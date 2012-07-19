@@ -80,7 +80,7 @@ function vienara_header()
 			echo (!vienara_is_logged() ? '<a href="javascript:void(0);" onclick="$(\'.login\').slideToggle(); $(\'.password\').focus();">' . ($vienara['setting']['menu_icons'] == 1 ? '<img src="./images/login.png" alt="" /> ' : '') . show_string('login') . '</a><br />
 			<div style="display: none;" class="login">
 				<form action="' . Blog_file . '?app=login" method="post">
-					' . show_string('password') . ': <input type="password" name="password" class="password" /> <input type="submit" value="' . show_string('login') . '" />
+					' . show_string('password') . ': <input type="password" name="' . $vienara['key'] . 'password" class="password" /> <input type="submit" value="' . show_string('login') . '" />
 				</form>
 			</div>' : '
 			<a href="' . Blog_file . '?app=admin">' . ($vienara['setting']['menu_icons'] == 1 ? '<img src="./images/admin.png" alt="" /> ' : '') . show_string('admin') . '</a>
@@ -264,15 +264,15 @@ function vienara_show_blog($information = '', $is_status = false, $single = fals
 						<table width="100%">
 							<tr>
 								<td width="20%" valign="top"><strong>' . show_string('name') . ':</strong></td>
-								<td width="80%"><input type="text" name="username" /></td>
+								<td width="80%"><input type="text" name="' . $vienara['key'] . 'username" /></td>
 							</tr>
 							<tr>
 								<td width="20%" valign="top"><strong>' . show_string('website') . ':</strong></td>
-								<td width="80%"><input type="text" name="website" /></td>
+								<td width="80%"><input type="text" name="' . $vienara['key'] . 'website" /></td>
 							</tr>
 							<tr>
 								<td width="20%" valign="top"><strong>' . show_string('message') . ':</strong></td>
-								<td width="80%"><textarea class="editor" name="message" rows="5" cols="50"></textarea></td>
+								<td width="80%"><textarea class="editor" name="' . $vienara['key'] . 'message" rows="5" cols="50"></textarea></td>
 							</tr>
 						</table><br /><br />
 						' . show_string('comment_policy') . '<br /><br />
@@ -435,22 +435,24 @@ function template_page($info = array())
 // Search.
 function template_search()
 {
+	global $vienara;
+
 	echo '
 		<form action="' . Blog_file . '?app=search" method="post">
 			<table width="100%">
 				<tr>
-					<td width="90%"><input type="text" class="search" name="keywords" autofocus="autofocus" /></td>
+					<td width="90%"><input type="text" class="search" name="' . $vienara['key'] . 'keywords" autofocus="autofocus" /></td>
 					<td width="10%"><input type="submit" class="searchsubmit" value="' . show_string('search') . '" /></td>
 				</tr>
 			</table><br /><br />
 			<div class="bg_color padding">' . show_string('search_for') . '</div>
-				<div class="bg_color5 padding"><input type="radio" name="type" value="normal" checked="checked" /> ' . show_string('search_normal') . '</div>
-				<div class="bg_color4 padding"><input type="radio" name="type" value="images" /> ' . show_string('search_images') . '</div>
-				<div class="bg_color5 padding"><input type="radio" name="type" value="maps" /> ' . show_string('search_maps') . '</div>
-				<div class="bg_color4 padding"><input type="radio" name="type" value="videos" /> ' . show_string('search_videos') . '</div><br />
+				<div class="bg_color5 padding"><input type="radio" name="' . $vienara['key'] . 'type" value="normal" checked="checked" /> ' . show_string('search_normal') . '</div>
+				<div class="bg_color4 padding"><input type="radio" name="' . $vienara['key'] . 'type" value="images" /> ' . show_string('search_images') . '</div>
+				<div class="bg_color5 padding"><input type="radio" name="' . $vienara['key'] . 'type" value="maps" /> ' . show_string('search_maps') . '</div>
+				<div class="bg_color4 padding"><input type="radio" name="' . $vienara['key'] . 'type" value="videos" /> ' . show_string('search_videos') . '</div><br />
 			<div class="bg_color padding">' . show_string('extra_search_args') . '</div>
-				<div class="bg_color5 padding"><input type="checkbox" name="thissite"/> ' . show_string('search_this') . '</div>
-				<div class="bg_color4 padding"><input type="checkbox" name="exact" /> ' . show_string('search_exact') . '</div><br /><br />
+				<div class="bg_color5 padding"><input type="checkbox" name="' . $vienara['key'] . 'thissite"/> ' . show_string('search_this') . '</div>
+				<div class="bg_color4 padding"><input type="checkbox" name="' . $vienara['key'] . 'exact" /> ' . show_string('search_exact') . '</div><br /><br />
 			<div class="bg_color padding"><a href="javascript:void(0);" onclick="$(\'#privacy\').slideToggle(\'slow\')">' . show_string('privacy_policy') . '</a></div>
 			<div id="privacy" class="padding bg_color5">
 				' . show_string('google_policy') . '

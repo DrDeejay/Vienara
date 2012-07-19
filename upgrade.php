@@ -291,6 +291,12 @@ function upgrade_step_2()
 		if(!$db)
 			die_nice('Database connection failed.');
 
+	// Include the generatekey class
+	include 'classes/Class-GenerateKey.php';
+
+		// Set it up
+		$generateKey = new GenerateKey;
+
 	// Insert everything into the database
 	$query = file_get_contents('upgrade.sql');
 
@@ -299,6 +305,9 @@ function upgrade_step_2()
 
 		// The new version
 		$query = str_replace('{cur_version}', Upgrade_to, $query);
+
+		// Define a form key
+		$query = str_replace('{form_key}', $generateKey->setup(), $query);
 
 		// Execute the queries
 		$result = mysqli_multi_query($db, $query);
@@ -321,11 +330,14 @@ $php_pages = true;';
 		$configFile = file_get_contents('Config.php');
 
 			// Already there?
-			if(!strpos($configFile, '$php_pages ='))
+			if(!strpos($configFile, '$php_pages =')) {
+
+				// Set the content
 				$newConfig = $configFile .= $add_setting;
 
-		// Put the contents
-		file_put_contents('Config.php', $newConfig);
+				// Put the contents
+				file_put_contents('Config.php', $newConfig);
+			}
 	}
 
 	// Say that we are done.

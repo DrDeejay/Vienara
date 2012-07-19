@@ -44,7 +44,8 @@ INSERT INTO {db_pref}settings (`id`, `value`) VALUES
 ('ext_enable', '1'),
 ('version', '{cur_version}'),
 ('reg_comments', '1'),
-('width', '90');
+('width', '90'),
+('form_key', '{form_key}');
 
 CREATE TABLE {db_pref}menu (
   `id_tab` int NOT NULL AUTO_INCREMENT PRIMARY KEY,

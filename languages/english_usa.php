@@ -204,6 +204,10 @@ $txt['asc'] = 'Ascending';
 $txt['desc'] = 'Descending';
 $txt['php_pages_disallowed'] = 'The administrator has disabled PHP pages. PHP pages will be displayed like normal HTML until the administrator enables PHP pages again.';
 $txt['designers'] = 'Designers';
+$txt['static_forms'] = 'Static forms';
+$txt['generate_key'] = 'Generate a new form key';
+$txt['generate_key_explain'] = 'You can generate a new form key by clicking on the button below. You should press this button once in a few days. Normal users won\'t notice any difference, but generating a new form key prevents comment spammers. The more often you do this, the higher the chance that spammers won\'t get through. Just press the button below and Vienara does the work for you. This key only has effect on public forms (comments, search page etc)';
+$txt['generate'] = 'Generate';
 
 // Pages
 $txt['page_not_found'] = 'Page not found';

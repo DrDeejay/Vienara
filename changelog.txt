@@ -46,6 +46,14 @@
 ! Show a 'Done!' page after submitting a new post
 ! Don't show the page index when you're viewing a done-page
 ! Made sure you can't spam by pressing f5 (thanks, Phantom :))
+! We should add footer links to the FamFamFam and Fatcow website in the admin panel too
+! The add comment form is now static
+! Made the search page static too.
+! And last but not least: the login page is now static too
+! The installer still provided the wrong installation path
+- Removed the sha256 extension from the package, as it doesn't work on many hosts anyway
+! Updated the guestbook extension as it should have a static form instead
+! Fixed major bug in upgrade.php which wiped out the entire settings file in some cases
 
 1.0 Beta 2
 --------------------------------------------------------------------

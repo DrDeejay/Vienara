@@ -9,7 +9,7 @@
 * not use the name "Vienara" as name for your project
 * either. Thanks for understanding.
 *
-* @version: 1.0
+* @version: 1.0.1
 * @copyright 2012: Dr. Deejay
 * @developed by: Dr. Deejay
 *
@@ -24,23 +24,23 @@ function vienara_act_guestbook()
 	global $vienara, $viencode;
 
 	// Do we want to save a comment? Then save it, so we can see it. :)
-	if(!empty($_POST['message'])) {
+	if(!empty($_POST[$vienara['key'] . 'message'])) {
 
 		// Clean the fields
-		$_POST['username'] = xensql_escape_string($_POST['username']);
-		$_POST['website'] = xensql_escape_string($_POST['website']);
-		$_POST['message'] = xensql_escape_string($_POST['message']);
+		$_POST[$vienara['key'] . 'username'] = xensql_escape_string($_POST[$vienara['key'] . 'username']);
+		$_POST[$vienara['key'] . 'website'] = xensql_escape_string($_POST[$vienara['key'] . 'website']);
+		$_POST[$vienara['key'] . 'message'] = xensql_escape_string($_POST[$vienara['key'] . 'message']);
 
 		// Escape the html
-		$_POST['username'] = htmlspecialchars($_POST['username'], ENT_NOQUOTES, 'UTF-8', false);
-		$_POST['website'] = htmlspecialchars($_POST['website'], ENT_NOQUOTES, 'UTF-8', false);
-		$_POST['message'] = htmlspecialchars($_POST['message'], ENT_NOQUOTES, 'UTF-8', false);		
+		$_POST[$vienara['key'] . 'username'] = htmlspecialchars($_POST[$vienara['key'] . 'username'], ENT_NOQUOTES, 'UTF-8', false);
+		$_POST[$vienara['key'] . 'website'] = htmlspecialchars($_POST[$vienara['key'] . 'website'], ENT_NOQUOTES, 'UTF-8', false);
+		$_POST[$vienara['key'] . 'message'] = htmlspecialchars($_POST[$vienara['key'] . 'message'], ENT_NOQUOTES, 'UTF-8', false);		
 
 		// Do we have a username set?
-		if(empty($_POST['username']) && !vienara_is_logged())
-			$_POST['username'] = 'Guest';
-		elseif(empty($_POST['username']) && vienara_is_logged())
-			$_POST['username'] = 'Admin';
+		if(empty($_POST[$vienara['key'] . 'username']) && !vienara_is_logged())
+			$_POST[$vienara['key'] . 'username'] = 'Guest';
+		elseif(empty($_POST[$vienara['key'] . 'username']) && vienara_is_logged())
+			$_POST[$vienara['key'] . 'username'] = 'Admin';
 
 		// Get the ip adress
 		$ip = $_SERVER['REMOTE_ADDR'];
@@ -52,11 +52,11 @@ function vienara_act_guestbook()
 			VALUES (
 				'',
 				'$ip',
-				'" . $_POST['message'] . "',
+				'" . $_POST[$vienara['key'] . 'message'] . "',
 				UNIX_TIMESTAMP(),
 				'" . (vienara_is_logged() ? 1 : 0) . "',
-				'" . $_POST['website'] . "',
-				'" . $_POST['username'] . "'
+				'" . $_POST[$vienara['key'] . 'website'] . "',
+				'" . $_POST[$vienara['key'] . 'username'] . "'
 			)
 		");
 
@@ -149,15 +149,15 @@ function vienara_act_guestbook()
 				<table width="100%">
 					<tr>
 						<td width="20%" valign="top"><strong>Name:</strong></td>
-						<td width="80%"><input type="text" name="username" /></td>
+						<td width="80%"><input type="text" name="' . $vienara['key'] . 'username" /></td>
 					</tr>
 					<tr>
 						<td width="20%" valign="top"><strong>Website:</strong></td>
-						<td width="80%"><input type="text" name="website" /></td>
+						<td width="80%"><input type="text" name="' . $vienara['key'] . 'website" /></td>
 					</tr>
 					<tr>
 						<td width="20%" valign="top"><strong>Message:</strong></td>
-						<td width="80%"><textarea class="editor" name="message" rows="5" cols="50"></textarea></td>
+						<td width="80%"><textarea class="editor" name="' . $vienara['key'] . 'message" rows="5" cols="50"></textarea></td>
 					</tr>
 				</table><br /><br />
 				When sending a comment, your ip-adress will be saved. It will only be used for anti-spam purposes and will not be published

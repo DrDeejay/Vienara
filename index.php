@@ -223,6 +223,9 @@ $result = xensql_query("
 	foreach($result as $setting)
 		$vienara['setting'][$setting['id']] = $setting['value'];
 
+	// Make the form key a bit shorter
+	$vienara['key'] = $vienara['setting']['form_key'];
+
 // Get a hook from an extension
 function vienara_hook($hook_name = '')
 {
@@ -383,17 +386,17 @@ function vienara_act_login()
 	global $vienara;
 
 	// Is it the right one?
-	if(isset($_POST['password'])) {
+	if(isset($_POST[$vienara['key'] . 'password'])) {
 
 		// Does it match?
-		if(sha1($_POST['password']) != $vienara['setting']['password'])
+		if(sha1($_POST[$vienara['key'] . 'password']) != $vienara['setting']['password'])
 			die_nice(show_string('incorrect_pass'));
 
 		// Yup!
 		else {
 
 			// Set the session
-			$_SESSION['vienara_user_session'] = sha1($_POST['password']);
+			$_SESSION['vienara_user_session'] = sha1($_POST[$vienara['key'] . 'password']);
 
 			// We're done with that
 			header('Location: ' . Blog_file);
@@ -570,28 +573,28 @@ function vienara($single = '')
 	define('VienaraFront', 1);
 
 	// There is a chance we posted a comment. Check it.
-	if(!empty($_POST['message']) && !empty($single)) {
+	if(!empty($_POST[$vienara['key'] . 'message']) && !empty($single)) {
 
 		// Comments! Make sure they're enabled
 		if($vienara['setting']['reg_comments'] == 0)
 			die_nice(show_string('comments_disabled'));
 
 		// Do we have a username set?
-		if(empty($_POST['username']) && !vienara_is_logged())
-			$_POST['username'] = show_string('user_guest');
-		elseif(empty($_POST['username']) && vienara_is_logged())
-			$_POST['username'] = show_string('user_admin');
+		if(empty($_POST[$vienara['key'] . 'username']) && !vienara_is_logged())
+			$_POST[$vienara['key'] . 'username'] = show_string('user_guest');
+		elseif(empty($_POST[$vienara['key'] . 'username']) && vienara_is_logged())
+			$_POST[$vienara['key'] . 'username'] = show_string('user_admin');
 
 		// Clean the fields
-		$_POST['username'] = xensql_escape_string($_POST['username']);
-		$_POST['website'] = xensql_escape_string($_POST['website']);
-		$_POST['message'] = xensql_escape_string($_POST['message']);
-		$_GET['blog'] = xensql_escape_string($_GET['blog']);
+		$_POST[$vienara['key'] . 'username'] = xensql_escape_string($_POST[$vienara['key'] . 'username']);
+		$_POST[$vienara['key'] . 'website'] = xensql_escape_string($_POST[$vienara['key'] . 'website']);
+		$_POST[$vienara['key'] . 'message'] = xensql_escape_string($_POST[$vienara['key'] . 'message']);
+		$_GET[$vienara['key'] . 'blog'] = xensql_escape_string($_GET[$vienara['key'] . 'blog']);
 
 		// Escape the html
-		$_POST['username'] = htmlspecialchars($_POST['username'], ENT_NOQUOTES, 'UTF-8', false);
-		$_POST['website'] = htmlspecialchars($_POST['website'], ENT_NOQUOTES, 'UTF-8', false);
-		$_POST['message'] = htmlspecialchars($_POST['message'], ENT_NOQUOTES, 'UTF-8', false);
+		$_POST[$vienara['key'] . 'username'] = htmlspecialchars($_POST[$vienara['key'] . 'username'], ENT_NOQUOTES, 'UTF-8', false);
+		$_POST[$vienara['key'] . 'website'] = htmlspecialchars($_POST[$vienara['key'] . 'website'], ENT_NOQUOTES, 'UTF-8', false);
+		$_POST[$vienara['key'] . 'message'] = htmlspecialchars($_POST[$vienara['key'] . 'message'], ENT_NOQUOTES, 'UTF-8', false);
 
 		// Check if the blog exists
 		$result = xensql_query("
@@ -616,10 +619,10 @@ function vienara($single = '')
 				'" . (int) $_GET['blog'] . "',
 				'" . (vienara_is_logged() ? 1 : 0) . "',
 				'$ip',
-				'" . $_POST['website'] . "',
-				'" . $_POST['message'] . "',
+				'" . $_POST[$vienara['key'] . 'website'] . "',
+				'" . $_POST[$vienara['key'] . 'message'] . "',
 				UNIX_TIMESTAMP(),
-				'" . $_POST['username'] . "'
+				'" . $_POST[$vienara['key'] . 'username'] . "'
 			)
 		");
 	}
@@ -962,7 +965,7 @@ function vienara_act_search()
 	global $vienara;
 
 	// There might be a chance that we have already entered something to search for.
-	if(isset($_POST['keywords'])) {
+	if(isset($_POST[$vienara['key'] . 'keywords'])) {
 
 		// Search types
 		$types = array(
@@ -973,36 +976,36 @@ function vienara_act_search()
 		);
 
 		// Ok, we need to make sure that we have a type set
-		if(empty($_POST['type']))
-			$_POST['type'] = 'normal';
-		elseif(!in_array($_POST['type'], $types))
-			$_POST['type'] = 'normal';
+		if(empty($_POST[$vienara['key'] . 'type']))
+			$_POST[$vienara['key'] . 'type'] = 'normal';
+		elseif(!in_array($_POST[$vienara['key'] . 'type'], $types))
+			$_POST[$vienara['key'] . 'type'] = 'normal';
 
 		// We need valid urls
-		$_POST['keywords'] = str_replace(' ', '+', $_POST['keywords']);
+		$_POST[$vienara['key'] . 'keywords'] = str_replace(' ', '+', $_POST[$vienara['key'] . 'keywords']);
 
 		// Exact values?
 		if(isset($_POST['exact']))
-			$_POST['keywords'] = '"' . $_POST['keywords'] . '"';
+			$_POST[$vienara['key'] . 'keywords'] = '"' . $_POST[$vienara['key'] . 'keywords'] . '"';
 
 		// And do we only want results from this site?
-		if(isset($_POST['thissite']))
-			$_POST['keywords'] .= ' site:' . $vienara['setting']['blog_url'];
+		if(isset($_POST[$vienara['key'] . 'thissite']))
+			$_POST[$vienara['key'] . 'keywords'] .= ' site:' . $vienara['setting']['blog_url'];
 
 		// Define the modus
-		if($_POST['type'] == 'normal')
+		if($_POST[$vienara['key'] . 'type'] == 'normal')
 			$modus = 'search';
-		elseif($_POST['type'] == 'images')
+		elseif($_POST[$vienara['key'] . 'type'] == 'images')
 			$modus = 'imghp';
-		elseif($_POST['type'] == 'maps')
+		elseif($_POST[$vienara['key'] . 'type'] == 'maps')
 			$modus = 'maps';
-		elseif($_POST['type'] == 'videos')
+		elseif($_POST[$vienara['key'] . 'type'] == 'videos')
 			$modus = 'videohp';
 		else
 			$modus = 'search';
 
 		// The google url
-		$url = 'http://www.google.com/' . $modus . '?q=' . $_POST['keywords'];
+		$url = 'http://www.google.com/' . $modus . '?q=' . $_POST[$vienara['key'] . 'keywords'];
 
 		// Clean the contents of the screen
 		ob_get_clean();
@@ -1181,6 +1184,12 @@ function vienara_act_admin()
 			'href' => Blog_file . '?app=admin&section=css',
 			'show' => true,
 			'icon' => 'style_edit.png'
+		),
+		'forms' => array(
+			'title' => show_string('static_forms'),
+			'href' => Blog_file . '?app=admin&section=forms',
+			'show' => true,
+			'icon' => 'generate_key.png'
 		),
 		'help' => array(
 			'title' => show_string('help_docs'),
@@ -2196,6 +2205,36 @@ function vienara_act_admin()
 		define('adm_sect', 'terminal');
 	}
 
+	// Generate a new form key
+	function admin_section_forms()
+	{
+		// Generate a new key?
+		if(isset($_GET['generate'])) {
+
+			// First of all, get the class
+			loadClass('GenerateKey');
+
+			// Set it up
+			$key = new GenerateKey;
+
+			// Generate a new one
+			$new_key = $key->setup();
+
+			// Update the database
+			xensql_query("
+				UPDATE {db_pref}settings
+					SET value = '$new_key'
+					WHERE id = 'form_key'
+			");
+
+			// We're done
+			done('?app=admin&section=forms');
+		}
+
+		// Show the template
+		define('adm_sect', 'forms');
+	}
+
 	// Define sections!
 	$admin['sections'] = array(
 		'newblog' => 'newblog',
@@ -2212,7 +2251,8 @@ function vienara_act_admin()
 		'extensions' => 'extensions',
 		'pages' => 'pages',
 		'css' => 'css',
-		'terminal' => 'terminal'
+		'terminal' => 'terminal',
+		'forms' => 'forms'
 	);
 
 	// New sections :D

@@ -207,8 +207,8 @@ input[type="submit"], .more, button {
 }
 
 /* Other styles */
-.update {
-	padding: 10px;
+.generateKey {
+	padding: 15px;
 	border: 1px solid #DEDEDE;
 	background: #F5F5F5;
 	margin: 10px;
@@ -216,6 +216,9 @@ input[type="submit"], .more, button {
 	display: table-cell;
 	font-size: 20px;
 	color: #8AC168;
+}
+.generateKey img {
+	vertical-align: middle;
 }
 .done {
 	margin: auto;
