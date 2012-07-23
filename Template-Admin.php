@@ -75,13 +75,13 @@ function vienara_footer()
 	echo '
 				<div class="aligncenter">
 					<br /><br />' . ($vienara['setting']['top_button'] == 1 ? '<a href="javascript:void(0);" onclick="$(\'html, body\').animate({scrollTop:0}, \'slow\');">' . show_string('top') . '</a>' : '') . '<br />
-					' . show_string('icons_by') . '<a href="http://www.famfamfam.com/lab/icons/silk/">FamFamFam</a> ' . show_string('and') . ' <a href="http://www.fatcow.com/free-icons">Fatcow</a>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="copyright">
 		<a href="' . Website_Url . '">' . show_string('powered_by') . 'Vienara ' . Version . '</a> | <a href="http://graywebhost.com">' . show_string('sponsored_by') . 'Graywebhost</a><br />
+		' . show_string('icons_by') . '<a href="http://www.famfamfam.com/lab/icons/silk/">FamFamFam</a> ' . show_string('and') . ' <a href="http://www.fatcow.com/free-icons">Fatcow</a>
 	</div>
 </body>
 </html>';
@@ -880,6 +880,10 @@ function template_admin($admin = array())
 				<span><a href="' . Blog_file . '?app=admin&section=forms&generate">' . show_string('generate') . '</a></span>
 			</div>';
 	}
+
+	// A custom one?
+	elseif(function_exists('ext_template_' . adm_sect))
+		call_user_func('ext_template_' . adm_sect);
 
 	echo '
 		</div>

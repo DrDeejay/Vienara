@@ -9,7 +9,7 @@
 * not use the name "Vienara" as name for your project
 * either. Thanks for understanding.
 *
-* @version: 1.0 Release Candidate 1
+* @version: 1.0 Release Candidate 2
 * @copyright 2012: Vienara
 * @developed by: Dr. Deejay and Thomas de Roo
 * @package: Vienara
@@ -55,7 +55,7 @@ ob_start('vienara_pretty');
 $vienara = array();
 
 // What version are we using? And what is the link to the website?
-define('Version', '1.0 Release Candidate 1');
+define('Version', '1.0 Release Candidate 2');
 define('Website_Url', 'http://vienara.org'); // Don't change this!
 define('Blog_file', 'index.php');
 define('Branch', '1.0');
@@ -610,6 +610,9 @@ function vienara($single = '')
 		// Get the ip adress
 		$ip = $_SERVER['REMOTE_ADDR'];
 
+		// Multi-line comments
+		$_POST[$vienara['key'] . 'message'] = nl2br($_POST[$vienara['key'] . 'message']);
+
 		// Add it to the database.
 		xensql_query("
 			INSERT
@@ -625,6 +628,9 @@ function vienara($single = '')
 				'" . $_POST[$vienara['key'] . 'username'] . "'
 			)
 		");
+
+		// We're done!
+		done('?blog=' . $_GET['blog']);
 	}
 
 	// Deleting an existing comment? Only if we are allowed to do that.

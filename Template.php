@@ -199,7 +199,7 @@ function vienara_show_blog($information = '', $is_status = false, $single = fals
 						<a href="' . Blog_file . '?blog=' . $information['id_blog'] . '" id="' . $information['id_blog'] . '">' . $information['blog_title'] . '</a>
 					</div>
 					' . show_string('posted_on') . ': ' . parse_date(date("F j, Y, g:i a", $information['post_date']), true) . '
-					' . (vienara_is_logged() ? '<br /><a href="' . Blog_file . '?app=admin&amp;section=edit&amp;id=' . $information['id_blog'] . '">[' . show_string('edit') . ']</a>' : '') . '
+					' . (vienara_is_logged() ? '<br /><a href="' . Blog_file . '?app=admin&amp;section=edit&amp;id=' . $information['id_blog'] . '">[' . show_string('edit') . ']</a> <a href="' . Blog_file . '?app=delete&amp;id=' . $information['id_blog'] . '">[' . show_string('delete') . ']</a>' : '') . '
 				</div>
 				<br class="clear" />
 				<div class="blog_content">
@@ -290,6 +290,7 @@ function template_help($doc_message = '', $title = '')
 	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"' . $is_rtl . ' lang="' . $vienara['lang']['code'] . '">
 	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<style type="text/css">
 			body {
 				background: #B9D897;

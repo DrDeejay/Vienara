@@ -1,3 +1,12 @@
+1.0 Release Candidate 2
+--------------------------------------------------------------------
+! Show a redirection page after posting a comment to make sure comments won't be posted twice (Thanks Phantom)
+! The admin panel hook didn't work that well as it placed content at the wrong place
+! Comments didn't support multiple lines, while they should (Thanks Phantom)
+! Fixed utf8 issues in the help page (Thanks Phantom :))
+! Fixed misplaced image copyright
++ Added a quick delete link, as it makes sense to have one when there is a quick edit link too
+
 1.0 Release Candidate 1
 --------------------------------------------------------------------
 ! Removed the 'v'-part from the copyright, as it looks kinda weird
@@ -37,7 +46,7 @@
 # The repair and optimize section in the admin panel needs some padding
 ! Saving pages didn't work after a database change
 ! Don't call to fatal_error when the template of it isn't available
-! Fixed missing global in the ppage template
+! Fixed missing global in the page template
 # Slightly altered the color of links
 ! Don't show existing comments if comments are disabled
 ! Show an error message when someone tries to posts comments by using a custom form even though comments are disabled
