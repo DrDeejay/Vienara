@@ -237,7 +237,7 @@ function vienara_show_blog($information = '', $is_status = false, $single = fals
 							' . (!empty($comment['website']) ? '<a href="' . $comment['website'] . '">[' . show_string('website') . ']</a><br />' : '') . '
 							' . (vienara_is_logged() ? '<a href="http://www.stopforumspam.com/ipcheck/' . $comment['ip'] . '">[' . show_string('trace_ip') . ']</a>' : '') . '
 						</td>
-						<td width="85%" class="padding bg_color4" valign="top">
+						<td width="85%" class="padding bg_color4 comment" valign="top">
 							' . (vienara_is_logged() ? '<a href="' . Blog_file . '?blog=' . $information['id_blog'] . '&deletecomment=' . $comment['id_comment'] . '">[' . show_string('delete') . ']</a><br />' : '') . '
 							' . $comment['message'] . '<br />
 							<em>' . show_string('post_date') . ': ' . parse_date(date("F j, Y, g:i a", $comment['poster_time'])) . '</em>

@@ -6,6 +6,9 @@
 ! Fixed utf8 issues in the help page (Thanks Phantom :))
 ! Fixed misplaced image copyright
 + Added a quick delete link, as it makes sense to have one when there is a quick edit link too
+! Make sure long words don't break the layout (Thanks Phantom :))
+! Usernames in comments shouldn't be longer than 20 characters
++ Added the regular navigation bar in the admin panel
 
 1.0 Release Candidate 1
 --------------------------------------------------------------------

@@ -114,6 +114,14 @@ strong {
 	font-size: 20px;
 	color: white;
 }
+.menu {
+	padding: 5px;
+	background: #A5C693;
+}
+.menu a {
+	color: white;
+	margin-right: 5px;
+}
 
 /* Editor styles */
 .editor {

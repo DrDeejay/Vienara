@@ -59,6 +59,24 @@ function vienara_header()
 		<div class="topbar">
 			' . $vienara['setting']['title'] . show_string('administration_panel') . '
 		</div>
+		<div class="menu">
+			<a href="' . Blog_file . '">' . ($vienara['setting']['menu_icons'] == 1 ? '<img src="./images/home.png" alt="" /> ' : '') . show_string('index') . '</a>';
+
+			// Custom tabs
+			foreach($vienara['tabs'] as $tab)
+				echo '
+					' . (file_exists('MenuIcons/tab_' . $tab['tab_position']  . '.png') ? '<img src="MenuIcons/tab_' . $tab['tab_position']  . '.png" alt="" /> ' : '') . '<a href="' . $tab['tab_link'] . '">' . $tab['tab_label'] . '</a>';
+		
+			vienara_hook('menu');
+
+			if($vienara['setting']['enable_search'] == 1)
+				echo '
+					<a href="' . Blog_file . '?app=search">' . ($vienara['setting']['menu_icons'] == 1 ? '<img src="./images/search.png" alt="" /> ' : '') . show_string('search') . '</a>';
+
+			echo '
+			<a href="' . Blog_file . '?app=admin">' . ($vienara['setting']['menu_icons'] == 1 ? '<img src="./images/admin.png" alt="" /> ' : '') . show_string('admin') . '</a>
+			<a href="' . Blog_file . '?app=logout">' . ($vienara['setting']['menu_icons'] == 1 ? '<img src="./images/logout.png" alt="" /> ' : '') . show_string('logout') . '</a>
+		</div>
 		<div class="reg_content">';
 
 		// Content!

@@ -585,6 +585,10 @@ function vienara($single = '')
 		elseif(empty($_POST[$vienara['key'] . 'username']) && vienara_is_logged())
 			$_POST[$vienara['key'] . 'username'] = show_string('user_admin');
 
+		// Check the length of the username
+		if(strlen($_POST[$vienara['key'] . 'username']) > 20)
+			die_nice(show_string('comment_name_too_long'));
+
 		// Clean the fields
 		$_POST[$vienara['key'] . 'username'] = xensql_escape_string($_POST[$vienara['key'] . 'username']);
 		$_POST[$vienara['key'] . 'website'] = xensql_escape_string($_POST[$vienara['key'] . 'website']);

@@ -153,6 +153,9 @@ strong {
 	font-family: Times New Roman;
 	font-size: 40px;
 }
+.blog_content, .comment {
+	word-wrap: break-word;
+}
 .editor {
 	padding: 5px;
 	font: inherit;

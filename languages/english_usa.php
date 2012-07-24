@@ -73,6 +73,7 @@ $txt['administrator'] = 'Administrator';
 $txt['post_date'] = 'Posted on';
 $txt['not_allowed'] = 'You are not allowed to perform that action';
 $txt['comment_not_found'] = 'The requested comment could not be found.';
+$txt['comment_name_too_long'] = 'The username you provided is too long.';
 
 // Altering settings
 $txt['old_pass'] = 'Old password';
