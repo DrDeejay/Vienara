@@ -65,7 +65,7 @@ function vienara_header()
 			// Custom tabs
 			foreach($vienara['tabs'] as $tab)
 				echo '
-					' . (file_exists('MenuIcons/tab_' . $tab['tab_position']  . '.png') ? '<img src="MenuIcons/tab_' . $tab['tab_position']  . '.png" alt="" /> ' : '') . '<a href="' . $tab['tab_link'] . '">' . $tab['tab_label'] . '</a>';
+					<a href="' . $tab['tab_link'] . '">' . (file_exists('MenuIcons/tab_' . $tab['tab_position']  . '.png') ? '<img src="MenuIcons/tab_' . $tab['tab_position']  . '.png" alt="" /> ' : '') . $tab['tab_label'] . '</a>';
 		
 			vienara_hook('menu');
 

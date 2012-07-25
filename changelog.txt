@@ -9,6 +9,7 @@
 ! Make sure long words don't break the layout (Thanks Phantom :))
 ! Usernames in comments shouldn't be longer than 20 characters
 + Added the regular navigation bar in the admin panel
+! Icons of custom tabs should be linked too (Thanks Phantom)
 
 1.0 Release Candidate 1
 --------------------------------------------------------------------

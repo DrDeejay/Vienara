@@ -9,7 +9,7 @@
 * not use the name "Vienara" as name for your project
 * either. Thanks for understanding.
 *
-* @version: 1.0 Release Candidate 1
+* @version: 1.0 Release Candidate 2
 * @copyright 2012: Vienara
 * @developed by: Dr. Deejay and Thomas de Roo
 * @package: Vienara
@@ -30,8 +30,8 @@ ini_set('magic_quotes_runtime', 0);
 
 // Useful information will be provided below
 define('Blog_Branch', '1.0');
-define('Upgrade_from', '1.0 Beta 2');
-define('Upgrade_to', '1.0 Release Candidate 1');
+define('Upgrade_from', '1.0 Release Candidate 1');
+define('Upgrade_to', '1.0 Release Candidate 2');
 
 // Variables that we need later
 $vienara = array();
@@ -315,30 +315,6 @@ function upgrade_step_2()
 			// Did it work?
 			if(!$result)
 				die_nice('Upgrade failed. Please make sure you entered the correct database prefix.');
-
-	// Add a setting to Config.php?
-	if(Upgrade_to == '1.0 Release Candidate 1') {
-
-		// The setting we want to add
-		$add_setting = '
-/**
- * If you wish to disable PHP pages, this is the setting you are looking for.
-*/
-$php_pages = true;';
-		
-		// Get the content of Config.php
-		$configFile = file_get_contents('Config.php');
-
-			// Already there?
-			if(!strpos($configFile, '$php_pages =')) {
-
-				// Set the content
-				$newConfig = $configFile .= $add_setting;
-
-				// Put the contents
-				file_put_contents('Config.php', $newConfig);
-			}
-	}
 
 	// Say that we are done.
 	die_nice('Upgrade done. You can now login into your blog. Thanks for using our software and don\'t forget to remove the upgrade tools.');
